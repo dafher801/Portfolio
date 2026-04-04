@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARTificial — Project Overview</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0;
+    }
+
+    .a4-page {
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      position: relative;
+      margin: 0 auto;
+      max-width: 210mm;
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Hero Section ── */
+    .project-hero {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(12, 10, 18, 0.72) 0%, rgba(20, 16, 30, 0.60) 55%, rgba(12, 10, 18, 0.72) 100%),
+        url('artificial_bg.jpg') center/cover no-repeat;
+      /* fallback if no bg image */
+      background-color: #1a1028;
+      padding: 55px 48px 55px;
+      overflow: hidden;
+    }
+
+    .project-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      pointer-events: none;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', 'Noto Sans KR', serif;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: -0.4px;
+      color: #fff;
+      margin-top: -6px;
+      margin-bottom: 6px;
+    }
+
+    .project-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .project-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .intro-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 16px;
+    }
+
+    .intro-row:first-child {
+      position: relative;
+    }
+    .intro-row:first-child::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 16px; right: 16px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .intro-label {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .intro-label.concept { color: #C084FC; }
+    .intro-label.role    { color: #5BC0EB; }
+
+    .intro-text {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .project-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .meta-value {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      word-break: keep-all;
+    }
+
+    .meta-value a {
+      color: #8AB4F8;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .hero-media {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .media-img-slot {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      background: #1a1028;
+      min-height: 100px;
+    }
+
+    .media-img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* placeholder for screenshots */
+    .media-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── Page Body ── */
+    .page-body {
+      padding: 28px 48px 32px;
+      flex: 1;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .section-bar {
+      width: 3px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ── Game Intro ── */
+    .game-intro {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 28px;
+      word-break: keep-all;
+    }
+
+    /* ── Highlight Cards ── */
+    .highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .highlight-card {
+      display: flex;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 16px 20px;
+      align-items: flex-start;
+    }
+
+    .highlight-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: #fff;
+      border: 2px solid var(--navy);
+      box-shadow: 0 0 0 3px var(--bg-card);
+    }
+
+    .highlight-content { flex: 1; }
+
+    .highlight-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .highlight-desc {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    /* ── Contribution (Role-based) ── */
+    .role-contrib {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .contrib-section {
+      margin-bottom: 28px;
+    }
+
+    .sub-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .sub-bar {
+      width: 3px;
+      height: 13px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .sub-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .sub-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .contrib-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.65;
+    }
+
+    .contrib-bullet {
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    /* ── Outcome ── */
+    .outcome-section {
+      margin-bottom: 0;
+    }
+
+    .outcome-strip {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .outcome-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    .outcome-tag .tag-icon {
+      font-size: 13px;
+    }
+
+    /* ── Retrospective ── */
+    .retro-box {
+      margin-top: 0;
+      margin-bottom: 0;
+      background: linear-gradient(135deg, #F8F7FF 0%, #F0F4FF 100%);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .retro-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .retro-text {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* ── Print ── */
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .a4-page {
+        margin: 0; padding: 0; box-shadow: none; border: none;
+        width: 210mm; height: 297mm; max-width: 210mm; min-height: 297mm;
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <!-- ━━ HERO ━━ -->
+    <header class="project-hero">
+      <div class="hero-container">
+        <div class="hero-copy">
+          <h1 class="project-title">ARTificial</h1>
+          <p class="project-tagline">화가의 기이한 그림 속 진실을 파헤치는 3D 방탈출 게임</p>
+
+          <div class="project-intro">
+            <div class="intro-row">
+              <span class="intro-label concept">Concept</span>
+              <span class="intro-text">동경하는 화가의 집을 방문하여 그림과 대화하고, 그가 숨기고 있는 비밀을 밝혀낸다.</span>
+            </div>
+            <div class="intro-row">
+              <span class="intro-label role">My Role</span>
+              <span class="intro-text">기획 총괄 · 서브 프로그래머 — 게임 컨셉 설계부터 프로젝트 관리까지 전 과정을 주도했다.</span>
+            </div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">Period</span>
+              <span class="meta-value">2022.07 – 2022.08</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Type</span>
+              <span class="meta-value">동아리 여름 합숙 프로젝트</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Link</span>
+              <span class="meta-value">
+                <a href="https://github.com/Doopaang/Artificial" target="_blank">github.com/Doopaang/Artificial</a>
+              </span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Stack</span>
+              <span class="meta-value">C# · Unity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="media-img-slot">
+            <!-- 스크린샷 이미지를 여기에 교체 -->
+            <img src="artificial 1.jpg" alt="게임 스크린샷 1">
+          </div>
+          <div class="media-img-slot">
+            <img src="artificial 2.jpg" alt="게임 스크린샷 2">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ━━ BODY ━━ -->
+    <main class="page-body">
+
+      <!-- ── Role 1: 기획 총괄 ── -->
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <h2 class="section-title">프로젝트 총괄 <span class="section-title-en">Game Director</span></h2>
+      </div>
+
+      <div class="role-contrib">
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>컨셉 · 방향 설정</strong> — "그림과 대화하며 단서를 찾는다"는 핵심 컨셉을 제안하고, 합숙 기간 내 완성 가능한 스코프로 조율</span>
+        </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>시스템 · 퍼즐 설계</strong> — 퍼즐 난이도 곡선, NPC 대화 분기, 퍼즐 해금 조건 등 게임 플로우 전반의 구조를 설계</span>
+        </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>일정 · 작업 관리</strong> — 프로그래밍·그래픽 파트의 작업 우선순위를 조율하고 전반적인 작업 지시를 주도</span>
+        </div>
+      </div>
+
+      <div class="retro-box">
+        <span class="retro-icon">→</span>
+        <div class="retro-text">기획 문서의 관리 부족으로 레퍼런스·문서·구현이 각각 다른 스펙으로 진행되는 문제를 겪었다. 기획 의도를 사전에 명확히 정리하지 않으면 팀 전체의 작업이 어긋난다는 것을 체감했고, 이후 프로젝트에서는 기획 의도와 기준을 먼저 확보하고 있다.</div>
+      </div>
+
+      <!-- ── Role 2: 서브 프로그래머 ── -->
+      <div class="section-header" style="margin-top: 26px;">
+        <div class="section-bar"></div>
+        <h2 class="section-title">서브 프로그래머 <span class="section-title-en">Sub Programmer</span></h2>
+      </div>
+
+      <div class="role-contrib">
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>인벤토리</strong> — 아이템 획득·보관·인스펙션·사용 흐름을 구현하고 Unity UI와 연동했다.</span>
+        </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>씬 구성 · 환경 배치</strong> — 레벨 디자인 문서를 기반으로 Unity 에디터에서 씬 구성 및 환경 오브젝트 배치를 담당했다.</span>
+        </div>
+      </div>
+
+      <div class="retro-box">
+        <span class="retro-icon">→</span>
+        <div class="retro-text">프로그래머 2명 이상으로 협업한 첫 프로젝트로, Git 브랜치 전략과 충돌 해결 등 버전 관리의 기초를 실전에서 익혔다.</div>
+      </div>
+
+      <!-- ── 성과 ── -->
+      <div class="section-header" style="margin-top: 26px;">
+        <div class="section-bar"></div>
+        <h2 class="section-title">성과 <span class="section-title-en">Outcome</span></h2>
+      </div>
+
+      <div class="outcome-section">
+        <div class="outcome-strip">
+          <span class="outcome-tag"><span class="tag-icon">🚀</span> <a href="https://store.steampowered.com/app/2216000/ARTificial/" target="_blank" style="color:#fff;text-decoration:underline;text-underline-offset:2px;">Steam 정식 출시</a></span>
+          <span class="outcome-tag"><span class="tag-icon">👥</span> 다운로드 수: 40,023</span>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">15 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

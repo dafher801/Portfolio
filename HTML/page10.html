@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 03 — 게임 시스템 연동 (Page 2)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page-body {
+      padding: 32px 52px 48px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection { margin-bottom: 28px; }
+    .subsection:last-child { margin-bottom: 0; }
+
+    .subsection-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px; border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .subsection-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 400;
+      color: var(--text-muted); margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    /* ─── Section / Table Title Label (공통 스타일 추가) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Act Structure Table ─── */
+    .act-table-wrap {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .act-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .act-table thead th {
+      background: var(--bg-card);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text-sec);
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.2px;
+    }
+
+    .act-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-sec);
+      vertical-align: top;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .act-table tbody tr:last-child td { border-bottom: none; }
+
+    .act-label { font-weight: 700; color: var(--text); white-space: nowrap; }
+    .act-desc { color: var(--text-sec); }
+
+    /* ─── Beat tag pills ─── */
+    .beat-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .beat-pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .beat-pill.act1 { background: rgba(45, 91, 227, 0.07); color: #2D5BE3; }
+    .beat-pill.act2 { background: rgba(52, 168, 83, 0.07); color: #2D7D46; }
+    .beat-pill.act3 { background: rgba(232, 87, 61, 0.07); color: #C0392B; }
+    .beat-pill.act4 { background: rgba(200, 162, 78, 0.07); color: #9B7A2F; }
+
+    /* ─── Beat Definition Cards ─── */
+    .beat-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .beat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 12px 14px;
+      border-top: 3px solid var(--border);
+    }
+
+    .beat-card.c1 { border-top-color: #2D5BE3; }
+    .beat-card.c2 { border-top-color: #34A853; }
+    .beat-card.c3 { border-top-color: #E8573D; }
+    .beat-card.c4 { border-top-color: #C8A24E; }
+
+    .beat-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .beat-card-item {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+
+    .beat-card-item:last-child { margin-bottom: 0; }
+
+    .beat-card-item .beat-pill {
+      flex-shrink: 0;
+    }
+
+    .beat-card-desc {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      line-height: 1.45;
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+    <main class="page-body">
+
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-num">2</span>
+          <h2 class="subsection-title">시나리오 작법<span class="subsection-title-en"> Scenario Writing</span></h2>
+        </div>
+
+        <div class="desc-block">
+          <p>시나리오의 장면간 연결성을 개선하기 위해 시나리오 작법을 Blake Snyder의 방식으로 변경하였다. 시나리오 구조를 15개의 비트(Beat)로 세분화하여, 각 비트마다 스토리 전개에서 발생해야 할 구체적인 사건의 종류와 타이밍을 명시하였다. 또한 15개 비트를 게임 시나리오에 맞게 4개 Act로 재구성하고, 각 Act에 10개의 장면을 배치하여 총 40장면 체계를 설계하였다.</p>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          Blake Snyder 구조
+        </div>
+
+        <div class="act-table-wrap">
+          <table class="act-table">
+            <thead>
+              <tr>
+                <th style="width:64px">Act</th>
+                <th style="width:210px">포함 비트</th>
+                <th>서사적 역할</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="act-label">Act 1</span></td>
+                <td>
+                  <div class="beat-flow">
+                    <span class="beat-pill act1">오프닝 이미지</span>
+                    <span class="beat-pill act1">주제 명시</span>
+                    <span class="beat-pill act1">설정</span>
+                    <span class="beat-pill act1">기폭제</span>
+                    <span class="beat-pill act1">토론</span>
+                    <span class="beat-pill act1">2막 진입</span>
+                  </div>
+                </td>
+                <td><span class="act-desc">스토리의 설정과 시작 — 세계관, 주인공, 핵심 갈등을 소개하고 모험의 계기를 제시한다.</span></td>
+              </tr>
+              <tr>
+                <td><span class="act-label">Act 2</span></td>
+                <td>
+                  <div class="beat-flow">
+                    <span class="beat-pill act2">B 스토리</span>
+                    <span class="beat-pill act2">재미와 놀이</span>
+                    <span class="beat-pill act2">미드포인트</span>
+                  </div>
+                </td>
+                <td><span class="act-desc">새로운 세계에서의 경험과 전환 — 동료와의 관계, 새로운 도전, 그리고 이야기의 방향이 전환되는 지점을 다룬다.</span></td>
+              </tr>
+              <tr>
+                <td><span class="act-label">Act 3</span></td>
+                <td>
+                  <div class="beat-flow">
+                    <span class="beat-pill act3">악역이 다가오다</span>
+                    <span class="beat-pill act3">절망의 순간</span>
+                    <span class="beat-pill act3">영혼의 어두운 밤</span>
+                  </div>
+                </td>
+                <td><span class="act-desc">위기와 절망 — 적대 세력의 압박이 극대화되고, 주인공이 최대의 시련에 직면한다.</span></td>
+              </tr>
+              <tr>
+                <td><span class="act-label">Act 4</span></td>
+                <td>
+                  <div class="beat-flow">
+                    <span class="beat-pill act4">3막 진입</span>
+                    <span class="beat-pill act4">피날레</span>
+                    <span class="beat-pill act4">마지막 이미지</span>
+                  </div>
+                </td>
+                <td><span class="act-desc">해결과 완결 — 주인공이 교훈을 바탕으로 갈등을 해결하고 변화된 모습을 보여준다.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          15비트 용어 정의
+        </div>
+
+        <div class="beat-cards">
+
+          <div class="beat-card c1">
+            <div class="beat-card-title">Act 1 — 설정과 시작</div>
+            <div class="beat-card-item"><span class="beat-pill act1">오프닝 이미지</span><span class="beat-card-desc">주인공의 초기 상태를 상징적으로 제시</span></div>
+            <div class="beat-card-item"><span class="beat-pill act1">주제 명시</span><span class="beat-card-desc">핵심 메시지를 조연을 통해 암시</span></div>
+            <div class="beat-card-item"><span class="beat-pill act1">설정</span><span class="beat-card-desc">일상 세계, 성격, 관계, 문제점 제시</span></div>
+            <div class="beat-card-item"><span class="beat-pill act1">기폭제</span><span class="beat-card-desc">일상을 뒤흔드는 결정적 사건</span></div>
+            <div class="beat-card-item"><span class="beat-pill act1">토론</span><span class="beat-card-desc">행동 여부를 두고 갈등·망설임</span></div>
+            <div class="beat-card-item"><span class="beat-pill act1">2막 진입</span><span class="beat-card-desc">결단을 내리고 새로운 세계로 진입</span></div>
+          </div>
+
+          <div class="beat-card c2">
+            <div class="beat-card-title">Act 2 — 경험과 전환</div>
+            <div class="beat-card-item"><span class="beat-pill act2">B 스토리</span><span class="beat-card-desc">우정·로맨스 등 부차적 관계로 주제 강화</span></div>
+            <div class="beat-card-item"><span class="beat-pill act2">재미와 놀이</span><span class="beat-card-desc">장르적 재미와 핵심 메커니즘이 집중</span></div>
+            <div class="beat-card-item"><span class="beat-pill act2">미드포인트</span><span class="beat-card-desc">거짓 승리/패배로 이야기 방향 전환</span></div>
+          </div>
+
+          <div class="beat-card c3">
+            <div class="beat-card-title">Act 3 — 위기와 절망</div>
+            <div class="beat-card-item"><span class="beat-pill act3">악역이 다가오다</span><span class="beat-card-desc">외적·내적 갈등이 동시에 심화</span></div>
+            <div class="beat-card-item"><span class="beat-pill act3">절망의 순간</span><span class="beat-card-desc">모든 희망이 사라진 최대의 위기</span></div>
+            <div class="beat-card-item"><span class="beat-pill act3">영혼의 어두운 밤</span><span class="beat-card-desc">믿음을 재검토하며 내적 변화를 준비</span></div>
+          </div>
+
+          <div class="beat-card c4">
+            <div class="beat-card-title">Act 4 — 해결과 완결</div>
+            <div class="beat-card-item"><span class="beat-pill act4">3막 진입</span><span class="beat-card-desc">새로운 깨달음으로 최종 대결에 돌입</span></div>
+            <div class="beat-card-item"><span class="beat-pill act4">피날레</span><span class="beat-card-desc">최종 시련을 극복, 변화와 성장 실현</span></div>
+            <div class="beat-card-item"><span class="beat-pill act4">마지막 이미지</span><span class="beat-card-desc">오프닝과 대비되는 변화의 완성</span></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">10 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 04 — 실험 환경 및 결과</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --caution: #F5A623;
+      --success: #3BA676;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 28px 52px 36px;
+    }
+
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 2px solid var(--navy); }
+    .section-bar { width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .section-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); margin-left: 6px; text-transform: uppercase; }
+
+    .section-summary { font-size: 12.5px; color: var(--text-sec); line-height: 1.8; margin-bottom: 12px; }
+
+    .subsection { margin-bottom: 14px; }
+    .subsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .subsection-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; color: var(--accent); background: rgba(45, 91, 227, 0.07); padding: 2px 8px; border-radius: 4px; }
+    .subsection-title { font-size: 14px; font-weight: 700; color: var(--text); }
+    .subsection-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 400; color: var(--text-muted); margin-left: 4px; text-transform: uppercase; }
+
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 10px;
+      margin-bottom: 10px;
+    }
+
+    .img-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .img-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-info {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .img-label {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-sec);
+    }
+
+    .limitation-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .limitation-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--caution);
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .limit-icon {
+      font-size: 14px;
+      line-height: 1.5;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
+    .limit-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .limit-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .limit-desc {
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.6;
+    }
+
+    .limit-resolve {
+      font-size: 10.5px;
+      color: var(--success);
+      font-weight: 500;
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    .limit-resolve::before {
+      content: '→ ';
+      font-weight: 700;
+    }
+
+    .conclusion-callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.05);
+      border: 1px solid rgba(45, 91, 227, 0.15);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 14px; 
+      box-shadow: 0 4px 12px rgba(45, 91, 227, 0.03);
+    }
+
+    .conclusion-callout .icon {
+      flex-shrink: 0;
+      font-size: 18px;
+      color: var(--accent);
+      margin-top: -2px;
+    }
+
+    .conclusion-callout .text {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.75;
+    }
+
+    .conclusion-callout .text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .page-footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
+    .page-number { display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light); }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <div class="section-header">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Step 4. 최종 결과<span class="section-title-en">Results</span></h2>
+    </div>
+
+    <div class="section-summary">
+      시나리오 생성 프롬프트 체인을 구성하고, 이를 통해 생성한 시나리오를 실제 게임에 적용 가능한지 실험을 통해 확인하였다. 실험 환경은 Unity(2022.3.51f1) 엔진을 이용한 탑뷰 시점의 타일 기반 2D 어드벤처 게임이며, 플레이어는 키보드 입력을 통한 이동, 랜덤 인카운터 방식의 턴제 전투, 오브젝트 상호작용이 가능하다. 전체 맵은 루트 노드인 게임 월드, 지역 내부, 건물 내부 순서의 계층 구조로 구성된다.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-header">
+        <span class="subsection-num">1</span>
+        <h3 class="subsection-title">게임 화면<span class="subsection-title-en"> Gameplay Screenshots</span></h3>
+      </div>
+
+      <div class="image-gallery">
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Game World.png" alt="전체 월드 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">전체 월드</span>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="NPC.png" alt="NPC 대화 화면 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">NPC 대화 화면</span>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Combat.png" alt="전투 화면 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">전투 화면</span>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Boss.png" alt="최종 보스전 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">최종 보스전</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection" style="margin-bottom: 10px;">
+      <div class="subsection-header">
+        <span class="subsection-num">2</span>
+        <h3 class="subsection-title">제약 사항<span class="subsection-title-en">Constraints</span></h3>
+      </div>
+
+      <div class="limitation-cards">
+        <div class="limitation-card">
+          <span class="limit-icon">🌦️</span>
+          <div class="limit-content">
+            <span class="limit-title">시간적 요소: 동적 환경 변화의 제한</span>
+            <span class="limit-desc">리소스의 정적 특성으로 인해 날씨, 계절 등의 동적 변화를 게임 환경에 반영하는 데 한계가 있었다.</span>
+            <span class="limit-resolve">수면 관련 오브젝트(침대)와의 상호작용을 통해 다음 날 아침으로 전환되도록 구현하여 자연스러운 시간 진행을 표현</span>
+          </div>
+        </div>
+
+        <div class="limitation-card">
+          <span class="limit-icon">🧱</span>
+          <div class="limit-content">
+            <span class="limit-title">환경적 요소: 시각적 표현의 단순화</span>
+            <span class="limit-desc">리소스의 범위 제한으로 인해 건물의 세부 구조물(뒷문, 창문, 굴뚝 등)이나 지형의 세부 속성(흙의 색깔, 강의 색깔 등)을 상세히 표현하기 어려웠다.</span>
+            <span class="limit-resolve">건물 구조물 및 지형 속성의 시각적 표현을 타일 기반으로 간략화</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conclusion-callout">
+      <span class="icon">★</span>
+      <span class="text">NPC의 위치 및 대사, 퀘스트 부여·진행·완료 등 생성된 데이터를 통해 게임이 시작부터 종료까지 일관되게 구성됨을 확인하였다. <strong>매 회차마다 서로 다른 대사, 퀘스트, NPC로 이루어진 완전히 새로운 스토리를 제공</strong>함으로써, 재플레이 가치를 극대화하고 게임의 생명 주기를 연장할 수 있는 기반이 될 것으로 기대한다.</span>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-number">12 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

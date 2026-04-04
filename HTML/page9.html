@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 03 — 게임 시스템 연동</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --step-pre: #2D5BE3;
+      --step-mat: #34A853;
+      --step-sys: #E8590C;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 36px 52px 48px;
+    }
+
+    /* ─── Section Header ─── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .section-bar { width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 400;
+      color: var(--text-muted); margin-left: 6px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Section Summary ─── */
+    .section-summary {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection { margin-bottom: 32px; }
+    .subsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .subsection-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 400;
+      color: var(--text-muted); margin-left: 4px;
+      text-transform: uppercase;
+    }
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    /* ─── Section / Table Title Label (공통 스타일 추가) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Pipeline Diagram ─── */
+    .pipeline-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 16px 24px 24px; /* 타이틀 분리에 따른 상단 패딩 축소 */
+      margin-bottom: 24px;
+    }
+
+    .pipeline-phase-label {
+      font-family: 'IBM Plex Mono', 'Noto Sans KR', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* ─── Phase rows ─── */
+    .phase-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    /* Nodes */
+    .pipeline-node {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      min-width: 86px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .pipeline-node .sub {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .pipeline-node.highlight {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .pipeline-node.highlight .sub { color: rgba(255,255,255,0.5); }
+
+    /* Stage Nodes */
+    .stage-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      min-width: 100px;
+      text-align: center;
+      position: relative;
+    }
+
+    .stage-node .stage-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .stage-node .stage-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .stage-node .stage-desc {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .stage-node.pre { border-color: var(--step-pre); }
+    .stage-node.pre .stage-num { color: var(--step-pre); }
+
+    .stage-node.mat { border-color: var(--step-mat); }
+    .stage-node.mat .stage-num { color: var(--step-mat); }
+
+    /* Arrows */
+    .stage-arrow {
+      flex-shrink: 0;
+      width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5A5F6E;
+    }
+    .stage-arrow svg { width: 15px; height: 15px; }
+
+    /* ─── Phase Transition (Step 01 적용) ─── */
+    .phase-transition {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;    /* 위쪽 여백을 늘려서 뱃지와 선을 통째로 아래로 내림 */
+      margin-bottom: 10px;
+    }
+    .phase-transition::before, .phase-transition::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .phase-transition-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg); /* 배경을 흰색으로 하여 돋보이게 함 */
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px 14px;
+      flex-shrink: 0;
+    }
+    .phase-transition-badge svg {
+      width: 12px;
+      height: 12px;
+      color: var(--accent);
+    }
+    .phase-transition-badge span {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.3px;
+    }
+
+    /* Loop indicator */
+    .loop-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      transform: translateX(65px);
+    }
+
+    .loop-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      color: var(--step-mat);
+      background: rgba(52, 168, 83, 0.06);
+      border: 1px solid rgba(52, 168, 83, 0.2);
+      border-radius: 12px;
+      padding: 3px 10px;
+    }
+
+    .loop-badge svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    /* ─── Detail Cards ─── */
+    .detail-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 14px 16px;
+      border-top: 3px solid var(--border);
+    }
+
+    .detail-card.pre { border-top-color: var(--step-pre); }
+    .detail-card.mat { border-top-color: var(--step-mat); }
+
+    .detail-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-card-title .card-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      padding: 1px 5px;
+      border-radius: 3px;
+      letter-spacing: 0.3px;
+    }
+
+    .detail-card.pre .card-num { background: rgba(45, 91, 227, 0.1); color: var(--step-pre); }
+    .detail-card.mat .card-num { background: rgba(52, 168, 83, 0.1); color: var(--step-mat); }
+
+    .detail-card-desc {
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .detail-card-items {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .detail-card-item {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      line-height: 1.5;
+    }
+
+    .detail-card-item::before {
+      content: "·";
+      flex-shrink: 0;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <div class="section-header">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Step 3. 게임 시스템 연동 <span class="section-title-en">Game System Integration</span></h2>
+    </div>
+
+    <div class="section-summary">
+      게임 시나리오 대본 작성은 이벤트 트리거, 상태 변화, 퀘스트 등 시스템적 요소를 동시에 반영하는 과정에서 생기는 복잡성 때문에, 단일 프롬프트로 생성하기 어렵다. 이에 대화 유형에 따라 이벤트 트리거를 시스템과 연동하는 구조를 설계하여 Unity 기반 2D 어드벤처 게임에서 플레이 가능성을 검증하였다. 이 과정에서 시나리오 작법을 Blake Snyder의 비트 구조로 전환하여 장면 간 논리적 연결성을 개선했다.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-header">
+        <span class="subsection-num">1</span>
+        <h3 class="subsection-title">파이프라인 설계 <span class="subsection-title-en">Pipeline Design</span></h3>
+      </div>
+
+      <div class="desc-block">
+        게임 시스템 연동과 장면 간 논리적 연결성 개선을 위해 Step 1에서 설계한 파이프라인을 재설계했다. 전처리 과정에서는 15비트 구조를 도입하고 구체화 과정에서는 40개의 장면을 배치하도록 구조화하여 장면 간 논리적 연결성을 개선했다. 또한 장면 배치 단계에서 대화 유형을 분류하고, 대본 생성 단계에서는 대화의 유형과 내용을 토대로 트리거되어야 하는 이벤트에 필요한 파라미터를 생성했다.
+      </div>
+
+      <div class="section-element-title">
+        <span class="icon">◈</span>
+        파이프라인 흐름도
+      </div>
+
+      <div class="pipeline-diagram">
+        <div class="pipeline-phase-label">Phase 1 — 전처리 과정</div>
+
+        <div class="phase-row">
+          <div class="pipeline-node">
+            초기 데이터
+            <span class="sub">사용자 요청</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="stage-node pre">
+            <span class="stage-num">PROCESS 1</span>
+            <span class="stage-name">로그라인</span>
+            <span class="stage-desc">시나리오 요약</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="stage-node pre">
+            <span class="stage-num">PROCESS 2</span>
+            <span class="stage-name">등장인물</span>
+            <span class="stage-desc">캐릭터 프로필</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="stage-node pre">
+            <span class="stage-num">PROCESS 3</span>
+            <span class="stage-name">시나리오 구조</span>
+            <span class="stage-desc">15비트 분할</span>
+          </div>
+        </div>
+
+        <div class="phase-transition">
+          <div class="phase-transition-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3v10M4 9l4 4 4-4"/>
+            </svg>
+            <span>전처리 결과를 기반으로 구체화</span>
+          </div>
+        </div>
+
+        <div class="pipeline-phase-label">Phase 2 — 구체화 과정</div>
+
+        <div class="phase-row">
+          
+          <div class="pipeline-node">
+            시나리오 구조
+            <span class="sub">PROCESS 3 결과</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="stage-node mat">
+            <span class="stage-num">PROCESS 4</span>
+            <span class="stage-name">장면 배치</span>
+            <span class="stage-desc">4 Act × 10 Scene</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="stage-node mat">
+            <span class="stage-num">PROCESS 5</span>
+            <span class="stage-name">대본 생성</span>
+            <span class="stage-desc">플레이어 · NPC 대화</span>
+          </div>
+
+          <div class="stage-arrow">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 8h10M10 5l3 3-3 3"/>
+            </svg>
+          </div>
+
+          <div class="pipeline-node highlight">
+            대본 최종 출력
+            <span class="sub">게임 적용</span>
+          </div>
+        </div>
+
+        <div class="loop-indicator">
+          <div class="loop-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M13 6.5C13 6.5 11.5 4 8 4C4.5 4 3 6.5 3 8C3 9.5 4.5 12 8 12C10.5 12 12 10.5 12.5 9.5"/>
+              <path d="M13 3.5V6.5H10"/>
+            </svg>
+            <span>40회 반복 (1막 ~ 4막)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-cards">
+        <div class="detail-card pre">
+          <div class="detail-card-title">
+            <span class="card-num">P1</span>
+            전처리 과정
+          </div>
+          <div class="detail-card-desc">
+            초기 데이터를 기반으로 이야기의 핵심 뼈대를 단계별로 생성한다.
+          </div>
+          <div class="detail-card-items">
+            <div class="detail-card-item">로그라인: 아이러니, 장르, 캐릭터</div>
+            <div class="detail-card-item">등장인물: 이름, 성격, 위치, 직업, 역할</div>
+            <div class="detail-card-item">시나리오 구조: Blake Snyder의 15비트 구조</div>
+          </div>
+        </div>
+
+        <div class="detail-card mat">
+          <div class="detail-card-title">
+            <span class="card-num">P2</span>
+            구체화 과정
+          </div>
+          <div class="detail-card-desc">
+            시나리오 구조를 Act 단위로 나누고 장면과 대본을 반복 생성한다.
+          </div>
+          <div class="detail-card-items">
+            <div class="detail-card-item">장면 배치: 40개 유형의 대화 유형 분류</div>
+            <div class="detail-card-item">대본 생성: 대화 및 이벤트 파라미터 생성</div>
+            <div class="detail-card-item">Act 단위 반복으로 컨텍스트 관리</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <span class="page-number">9 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

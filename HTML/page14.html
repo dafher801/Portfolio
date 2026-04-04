@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chess & Poker — Page 2</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0;
+    }
+
+    .a4-page {
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      position: relative;
+      margin: 0 auto;
+      max-width: 210mm;
+      min-height: 297mm;
+      height: 297mm;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .page-body {
+      flex: 1;
+      padding: 24px 48px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .section-bar {
+      width: 3px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .section-block {
+      margin-bottom: 16px;
+    }
+
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .body-text {
+      font-size: 12px;
+      line-height: 1.75;
+      color: var(--text-sec);
+      word-break: keep-all;
+    }
+
+    .body-text + .body-text {
+      margin-top: 8px;
+    }
+
+    /* ─── Section / Table / Diagram Title Label ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Pipeline Diagram Wrapper ─── */
+    .pipeline-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 20px 24px 24px;
+      margin-bottom: 16px;
+    }
+
+    /* ─── Rule Cards ─── */
+    .rule-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rule-card {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      align-items: flex-start;
+    }
+
+    .rule-badge {
+      flex-shrink: 0;
+      width: 72px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .rule-badge.milestone { background: #2D5BE3; }
+    .rule-badge.epic { background: #1A8A6E; }
+    .rule-badge.task { background: #9B59B6; }
+
+    .rule-content {
+      flex: 1;
+    }
+
+    .rule-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .rule-desc {
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-sec);
+    }
+
+    /* ─── Layer Diagram ─── */
+    .pipeline-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 14px;
+    }
+
+    .pipeline-node {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 0;
+      width: 90px;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .pipeline-node .sub {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .pipeline-arrow {
+      flex-shrink: 0;
+      width: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5A5F6E;
+    }
+
+    .pipeline-arrow svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .layer-desc {
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-sec);
+    }
+
+    /* ─── Result Items ─── */
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .result-item {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: var(--text-sec);
+    }
+
+    .result-marker {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      color: #fff;
+      margin-top: 1px;
+    }
+
+    .result-marker.positive { background: #1A8A6E; }
+    .result-marker.neutral  { background: #C8A24E; }
+    .result-marker.negative { background: #D35F5F; }
+
+    .result-text strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ─── Conclusion Callout ─── */
+    .conclusion-callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.05);
+      border: 1px solid rgba(45, 91, 227, 0.15);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 14px;
+      box-shadow: 0 4px 12px rgba(45, 91, 227, 0.03);
+    }
+
+    .conclusion-callout .icon {
+      flex-shrink: 0;
+      font-size: 18px;
+      color: var(--accent);
+      margin-top: -2px;
+    }
+
+    .conclusion-callout .text {
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.75;
+    }
+
+    .conclusion-callout .text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .a4-page { 
+        margin: 0; 
+        padding: 0; 
+        box-shadow: none; 
+        border: none; 
+        width: 210mm;
+        height: 297mm;
+        max-width: 210mm;
+        min-height: 297mm;
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="a4-page">
+    
+    <main class="page-body">
+
+      <!-- 프로젝트 계획 자동화 -->
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <h2 class="section-title">계획 수립의 자동화 <span class="section-title-en">Automated Planning</span></h2>
+      </div>
+
+      <div class="section-block">
+        <p class="body-text">
+          포커에서는 프로젝트 계획 수립 자체를 AI에게 위임하였다.
+          계획을 마일스톤 → 에픽 → 태스크의 계층 구조로 분리하고,
+          각 계층에 규칙을 부여하였다. 모든 과정에서 Self-Reflection 기법을 적용하여,
+          규칙 준수 여부를 스스로 검증하도록 설계하였다.
+        </p>
+
+        <div class="section-element-title" style="margin-top: 14px;">
+          <span class="icon">◈</span>
+          계획 단위별 규칙 구조
+        </div>
+
+        <div class="pipeline-diagram" style="margin-bottom: 8px;">
+          <div class="rule-cards">
+            <div class="rule-card">
+              <span class="rule-badge milestone">Milestone</span>
+              <div class="rule-content">
+                <div class="rule-title">검증 체크포인트</div>
+                <div class="rule-desc">
+                  빌드를 통해 목표 달성이 가능해야 하며,
+                  후행 마일스톤이 선행 구현을 수정하지 않도록 의존 순서대로 정렬한다.
+                </div>
+              </div>
+            </div>
+            <div class="rule-card">
+              <span class="rule-badge epic">Epic</span>
+              <div class="rule-content">
+                <div class="rule-title">독립된 기능</div>
+                <div class="rule-desc">
+                  에픽 하나가 완료되면 해당 기능이 동작하는 상태가 되어야 한다.
+                  마일스톤에 소속되며, 하나의 마일스톤은 하나 이상의 에픽으로 구성된다.
+                </div>
+              </div>
+            </div>
+            <div class="rule-card">
+              <span class="rule-badge task">Task</span>
+              <div class="rule-content">
+                <div class="rule-title">단일 작업 단위</div>
+                <div class="rule-desc">
+                  원칙적으로 하나의 소스 코드 파일에 대응되며,
+                  설명만으로 작업 수행이 가능할 만큼 명확해야 한다.
+                  소스 코드의 설계 규칙은 SCA 레이어 구조 원칙을 따른다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCA 레이어 구조 -->
+      <div class="section-block">
+        <div class="section-element-title" style="margin-top: 0; margin-bottom: 6px;">
+          <span class="icon">◈</span>
+          SCA 레이어 참조 흐름
+        </div>
+
+        <div class="pipeline-diagram" style="margin-bottom: 0;">
+          <div class="pipeline-row">
+            <div class="pipeline-node">View<span class="sub">UI·조작</span></div>
+            <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+            <div class="pipeline-node">Director<span class="sub">흐름 제어</span></div>
+            <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+            <div class="pipeline-node">Usecase<span class="sub">게임 로직</span></div>
+            <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+            <div class="pipeline-node">Gateway<span class="sub">입출력</span></div>
+            <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+            <div class="pipeline-node">Entity<span class="sub">데이터·규칙</span></div>
+          </div>
+          <p class="layer-desc">
+            각 계층은 아래 계층만 참조하며, 같은 레이어 간 참조는 금지한다.
+            이 구조를 통해 AI가 하나의 태스크를 수행할 때 참조해야 할 코드 범위를 명확히 한정하여,
+            컨텍스트 윈도우를 효율적으로 활용할 수 있었다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 실험 결과 -->
+      <div class="section-header" style="margin-top: 18px;">
+        <div class="section-bar"></div>
+        <h2 class="section-title">실험 결과<span class="section-title-en">Results</span></h2>
+      </div>
+
+      <div class="section-block">
+        <div class="result-list">
+          <div class="result-item">
+            <span class="result-marker positive">✓</span>
+            <span class="result-text">컴파일 에러, 테스트 실패 등 로그로 직접 전달 가능한 에러는 AI가 자체적으로 해결할 수 있었다.</span>
+          </div>
+          <div class="result-item">
+            <span class="result-marker negative">✗</span>
+            <span class="result-text">인게임 플레이에서 감지되는 버그는 로그로 전달 가능한 에러보다 해결 정확도가 떨어졌다.</span>
+          </div>
+          <div class="result-item">
+            <span class="result-marker neutral">→</span>
+            <span class="result-text">버그의 <strong>예상 위치를 구체적으로</strong> 짚어줄수록 해결 정확도가 높아졌다.</span>
+          </div>
+          <div class="result-item">
+            <span class="result-marker positive">✓</span>
+            <span class="result-text">씬과 프리팹의 계층 구조 구성은 AI가 안정적으로 수행하였다.</span>
+          </div>
+          <div class="result-item">
+            <span class="result-marker negative">✗</span>
+            <span class="result-text">UI/UX 미세 조정은 C# 코드 작성만으로는 자동화가 어려웠다.</span>
+          </div>
+          <div class="result-item">
+            <span class="result-marker neutral">→</span>
+            <span class="result-text"><strong>HTML → Figma → Unity GUI / UXML</strong> 파이프라인을 통해 자동화가 가능할 것으로 판단된다.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 결론 -->
+      <div class="conclusion-callout">
+        <span class="icon">★</span>
+        <span class="text">완전 자동화의 병목은 단순히 만드는 것이 아니라, <strong>AI에게 문제를 정확히 전달하는 것</strong>에 있다.</span>
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">14 / 19</span>
+    </div>
+  </div>
+
+</body>
+</html>

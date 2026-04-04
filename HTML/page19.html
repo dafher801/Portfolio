@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김주영 — Portfolio (Page 12)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      display: flex;
+      flex-direction: column;
+      width: 210mm;
+      height: 297mm;
+      background: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* ── CLOSING HERO (mirrors page 1 hero) ── */
+    .closing-hero {
+      background: var(--navy);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle grid pattern background */
+    .closing-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+
+
+    .closing-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 520px;
+    }
+
+    .closing-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 32px;
+    }
+
+    .closing-statement {
+      font-family: 'Playfair Display', 'Noto Sans KR', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.5;
+      letter-spacing: -0.3px;
+      margin-bottom: 24px;
+    }
+
+    .closing-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 48px;
+    }
+
+    /* ── DIVIDER ── */
+    .closing-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 0 auto 48px;
+    }
+
+    /* ── CONTACT GRID ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .contact-item {
+      background: var(--navy-light);
+      padding: 18px 16px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .contact-icon {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 8px;
+    }
+
+    .contact-value {
+      font-size: 11px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    .contact-value a {
+      color: #7B9FFF;
+      text-decoration: none;
+    }
+
+    /* ── THANK YOU ── */
+    .closing-thanks {
+      margin-top: 48px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .a4-page { margin: 0; box-shadow: none; border: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+    <div class="closing-hero">
+      <div class="closing-content">
+
+        <div class="closing-label">Closing Note</div>
+
+        <div class="closing-statement">
+          LLM이 게임에서 할 수 있는 일의<br/>
+          경계를 직접 넓히겠습니다.
+        </div>
+
+        <div class="closing-sub">
+          연구로 가능성을 확인했고, 구현으로 증명했습니다.<br/>
+          다음은 현업에서 증명할 차례입니다.
+        </div>
+
+        <div class="closing-divider"></div>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-icon">Email</div>
+            <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f99d989f919c8bc1c9c8b99e94989095d79a9694">[email&#160;protected]</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">Phone</div>
+            <div class="contact-value">010-6376-7195</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">GitHub</div>
+            <div class="contact-value"><a href="https://github.com/dafher801">dafher801</a></div>
+          </div>
+        </div>
+
+        <div class="closing-thanks">Thank you for reading.</div>
+
+      </d

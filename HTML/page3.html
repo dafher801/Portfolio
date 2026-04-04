@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>p10 — Research Overview</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0;
+    }
+
+    .a4-page {
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      position: relative;
+      margin: 0 auto;
+      max-width: 210mm;
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Hero 섹션 관련 CSS */
+    .project-hero {
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(15, 26, 46, 0.55) 0%, rgba(22, 35, 58, 0.50) 55%, rgba(15, 26, 46, 0.58) 100%),
+        url('intro background.jpg') center/cover no-repeat;
+      padding: 40px 48px 34px;
+      overflow: hidden;
+    }
+
+    .project-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      pointer-events: none;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', 'Noto Sans KR', serif;
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+      color: #fff;
+      margin-top: -6px;
+      margin-bottom: 6px;
+    }
+
+    .project-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .project-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .intro-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 16px;
+    }
+
+    .intro-row:first-child {
+      border-bottom: none;
+      position: relative;
+    }
+
+    .intro-row:first-child::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .intro-label {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .intro-label.problem { color: #F5A623; }
+    .intro-label.approach { color: #5BC0EB; }
+
+    .intro-text {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .project-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .meta-value {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      word-break: keep-all;
+    }
+
+    .hero-media {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .media-img-slot {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .media-img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-body {
+      padding: 28px 48px 32px; 
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .section-bar {
+      width: 3px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .research-pipeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .research-pipeline::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+      left: 40px;
+      width: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .pipeline-step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      padding: 16px 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      background: #fff;
+      border: 2px solid var(--navy);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      box-shadow: 0 0 0 4px var(--bg);
+    }
+
+    .step-num span:first-child {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8px;
+      font-weight: 500;
+    }
+    .step-num span:last-child {
+      font-weight: 800;
+      font-size: 13px;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .step-content { flex: 1; }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 12.5px;
+      color: var(--text-sec);
+    }
+
+    .desc-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .desc-row + .desc-row { margin-top: 4px; }
+
+    .desc-icon {
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .desc-text {
+      flex: 1;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .step-transition {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 0 15px 60px;
+    }
+
+    .transition-arrow {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    .transition-text {
+      font-size: 11.5px;
+      font-style: italic;
+      color: var(--accent);
+      opacity: 0.75;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .page-footer { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
+    .page-number { display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light); }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { margin: 0; padding: 0; background: #fff; }
+      .a4-page { 
+        margin: 0; 
+        padding: 0; 
+        box-shadow: none; 
+        border: none; 
+        width: 210mm;
+        height: 297mm;
+        max-width: 210mm;
+        min-height: 297mm;
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      
+      .pipeline-step {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+    
+    <header class="project-hero">
+      <div class="hero-container">
+        <div class="hero-copy">
+          <h1 class="project-title">p10</h1>
+          <p class="project-tagline">같은 게임, 다른 이야기 — 매 회차마다 다른 시나리오로 진행되는 RPG</p>
+          <div class="project-intro">
+            <div class="intro-row">
+              <span class="intro-label problem">Problem</span>
+              <span class="intro-text">게임 내 고정된 퀘스트와 시나리오로 인한 반복 플레이는 리플레이 가치가 떨어진다.</span>
+            </div>
+            <div class="intro-row">
+              <span class="intro-label approach">Approach</span>
+              <span class="intro-text">매 회차마다 새로운 시나리오를 생성하고, 실제 게임에 연동하여 플레이 가능하도록 구현한다.</span>
+            </div>
+          </div>
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">Period</span>
+              <span class="meta-value">2023.08 – 2025.08</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Type</span>
+              <span class="meta-value">졸업 논문 / 연구 프로젝트</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Link</span>
+              <span class="meta-value">
+                <a href="https://github.com/dafher801/p10" target="_blank" style="color: #8AB4F8; text-decoration: underline; text-underline-offset: 2px;">github.com/dafher801/p10</a>
+              </span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Stack</span>
+              <span class="meta-value">C# · Python · Unity · Claude API · OpenAI API</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="media-img-slot">
+            <img src="game screen shot 1.png" alt="메인 게임 화면 1">
+          </div>
+          <div class="media-img-slot">
+            <img src="game screen shot 2.png" alt="메인 게임 화면 2">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-body">
+      
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <h2 class="section-title">연구 개요 <span class="section-title-en">Research Overview</span></h2>
+      </div>
+
+      <div class="research-pipeline">
+        
+        <div class="pipeline-step">
+          <div class="step-num">
+            <span>STEP</span>
+            <span>01</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">시나리오 대본 생성</div>
+            <div class="step-desc">
+              <div class="desc-row">
+                <span class="desc-icon">⚠️</span>
+                <span class="desc-text">실시간으로 LLM을 호출하는 방식은 네트워크 지연으로 인해 NPC 반응 속도에 문제가 있다.</span>
+              </div>
+              <div class="desc-row">
+                <span class="desc-icon">💡</span>
+                <span class="desc-text">시나리오 작법을 프롬프트에 적용하여 게임 로딩 시점에 시나리오 대본을 생성하는 파이프라인을 설계했다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-transition">
+          <svg class="transition-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3v10M4 9l4 4 4-4"/>
+          </svg>
+          <span class="transition-text">생성된 시나리오 대본을 토대로 실제 게임 월드를 구성하는 단계로 확장</span>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">
+            <span>STEP</span>
+            <span>02</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">게임 월드 구성</div>
+            <div class="step-desc">
+              <div class="desc-row">
+                <span class="desc-icon">⚠️</span>
+                <span class="desc-text">게임 월드는 지형, NPC 등 다양한 요소를 동시에 고려하는 과정에서 생기는 복잡성 때문에 한 번에 생성하기 어렵다.</span>
+              </div>
+              <div class="desc-row">
+                <span class="desc-icon">💡</span>
+                <span class="desc-text">월드 생성 파이프라인과 Self-Reflection 기법을 단계적으로 적용하여 플레이 가능한 게임 월드를 구성했다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-transition">
+          <svg class="transition-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3v10M4 9l4 4 4-4"/>
+          </svg>
+          <span class="transition-text">시나리오 대본 생성 과정에서 게임의 시스템적 제약 사항을 고려하는 단계로 확장</span>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">
+            <span>STEP</span>
+            <span>03</span>
+          </div>
+          <div class="step-content">
+            <div class="step-title">게임 시스템 연동</div>
+            <div class="step-desc">
+              <div class="desc-row">
+                <span class="desc-icon">⚠️</span>
+                <span class="desc-text">대본에서 연출되는 상황에 따라 구현해야 하는 이벤트가 다양하여, 범용적인 시스템 구조 설계가 필요했다.</span>
+              </div>
+              <div class="desc-row">
+                <span class="desc-icon">💡</span>
+                <span class="desc-text">대화 유형을 분류하여 각종 이벤트, 퀘스트 등을 시스템과 연동하는 과정을 파이프라인에 추가했다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">3 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

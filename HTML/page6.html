@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 02 — 게임 월드 구성</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --step-extract: #2D5BE3;
+      --step-env: #34A853;
+      --step-obj: #F5A623;
+      --step-reflect: #9B59B6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 36px 52px 48px;
+    }
+
+    /* ─── Section Header ─── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .section-bar { width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 400;
+      color: var(--text-muted); margin-left: 6px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Section Summary ─── */
+    .section-summary {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection { margin-bottom: 32px; }
+    .subsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .subsection-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 400;
+      color: var(--text-muted); margin-left: 4px;
+      text-transform: uppercase;
+    }
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    /* ─── Section / Table Title Label (가져온 통일 스타일) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Pipeline Diagram ─── */
+    .pipeline-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 20px 24px 24px; /* 타이틀 제거에 맞춰 상단 패딩 축소 */
+      margin-bottom: 24px;
+    }
+
+    /* ─── Branch Container ─── */
+    .branch-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* 3-stage top row */
+    .branch-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    /* Start / End Nodes */
+    .pipeline-node {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      min-width: 90px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .pipeline-node .sub {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .pipeline-node.highlight {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .pipeline-node.highlight .sub { color: rgba(255,255,255,0.5); }
+
+    /* Middle Stage Nodes */
+    .stage-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      min-width: 106px;
+      text-align: center;
+      position: relative;
+    }
+
+    .stage-node .stage-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .stage-node .stage-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .stage-node .stage-desc {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .stage-node.extract { border-color: var(--step-extract); }
+    .stage-node.extract .stage-num { color: var(--step-extract); }
+
+    .stage-node.world { border-color: var(--step-env); }
+    .stage-node.world .stage-num { color: var(--step-env); }
+
+    .stage-node.reflect { border-color: var(--step-reflect); }
+    .stage-node.reflect .stage-num { color: var(--step-reflect); }
+
+    /* Arrows */
+    .stage-arrow {
+      flex-shrink: 0;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5A5F6E;
+    }
+    .stage-arrow svg { width: 15px; height: 15px; }
+
+    /* Branch split area */
+    .branch-split-area {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .branch-vertical-connector {
+      width: 1.5px;
+      height: 32px;
+      background: var(--step-env);
+    }
+
+    /* 완벽하게 가로로 이어지는 선 구조 */
+    .branch-horizontal-line {
+      width: 190px;
+      height: 1.5px;
+      background: var(--step-env);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .branch-split-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--step-env);
+    }
+
+    .branch-sub-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 60px;
+    }
+
+    .branch-sub-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 130px;
+    }
+
+    .branch-sub-connector {
+      width: 1.5px;
+      height: 32px;
+      background: var(--step-env);
+    }
+
+    /* 하위 노드 (2-A, 2-B) */
+    .branch-sub-node {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      width: 100%;
+      height: 80px;
+      justify-content: center;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .branch-sub-node .sub-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 4px;
+    }
+
+    .branch-sub-node .sub-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .branch-sub-node .sub-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .branch-sub-node .sub-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      word-break: keep-all;
+    }
+
+    .branch-sub-node.env { border-color: #34A853; }
+    .branch-sub-node.env .sub-label { color: #34A853; }
+
+    .branch-sub-node.obj { border-color: #34A853; }
+    .branch-sub-node.obj .sub-label { color: #34A853; }
+
+    /* ─── Detail Cards ─── */
+    .detail-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 14px 16px;
+      border-top: 3px solid var(--border);
+    }
+
+    .detail-card.extract { border-top-color: var(--step-extract); }
+    .detail-card.world { border-top-color: var(--step-env); }
+    .detail-card.reflect { border-top-color: var(--step-reflect); }
+
+    .detail-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-card-title .card-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      padding: 1px 5px;
+      border-radius: 3px;
+      letter-spacing: 0.3px;
+    }
+
+    .detail-card.extract .card-num { background: rgba(45, 91, 227, 0.1); color: var(--step-extract); }
+    .detail-card.world .card-num { background: rgba(52, 168, 83, 0.1); color: var(--step-env); }
+    .detail-card.reflect .card-num { background: rgba(155, 89, 182, 0.1); color: var(--step-reflect); }
+
+    .detail-card-desc {
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .detail-card-items {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .detail-card-item {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      line-height: 1.5;
+    }
+
+    .detail-card-item::before {
+      content: "·";
+      flex-shrink: 0;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    /* ─── Reflect loop callout ─── */
+    .reflect-callout {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(155, 89, 182, 0.04);
+      border-left: 3px solid var(--step-reflect);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin-bottom: 0;
+    }
+
+    .reflect-callout .icon {
+      flex-shrink: 0;
+      font-size: 13px;
+      margin-top: 1px;
+      color: var(--step-reflect);
+    }
+
+    .reflect-callout .text {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .reflect-callout .text strong {
+      color: var(--text);
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <div class="section-header">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Step 2. 게임 월드 구성 <span class="section-title-en">Game World Construction</span></h2>
+    </div>
+
+    <div class="section-summary">
+      게임 월드 생성은 내러티브, 게임플레이, 시각적 일관성의 세 가지 측면을 모두 고려하는 과정에서 생기는 복잡성 때문에, 단일 프롬프트로 생성하기 어렵다. 이에 시나리오 대본으로부터 정보를 추출하고 단계적으로 월드를 구성한 뒤, 자기 피드백으로 개선하는 3단계 파이프라인을 설계하고 적용 횟수에 따른 성능 비교 실험을 진행하였다.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-header">
+        <span class="subsection-num">1</span>
+        <h3 class="subsection-title">파이프라인 설계 <span class="subsection-title-en">Pipeline Design</span></h3>
+      </div>
+
+      <div class="desc-block">
+        시나리오 대본에서 게임 월드로의 변환은 크게 내용 추출 단계, 월드 구성 단계, 자기 피드백 단계의 순서로 진행된다. 내용 추출 단계에서 대본의 장소·NPC·오브젝트 정보를 구조화하고, 월드 구성 단계에서 이를 바탕으로 환경 요소 구성과 오브젝트 배치를 순차적으로 수행한다. 이후 자기 피드백 단계에서 자기 피드백 기법을 적용하여 스스로 생성된 결과물을 피드백하고 개선하는 과정을 반복한다.
+      </div>
+
+      <div class="section-element-title">
+        <span class="icon">◈</span>
+        파이프라인 흐름도
+      </div>
+      
+      <div class="pipeline-diagram">
+        <div class="branch-container">
+          <div class="branch-top-row">
+            <div class="pipeline-node">
+              시나리오 대본
+              <span class="sub">Step 1 출력</span>
+            </div>
+
+            <div class="stage-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M3 8h10M10 5l3 3-3 3"/>
+              </svg>
+            </div>
+
+            <div class="stage-node extract">
+              <span class="stage-num">PROCESS 1</span>
+              <span class="stage-name">내용 추출</span>
+              <span class="stage-desc">필요한 정보 추출</span>
+            </div>
+
+            <div class="stage-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M3 8h10M10 5l3 3-3 3"/>
+              </svg>
+            </div>
+
+            <div class="stage-node world">
+              <span class="stage-num">PROCESS 2</span>
+              <span class="stage-name">월드 구성</span>
+              <span class="stage-desc">환경 + 오브젝트</span>
+            </div>
+
+            <div class="stage-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M3 8h10M10 5l3 3-3 3"/>
+              </svg>
+            </div>
+
+            <div class="stage-node reflect">
+              <span class="stage-num">PROCESS 3</span>
+              <span class="stage-name">자기 피드백</span>
+              <span class="stage-desc">Self-Reflection</span>
+            </div>
+
+            <div class="stage-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M3 8h10M10 5l3 3-3 3"/>
+              </svg>
+            </div>
+
+            <div class="pipeline-node highlight">
+              게임 월드
+              <span class="sub">최종 출력</span>
+            </div>
+          </div>
+
+          <div class="branch-split-area">
+            <div class="branch-vertical-connector"></div>
+            
+            <div class="branch-horizontal-line">
+              <div class="branch-split-indicator"></div>
+            </div>
+
+            <div class="branch-sub-row">
+              <div class="branch-sub-item">
+                <div class="branch-sub-connector"></div>
+                <div class="branch-sub-node env">
+                  <div class="sub-title">
+                    <span class="sub-label">PROCESS 2-A</span>
+                    <span class="sub-name">환경 요소 구성</span>
+                  </div>
+                  <div class="sub-desc">타일 맵 지형</div>
+                </div>
+              </div>
+
+              <div class="branch-sub-item">
+                <div class="branch-sub-connector"></div>
+                <div class="branch-sub-node obj">
+                  <div class="sub-title">
+                    <span class="sub-label">PROCESS 2-B</span>
+                    <span class="sub-name">오브젝트 배치</span>
+                  </div>
+                  <div class="sub-desc">캐릭터 · 건물</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-cards">
+        <div class="detail-card extract">
+          <div class="detail-card-title">
+            <span class="card-num">P1</span>
+            내용 추출
+          </div>
+          <div class="detail-card-desc">
+            시나리오 대본에서 게임 월드 구성에 필요한 정보를 추출한다.
+          </div>
+          <div class="detail-card-items">
+            <div class="detail-card-item">타일 맵의 지형 정보</div>
+            <div class="detail-card-item">필요한 건물 · 캐릭터 정보</div>
+            <div class="detail-card-item">타일 배치를 위한 맵핑 데이터</div>
+          </div>
+        </div>
+
+        <div class="detail-card world">
+          <div class="detail-card-title">
+            <span class="card-num">P2</span>
+            월드 구성
+          </div>
+          <div class="detail-card-desc">
+            추출된 정보를 바탕으로 환경 요소와 오브젝트를 단계적으로 배치한다.
+          </div>
+          <div class="detail-card-items">
+            <div class="detail-card-item">타일 맵 지형 생성</div>
+            <div class="detail-card-item">캐릭터 배치</div>
+            <div class="detail-card-item">건물 배치</div>
+          </div>
+        </div>
+
+        <div class="detail-card reflect">
+          <div class="detail-card-title">
+            <span class="card-num">P3</span>
+            자기 피드백
+          </div>
+          <div class="detail-card-desc">
+            생성된 게임 월드를 스스로 피드백하고 개선한다.
+          </div>
+          <div class="detail-card-items">
+            <div class="detail-card-item">배치 오류 탐지</div>
+            <div class="detail-card-item">플레이 가능성 확인</div>
+            <div class="detail-card-item">피드백 내용 반영</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-number">6 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

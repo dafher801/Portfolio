@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 02 — Mock 시나리오 (Page 2)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --step-extract: #2D5BE3;
+      --step-env: #34A853;
+      --step-obj: #F5A623;
+      --step-reflect: #9B59B6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ─── Page Body ─── */
+    .page-body {
+      padding: 32px 52px 48px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection {
+      margin-bottom: 34px;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .subsection-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Description Block ─── */
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    /* ─── Section / Table Title Label (공통 스타일 추가) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Prompt Structure ─── */
+    .prompt-structure {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 16px 24px 22px; /* 상단 타이틀이 외부로 빠졌으므로 top 패딩 축소 */
+      margin-bottom: 24px;
+    }
+
+    .prompt-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .prompt-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    .prompt-card.request { border-color: var(--accent); }
+    .prompt-card.role { border-color: var(--step-reflect); }
+
+    .prompt-card-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .prompt-card-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.3px;
+    }
+
+    .prompt-card.request .prompt-card-num {
+      background: rgba(45, 91, 227, 0.1);
+      color: var(--accent);
+    }
+
+    .prompt-card.role .prompt-card-num {
+      background: rgba(155, 89, 182, 0.1);
+      color: var(--step-reflect);
+    }
+
+    .prompt-card-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .prompt-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prompt-card-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .group-label {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 3px;
+      display: inline-block;
+      width: fit-content;
+      letter-spacing: 0.2px;
+    }
+
+    .group-label.story { background: rgba(45, 91, 227, 0.08); color: var(--accent); }
+    .group-label.visual { background: rgba(52, 168, 83, 0.08); color: #2D7D46; }
+    .group-label.impl { background: rgba(245, 166, 35, 0.1); color: #B8860B; }
+    .group-label.role-tag { background: rgba(155, 89, 182, 0.08); color: var(--step-reflect); }
+    .group-label.enforce-tag { background: rgba(155, 89, 182, 0.08); color: var(--step-reflect); }
+
+    .group-items {
+      display: flex;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .group-item {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .group-effect {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .group-effect-single {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* ─── Constraint Table ─── */
+    .constraint-table-wrap {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .constraint-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .constraint-table thead th {
+      background: var(--bg-card);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text-sec);
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.2px;
+    }
+
+    .constraint-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-sec);
+      vertical-align: middle;
+      font-size: 12px;
+    }
+
+    .constraint-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .constraint-category {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .resource-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 3px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: var(--text-sec);
+      margin: 1px 2px;
+      letter-spacing: 0.2px;
+    }
+
+    /* ─── Callout ─── */
+    .mock-callout {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.04);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+    }
+
+    .mock-callout .icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .mock-callout .text {
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .mock-callout .text strong {
+      color: var(--text);
+    }
+
+    /* ─── Next Step Link ─── */
+    .next-step {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .next-step-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .next-step-text .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <main class="page-body">
+
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-num">2</span>
+          <h2 class="subsection-title">시스템 프롬프트 <span class="subsection-title-en">System Prompt</span></h2>
+        </div>
+
+        <div class="desc-block">
+          <p>게임 월드 생성 시 고려해야 할 요소를 시나리오 생성 과정에 반영하기 위해, 선행 연구에서 사용된 프롬프트에 시스템 프롬프트를 추가로 도입하였다. 시스템 프롬프트는 사용자 요청과 LLM 역할 설정으로 구성되며, 이를 통해 리소스 제약이 반영된 Mock 시나리오를 생성하여 파이프라인의 입력으로 사용하였다.</p>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          시스템 프롬프트 구조
+        </div>
+
+        <div class="prompt-structure">
+          <div class="prompt-cards">
+            <div class="prompt-card request">
+              <div class="prompt-card-header">
+                <span class="prompt-card-num">A</span>
+                사용자 요청
+              </div>
+              <div class="prompt-card-desc">시나리오의 내용과 분위기를 결정하는 입력 요소</div>
+              <div class="prompt-card-items">
+                <div class="prompt-card-group">
+                  <span class="group-label story">이야기 구조</span>
+                  <div class="group-items">
+                    <span class="group-item">장르</span>
+                    <span class="group-item">플롯</span>
+                  </div>
+                  <div class="group-effect">→ 시나리오의 이야기 흐름에 영향</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label visual">시각 요소</span>
+                  <div class="group-items">
+                    <span class="group-item">배경</span>
+                    <span class="group-item">리소스 목록</span>
+                  </div>
+                  <div class="group-effect">→ 시나리오의 전체적인 분위기에 영향</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label impl">구현 사항</span>
+                  <div class="group-items">
+                    <span class="group-item">게임 규칙</span>
+                    <span class="group-item">제약 사항</span>
+                  </div>
+                  <div class="group-effect">→ 캐릭터 행동, 장소·시간 등 전체에 영향</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="prompt-card role">
+              <div class="prompt-card-header">
+                <span class="prompt-card-num">B</span>
+                LLM 역할 설정
+              </div>
+              <div class="prompt-card-desc">시나리오 품질과 요청 반영을 강제하는 설정</div>
+              <div class="prompt-card-items">
+                <div class="prompt-card-group">
+                  <span class="group-label role-tag">역할 부여</span>
+                  <div class="group-effect-single">시나리오 작가 역할을 부여하여 대본의 품질을 고려하도록 강제</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label enforce-tag">강제성 부여</span>
+                  <div class="group-effect-single">'투자자의 요청을 반영하지 않으면 투자를 받을 수 없다'는 조건을 제시하여 사용자 요청을 최우선으로 반영</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          입력 항목별 설정 내용
+        </div>
+
+        <div class="constraint-table-wrap">
+          <table class="constraint-table">
+            <thead>
+              <tr>
+                <th style="width:110px">입력 항목</th>
+                <th>설정 내용</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="constraint-category">플롯</span></td>
+                <td>Quest — 주인공이 특정 목표를 찾아 나서며, 단서를 수집하고 다양한 인물을 만나는 탐색 구조</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">장르</span></td>
+                <td>Light-hearted Comedy — 대화를 통해 오해를 풀어가는 가벼운 판타지 코미디</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">배경</span></td>
+                <td>중세 마을 — 석조 건물과 교회 첨탑이 있는 언덕 아래의 평화로운 마을</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">게임 규칙</span></td>
+                <td>NPC 순차 대화 기반의 선형 진행 — 전투 및 연출 없음</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">제약 사항</span></td>
+                <td>밤낮 변환 배제(오전~저녁 이전) · 실내 표현 배제(모든 장면 야외) · 맵 개수: 1개</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">타일 목록</span></td>
+                <td><span class="resource-tag">Rock</span> <span class="resource-tag">Dirt</span> <span class="resource-tag">Grass</span> <span class="resource-tag">Water</span></td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">건물 목록</span></td>
+                <td><span class="resource-tag">Blue House</span> <span class="resource-tag">Church</span> <span class="resource-tag">Forge</span> <span class="resource-tag">Inns</span> <span class="resource-tag">Market Hall</span> <span class="resource-tag">Red House</span> <span class="resource-tag">Saloon</span> <span class="resource-tag">Shop</span> <span class="resource-tag">Village Hall</span> <span class="resource-tag">Warehouse</span></td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">캐릭터 목록</span></td>
+                <td><span class="resource-tag">Adventurer Man</span> <span class="resource-tag">Adventurer Woman</span> <span class="resource-tag">Artist</span> <span class="resource-tag">Baker</span> <span class="resource-tag">Blacksmith</span> <span class="resource-tag">Child</span> <span class="resource-tag">Doctor</span> <span class="resource-tag">Guard</span> <span class="resource-tag">Inn Owner</span> <span class="resource-tag">Priest</span> <span class="resource-tag">Shop Owner</span> <span class="resource-tag">Teacher</span> <span class="resource-tag">Village Leader</span> <span class="resource-tag">Villager</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">7 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

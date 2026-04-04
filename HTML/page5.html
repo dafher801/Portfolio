@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 01 — 시나리오 대본 생성 (디자인 리뉴얼)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ─── Page Body ─── */
+    .page-body {
+      padding: 32px 52px 48px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection {
+      margin-bottom: 34px;
+    }
+
+    .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .subsection-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .subsection-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Description Block ─── */
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    /* ─── Section / Table Title Label (Step 02 Style) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Iteration Flow (작법 전환) ─── */
+    .iteration-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      /* 수정됨: 기존 20px 24px -> 6px 24px로 위아래 여백 축소 */
+      padding: 6px 24px; 
+      margin-bottom: 22px;
+    }
+
+    .iteration-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 16px;
+      padding: 14px 0; /* 이 안쪽 패딩과 바깥 패딩이 합쳐져 넓어 보였던 부분을 해결 */
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .iteration-item:last-child {
+      border-bottom: none;
+    }
+
+    .iteration-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .iteration-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .iteration-dot.fail { background: #E8573D; }
+    .iteration-dot.partial { background: #F5A623; }
+    .iteration-dot.success { background: #34A853; }
+
+    .iteration-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .iteration-detail {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .iteration-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .iteration-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .iteration-tag.problem { color: #C0392B; }
+    .iteration-tag.solve { color: #2D7D46; }
+    .iteration-tag.remain { color: #C87A1E; }
+
+    .iteration-tag::before {
+      content: "▸";
+      font-size: 9px;
+    }
+
+    /* ─── Result Table (Step 02 Style) ─── */
+    .result-table-wrap {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .result-table thead th {
+      background: var(--bg-card);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text-sec);
+      padding: 10px 14px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.2px;
+    }
+
+    .result-table thead th:first-child {
+      text-align: left;
+    }
+
+    .result-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-sec);
+      vertical-align: middle;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .result-table tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .result-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .result-table tbody tr.best-row {
+      background: rgba(45, 91, 227, 0.04);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 3px;
+    }
+
+    .tag.resolved { background: #E8F5E9; color: #2D7D46; }
+    .tag.issue { background: #FDE8E4; color: #C0392B; }
+    .tag.best-tag { background: rgba(45, 91, 227, 0.1); color: var(--accent); font-weight: 600; }
+    .tag.none { background: var(--bg-card); color: var(--text-muted); }
+
+    /* ─── Conclusion callout ─── */
+    .conclusion-callout {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.04);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+    }
+
+    .conclusion-callout .icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .conclusion-callout .text {
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .conclusion-callout .text strong {
+      color: var(--text);
+    }
+
+    /* ─── Next Step Link ─── */
+    .next-step {
+      padding-top: 18px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .next-step-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .next-step-text .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <main class="page-body">
+
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-num">2</span>
+          <h2 class="subsection-title">시나리오 작법 <span class="subsection-title-en">Scenario Writing</span></h2>
+        </div>
+
+        <div class="desc-block">
+          <p>LLM을 통한 시나리오 생성을 위해 작법 이론에 기반한 구조적 제약이 필요하다. 이에 로버트 맥키의 이론과 시드 필드의 이론을 프롬프트에 적용하여, 각 작법에서 발생하는 문제를 분석하였다. 최종적으로는 시드 필드의 구조를 기반으로, 주인공 시점에서 이야기가 전개되도록 개량한 1인칭 방식으로 수렴했다.</p>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          시나리오 작법 적용
+        </div>
+
+        <div class="iteration-flow">
+          <div class="iteration-item">
+            <div class="iteration-label">
+              <span class="iteration-dot fail"></span>
+              <span class="iteration-name">로버트 맥키</span>
+            </div>
+            <div>
+              <div class="iteration-detail">발단·전개·위기·절정·결말의 5단계 흐름을 적용하고, Act → Scene의 계층 구조로 시나리오를 구성했다. (5 Act × 4 Scene)</div>
+              <div class="iteration-tags">
+                <span class="iteration-tag problem">문제: 내용 작성 중 씬의 경계를 초과하여 다음 씬의 내용이 현재 씬에 침범하는 현상 발생</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="iteration-item">
+            <div class="iteration-label">
+              <span class="iteration-dot partial"></span>
+              <span class="iteration-name">시드 필드</span>
+            </div>
+            <div>
+              <div class="iteration-detail">3막 구조에서 구성점(Plot Point)과 중간점(Midpoint) 기반의 7단계 흐름을 적용하고, 각 Act의 Scene 개수는 LLM이 자율적으로 결정하도록 설계했다. (7 Act × N Scene)</div>
+              <div class="iteration-tags">
+                <span class="iteration-tag solve">해결: 서로 다른 영역끼리 스토리 생성 범위를 초과하는 문제가 개선</span>
+                <span class="iteration-tag problem">문제: 간헐적으로 씬에 주인공이 등장하지 않는 현상이 발생</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="iteration-item">
+            <div class="iteration-label">
+              <span class="iteration-dot success"></span>
+              <span class="iteration-name">1인칭 방식</span>
+            </div>
+            <div>
+              <div class="iteration-detail">시드 필드의 7단계 구조를 유지하되, 모든 씬을 주인공 시점의 1인칭 서술로 전개하도록 프롬프트를 개량했다. (7 Act × N Scene)</div>
+              <div class="iteration-tags">
+                <span class="iteration-tag solve">해결: 모든 씬에 주인공이 등장하여 NPC 대화 기반의 시나리오 진행이 가능한 것이 확인되었다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          실험 결과
+        </div>
+
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th style="width:74px; text-align:left">Trial</th>
+                <th style="width:100px">모델</th>
+                <th style="width:86px">작법</th>
+                <th>해결된 것</th>
+                <th>발견된 문제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Trial 1</td>
+                <td>Claude 3.5</td>
+                <td>맥키</td>
+                <td><span class="tag none">—</span></td>
+                <td><span class="tag issue">경계 침범</span></td>
+              </tr>
+              <tr>
+                <td>Trial 2</td>
+                <td>Claude 3.5</td>
+                <td>시드 필드</td>
+                <td><span class="tag resolved">경계 침범 해결</span></td>
+                <td><span class="tag issue">주인공 미등장</span></td>
+              </tr>
+              <tr class="best-row">
+                <td>Trial 3 <span class="tag best-tag">Best</span></td>
+                <td>Claude 3.5</td>
+                <td>1인칭</td>
+                <td><span class="tag resolved">주인공 미등장 해결</span></td>
+                <td><span class="tag none">—</span></td>
+              </tr>
+              <tr>
+                <td>Trial 4</td>
+                <td>GPT-4o</td>
+                <td>1인칭</td>
+                <td><span class="tag none">—</span></td>
+                <td><span class="tag issue">성능 미달</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="conclusion-callout">
+          <span class="icon">→</span>
+          <span class="text"><strong>1인칭 방식 + Claude 3.5 Sonnet</strong> 조합이 가장 안정적인 시나리오를 생성했다.</span>
+        </div>
+
+        <div class="next-step">
+          <span class="next-step-text">시나리오 대본 생성의 가능성이 확인되었으나, 이를 실제 플레이 가능한 게임 월드로 구성해야 하는 과제가 남았다. <span class="highlight">→ Step 02로 이어짐</span></span>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">5 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

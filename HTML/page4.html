@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 01 — 시나리오 대본 생성 (화살표 가시성 향상)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --step-1: #2D5BE3;
+      --step-2: #34A853;
+      --step-3: #F5A623;
+      --step-n-1: #E67E22;
+      --step-n: #E8573D;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      padding: 24px 52px 32px;
+    }
+
+    /* ─── Section Header ─── */
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 2px solid var(--navy); }
+    .section-bar { width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .section-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 400; color: var(--text-muted); margin-left: 6px; text-transform: uppercase; }
+
+    /* ─── Section Summary ─── */
+    .section-summary { font-size: 13px; color: var(--text-sec); line-height: 1.85; margin-bottom: 20px; }
+
+    /* ─── Subsection ─── */
+    .subsection { margin-bottom: 24px; }
+    .subsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .subsection-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); background: rgba(45, 91, 227, 0.07); padding: 2px 8px; border-radius: 4px; }
+    .subsection-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .subsection-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); margin-left: 4px; text-transform: uppercase; }
+    .desc-block { font-size: 13px; color: var(--text-sec); line-height: 1.8; margin-bottom: 14px; }
+
+    /* ─── Section / Table Title Label ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Pipeline Diagram ─── */
+    .pipeline-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 22px 24px 18px;
+      margin-bottom: 16px;
+    }
+
+    .pipeline-phase-label {
+      font-family: 'IBM Plex Mono', 'Noto Sans KR', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase; 
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .pipeline-row { display: flex; align-items: center; justify-content: center; gap: 0; }
+
+    .pipeline-node {
+      background: #fff; border: 1px solid var(--border); border-radius: 6px;
+      padding: 7px 12px; font-size: 11.5px; font-weight: 500; color: var(--text);
+      white-space: nowrap; text-align: center;
+    }
+    .pipeline-node .sub { display: block; font-size: 9.5px; font-weight: 400; color: var(--text-muted); margin-top: 1px; }
+    .pipeline-node.highlight { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .pipeline-node.highlight .sub { color: rgba(255,255,255,0.5); }
+
+    /* Phase 1 row 세로 여백 확대 */
+    .phase1-row {
+      margin: 0 0 14px;
+    }
+
+    .pipeline-arrow {
+      flex-shrink: 0;
+      width: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5A5F6E;
+    }
+    .pipeline-arrow svg { width: 14px; height: 14px; }
+
+    .phase-transition { display: flex; align-items: center; gap: 12px; margin: 18px 0; }
+    .phase-transition::before, .phase-transition::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+    .phase-transition-badge {
+      display: flex; align-items: center; gap: 6px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 12px; padding: 3px 12px; flex-shrink: 0;
+    }
+    .phase-transition-badge svg { width: 12px; height: 12px; color: var(--accent); }
+    
+    .phase-transition-badge span {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Loop Arrows in Phase 2 ─── */
+    .phase2-row { margin: 30px 0; display: flex; justify-content: center; }
+
+    .node-s1 { width: 110px; flex-shrink: 0; }
+    .node-s2 { width: 120px; flex-shrink: 0; }
+
+    .loop-wrapper-top { display: flex; align-items: center; position: relative; }
+    .loop-wrapper-bottom { display: flex; align-items: center; position: relative; }
+
+    .top-line {
+      position: absolute;
+      bottom: 100%;
+      left: 60px;
+      right: 60px;
+      height: 24px;
+      border: 1.5px solid var(--accent);
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+    }
+
+    /* 상단 루프 꺾쇠 머리 (마스크 없이 라인에 직접 연결, 아래를 향함) */
+    .top-line::after {
+      content: ""; 
+      position: absolute;
+      bottom: 0.5px; 
+      left: -4.4px; 
+      width: 6px; 
+      height: 6px;
+      border-bottom: 1.5px solid var(--accent);
+      border-left: 1.5px solid var(--accent);
+      transform: rotate(-45deg); 
+    }
+
+    .bottom-line {
+      position: absolute;
+      top: 100%;
+      left: 55px;
+      right: 60px;
+      height: 24px;
+      border: 1.5px solid var(--accent);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* 하단 루프 꺾쇠 머리 (마스크 없이 라인에 직접 연결, 위를 향함) */
+    .bottom-line::after {
+      content: ""; 
+      position: absolute;
+      top: 0.5px; 
+      left: -4.4px; 
+      width: 6px; 
+      height: 6px;
+      border-top: 1.5px solid var(--accent);
+      border-left: 1.5px solid var(--accent);
+      transform: rotate(45deg); 
+    }
+
+    .loop-text {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      background: var(--bg-card);
+      padding: 0 6px; border-radius: 4px;
+      font-family: 'Noto Sans KR', sans-serif; font-size: 9.5px; 
+      font-weight: 600; color: var(--accent); white-space: nowrap;
+    }
+    .top-line .loop-text { top: -8px; }
+    .bottom-line .loop-text { bottom: -8px; }
+
+    /* ─── Prompt Chain Diagram ─── */
+    .chain-diagram {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 20px 18px 12px;
+      margin-bottom: 12px;
+    }
+
+    .chain-steps { display: flex; align-items: flex-end; gap: 16px; justify-content: center; } 
+
+    .chain-step {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      flex: 1; max-width: 125px;
+    }
+
+    .chain-prompt-label {
+      font-family: 'Noto Sans KR', sans-serif; 
+      font-size: 10.5px; 
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--text-sec); 
+      background: var(--bg-card); 
+      padding: 2px 6px; 
+      margin-bottom: -4px; 
+      z-index: 1;
+    }
+
+    .chain-prompt-label.s1 { color: var(--step-1); }
+    .chain-prompt-label.s2 { color: var(--step-2); }
+    .chain-prompt-label.s3 { color: var(--step-3); }
+    .chain-prompt-label.sn { color: var(--step-n); }
+
+    .chain-input-box {
+      width: 100%; border: 1.5px solid var(--border); border-radius: 6px; background: #fff;
+      padding: 10px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      min-height: 80px; justify-content: flex-end; position: relative;
+    }
+
+    .chain-ref-zone {
+      width: 100%; border: 1.5px dashed rgba(139, 144, 160, 0.5); border-radius: 4px; padding: 6px 4px 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative;
+      background: rgba(139, 144, 160, 0.04);
+    }
+
+    .chain-ref-label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 7px; font-weight: 600; color: #5A5F6E;
+      letter-spacing: 0.5px; text-transform: uppercase; position: absolute; top: -7px; left: 4px;
+      background: #fff; padding: 0 3px;
+    }
+
+    .chain-init-box {
+      background: #F0F2F5; 
+      border: 1px solid #D8DAE0; 
+      border-radius: 4px; 
+      padding: 4px 8px; 
+      width: fit-content;
+      white-space: nowrap;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      margin-top: 1px;
+      margin-bottom: 3px;
+    }
+    .chain-init-label { display: block; font-size: 8.5px; font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 2px;}
+    .chain-init-desc { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; color: var(--text-muted); line-height: 1.1;}
+
+    .chain-prev-results-block { display: flex; flex-direction: column; gap: 3px; align-items: center; width: 100%; }
+
+    .chain-result-tag { font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; white-space: nowrap; color: #fff; }
+    .chain-result-tag.r1 { background: var(--step-1); }
+    .chain-result-tag.r2 { background: var(--step-2); }
+    .chain-result-tag.r3 { background: var(--step-3); }
+    .chain-result-tag.rn-1 { background: var(--step-n-1); } 
+    .chain-result-tag.rn { background: var(--step-n); } 
+    .chain-result-tag.dots { background: transparent; color: var(--text-muted); font-size: 10px; padding: 0; }
+
+    .chain-plus { font-size: 11px; color: var(--text-muted); font-weight: 600; margin: 3px 0; }
+
+    .chain-prompt-parts { display: flex; gap: 3px; justify-content: center; }
+    .chain-prompt-part { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; font-weight: 600; padding: 2.5px 5px; border-radius: 3px; white-space: nowrap; }
+    .chain-prompt-part.req { background: rgba(45, 91, 227, 0.15); color: #2D5BE3; }
+    .chain-prompt-part.json { background: rgba(200, 162, 78, 0.2); color: #9A7B2E; }
+
+    .chain-arrow-down { color: var(--text-muted); font-size: 14px; line-height: 1; margin: 2px 0; }
+
+    .chain-output { font-size: 10px; font-weight: 600; padding: 6px 14px; border-radius: 5px; white-space: nowrap; color: #fff; }
+    .chain-output.o1 { background: var(--step-1); }
+    .chain-output.o2 { background: var(--step-2); }
+    .chain-output.o3 { background: var(--step-3); }
+    .chain-output.on { background: var(--step-n); }
+
+    .chain-dots { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: var(--text-muted); 
+      font-size: 16px; 
+      font-weight: 700;
+      letter-spacing: 3px; 
+      padding-bottom: 0; 
+      margin-bottom: 75px; 
+      margin-left: 25px;  
+      margin-right: 25px; 
+      flex-shrink: 0; 
+    }
+
+    .chain-legend { display: flex; gap: 14px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-light); justify-content: center; flex-wrap: wrap; }
+    .chain-legend-item { display: flex; align-items: center; gap: 5px; font-size: 9px; color: var(--text-muted); }
+    .chain-legend-item .swatch { width: 8px; height: 8px; border-radius: 2px; }
+    .chain-legend-item .swatch.req { background: rgba(45, 91, 227, 0.3); }
+    .chain-legend-item .swatch.json { background: rgba(200, 162, 78, 0.35); }
+    .chain-legend-item .swatch.ref { background: rgba(139, 144, 160, 0.3); }
+
+    /* ─── Footer ─── */
+    .page-footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
+    .page-number { display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light); }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; height: 297mm; } 
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+
+    <div class="section-header">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Step 1. 시나리오 대본 생성 <span class="section-title-en">Scenario Script Generation</span></h2>
+    </div>
+
+    <div class="section-summary">
+      시나리오를 사전에 작성하는 과정은 캐릭터·플롯·장면 등의 정보들 사이에서 일관성과 개연성을 고려해야 하는 복잡성 때문에, 단일 프롬프트로 생성하기 어렵다. 이에 Robert McKee, Syd Field의 시나리오 작법을 프롬프트에 적용한 파이프라인을 설계하고, Claude 3.5 Sonnet과 GPT-4o 모델 사이의 비교 실험을 진행하였다.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-header">
+        <span class="subsection-num">1</span>
+        <h3 class="subsection-title">파이프라인 설계 <span class="subsection-title-en">Pipeline Design</span></h3>
+      </div>
+
+      <div class="desc-block">
+        프롬프트 체인 기법을 사용하여, 이전 단계의 출력 결과가 다음 프롬프트의 REFERENCE로 누적 전달되는 구조로 설계했다. 크게 두 과정으로 진행이 되었는데, 전처리 과정에서는 캐릭터 정보에서 시나리오 구조까지 뼈대를 잡고, 구체화 과정에서 각 막과 씬의 내용을 반복적으로 구체화하여 최종 대본을 생성했다.
+      </div>
+
+      <div class="section-element-title">
+        <span class="icon">◈</span>
+        파이프라인 흐름도
+      </div>
+      <div class="pipeline-diagram">
+        <div class="pipeline-phase-label">Phase 1 — 전처리 과정</div>
+        <div class="pipeline-row phase1-row">
+          <div class="pipeline-node">주인공 생성</div>
+          <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+          <div class="pipeline-node">사건 설정</div>
+          <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+          <div class="pipeline-node">서브 캐릭터</div>
+          <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+          <div class="pipeline-node">시나리오 구조</div>
+        </div>
+
+        <div class="phase-transition">
+          <div class="phase-transition-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3v10M4 9l4 4 4-4"/>
+            </svg>
+            <span>전처리 결과를 기반으로 구체화</span>
+          </div>
+        </div>
+
+        <div class="pipeline-phase-label">Phase 2 — 구체화 과정</div>
+        <div class="pipeline-row phase2-row">
+          
+          <div class="pipeline-node node">시나리오 구조<span class="sub">N막 구성</span></div>
+          <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+
+          <div class="loop-wrapper-bottom">
+            <div class="pipeline-node node-s1">Act 내의 씬 생성<span class="sub">Act N → M개의 씬</span></div>
+            <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+
+            <div class="loop-wrapper-top">
+              <div class="pipeline-node node-s2">씬 육하원칙<span class="sub">씬에 대한 세부설명</span></div>
+              <div class="pipeline-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M11 4l4 4-4 4"/></svg></div>
+              
+              <div class="pipeline-node node-s2 highlight">씬별 대본 생성<span class="sub">최종 출력</span></div>
+
+              <div class="top-line">
+                <span class="loop-text">M회 반복 (1번 씬 ~ M번 씬)</span>
+              </div>
+            </div>
+
+            <div class="bottom-line">
+              <span class="loop-text">N회 반복 (1막 ~ N막)</span>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+
+      <div class="section-element-title">
+        <span class="icon">◈</span>
+        프롬프트 체인
+      </div>
+      <div class="chain-diagram">
+        <div class="chain-steps">
+          <div class="chain-step">
+            <span class="chain-prompt-label s1">1번 프롬프트</span>
+            <div class="chain-input-box">
+              <div class="chain-ref-zone">
+                <span class="chain-ref-label">REFERENCE</span>
+                
+                <div class="chain-init-box">
+                  <span class="chain-init-label">초기 입력</span>
+                  <span class="chain-init-desc">배경·장르·플롯</span>
+                </div>
+
+              </div>
+              <span class="chain-plus">+</span>
+              <div class="chain-prompt-parts">
+                <span class="chain-prompt-part req">REQUEST</span>
+                <span class="chain-prompt-part json">JSON_FMT</span>
+              </div>
+            </div>
+            <span class="chain-arrow-down">↓</span>
+            <span class="chain-output o1">1번 결과</span>
+          </div>
+
+          <div class="chain-step">
+            <span class="chain-prompt-label s2">2번 프롬프트</span>
+            <div class="chain-input-box">
+              <div class="chain-ref-zone">
+                <span class="chain-ref-label">REFERENCE</span>
+                
+                <div class="chain-init-box">
+                  <span class="chain-init-label">초기 입력</span>
+                  <span class="chain-init-desc">배경·장르·플롯</span>
+                </div>
+                
+                <span class="chain-result-tag r1">1번 결과</span>
+              </div>
+              <span class="chain-plus">+</span>
+              <div class="chain-prompt-parts">
+                <span class="chain-prompt-part req">REQUEST</span>
+                <span class="chain-prompt-part json">JSON_FMT</span>
+              </div>
+            </div>
+            <span class="chain-arrow-down">↓</span>
+            <span class="chain-output o2">2번 결과</span>
+          </div>
+
+          <div class="chain-step">
+            <span class="chain-prompt-label s3">3번 프롬프트</span>
+            <div class="chain-input-box">
+              <div class="chain-ref-zone">
+                <span class="chain-ref-label">REFERENCE</span>
+                
+                <div class="chain-init-box">
+                  <span class="chain-init-label">초기 입력</span>
+                  <span class="chain-init-desc">배경·장르·플롯</span>
+                </div>
+
+                <div class="chain-prev-results-block">
+                  <span class="chain-result-tag r1">1번 결과</span>
+                  <span class="chain-result-tag r2">2번 결과</span>
+                </div>
+              </div>
+              <span class="chain-plus">+</span>
+              <div class="chain-prompt-parts">
+                <span class="chain-prompt-part req">REQUEST</span>
+                <span class="chain-prompt-part json">JSON_FMT</span>
+              </div>
+            </div>
+            <span class="chain-arrow-down">↓</span>
+            <span class="chain-output o3">3번 결과</span>
+          </div>
+
+          <div class="chain-dots">····</div>
+
+          <div class="chain-step">
+            <span class="chain-prompt-label sn">N번 프롬프트</span>
+            <div class="chain-input-box">
+              <div class="chain-ref-zone">
+                <span class="chain-ref-label">REFERENCE</span>
+                
+                <div class="chain-init-box">
+                  <span class="chain-init-label">초기 입력</span>
+                  <span class="chain-init-desc">배경·장르·플롯</span>
+                </div>
+
+                <div class="chain-prev-results-block">
+                  <span class="chain-result-tag r1">1번 결과</span>
+                  <span class="chain-result-tag r2">2번 결과</span>
+                  <span class="chain-result-tag r3">3번 결과</span> <span class="chain-result-tag dots">····</span>
+                  <span class="chain-result-tag rn-1">N-1번 결과</span>
+                </div>
+              </div>
+              <span class="chain-plus">+</span>
+              <div class="chain-prompt-parts">
+                <span class="chain-prompt-part req">REQUEST</span>
+                <span class="chain-prompt-part json">JSON_FMT</span>
+              </div>
+            </div>
+            <span class="chain-arrow-down">↓</span>
+            <span class="chain-output on">N번 결과</span>
+          </div>
+        </div>
+
+        <div class="chain-legend">
+          <div class="chain-legend-item">
+            <span class="swatch req"></span>
+            <span>REQUEST — 생성 요청</span>
+          </div>
+          <div class="chain-legend-item">
+            <span class="swatch json"></span>
+            <span>JSON_FORMAT — 출력 형식 지정</span>
+          </div>
+          <div class="chain-legend-item">
+            <span class="swatch ref"></span>
+            <span>REFERENCE — 초기 입력 + 이전 결과 누적</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <span class="page-number">4 / 19</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 03 — 게임 시스템 연동 (Page 3)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F1A2E;
+      --navy-light: #182640;
+      --accent: #2D5BE3;
+      --accent-light: #4A73F5;
+      --gold: #C8A24E;
+      --text: #1A1D26;
+      --text-sec: #4A4F5C;
+      --text-muted: #8B90A0;
+      --border: #D8DAE0;
+      --border-light: #EDEEF2;
+      --bg-card: #F5F6F9;
+      --bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --c-conv: #2D5BE3;
+      --c-quest: #34A853;
+      --c-state: #E8590C;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #E0E0E0;
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page-body {
+      padding: 32px 52px 48px;
+    }
+
+    /* ─── Subsection ─── */
+    .subsection { margin-bottom: 28px; }
+    .subsection:last-child { margin-bottom: 0; }
+
+    .subsection-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .subsection-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: var(--accent);
+      background: rgba(45, 91, 227, 0.07);
+      padding: 2px 8px; border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .subsection-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .subsection-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 400;
+      color: var(--text-muted); margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .desc-block {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    /* ─── Section / Table Title Label (공통 스타일 추가) ─── */
+    .section-element-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-element-title .icon {
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Conversation Type Table ─── */
+    .type-table-wrap {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .type-table-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+    }
+
+    .type-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .type-table thead th {
+      background: var(--bg-card);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text-sec);
+      padding: 7px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.2px;
+    }
+
+    .type-table tbody td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-sec);
+      vertical-align: top;
+      font-size: 11.5px;
+      line-height: 1.65;
+    }
+
+    .type-table tbody tr:last-child td { border-bottom: none; }
+
+    .type-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .type-badge.conv { background: rgba(45, 91, 227, 0.07); color: #2D5BE3; }
+    .type-badge.quest { background: rgba(52, 168, 83, 0.07); color: #2D7D46; }
+
+    .event-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-sec);
+    }
+
+    .event-none {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Category Cards ─── */
+    .category-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px; /* 소제목이 들어가면서 여유를 줌 */
+    }
+
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 14px 14px;
+      border-top: 3px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .category-card.c-conv { border-top-color: var(--c-conv); }
+    .category-card.c-quest { border-top-color: var(--c-quest); }
+
+    .category-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .category-card-title .cat-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .category-card-desc {
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    /* ─── LLM Criteria List ─── */
+    .criteria-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .criteria-item {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .criteria-text {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      line-height: 1.5;
+    }
+
+    /* ─── Conclusion callout ─── */
+    .conclusion-callout {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.04);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 18px;
+      margin-bottom: 18px;
+      margin-top: 24px;
+    }
+
+    .conclusion-callout .icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .conclusion-callout .text {
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.7;
+    }
+
+    .conclusion-callout .text strong {
+      color: var(--text);
+    }
+
+    /* ─── Next Step ─── */
+    .next-step {
+      padding-top: 18px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .next-step-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .next-step-text .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .page-number {
+      display: inline-block;
+      padding: 2px 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+    <main class="page-body">
+
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-num">3</span>
+          <h2 class="subsection-title">대화 유형 분류 <span class="subsection-title-en">Conversation Type Classification</span></h2>
+        </div>
+
+        <div class="desc-block">
+          <p>선행 연구에서 생성된 대본이 게임 시스템과 연동되지 않던 한계를 해결하기 위해, 대화 유형 자동 분류 체계를 도입하였다. 대본 생성 단계에서 LLM이 대화의 내용과 맥락을 분석하여 6가지 유형 중 하나를 자동으로 부여하였다. 또한 유형별로 발생해야 하는 이벤트를 지정하여 대화 종료 시, 자동으로 이벤트가 실행되도록 구성하였다.</p>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          대화 유형 분류 기준
+        </div>
+
+        <div class="category-cards">
+          <div class="category-card c-conv">
+            <div class="category-card-title">
+              <span class="cat-dot" style="background:var(--c-conv)"></span>
+              일반 대화
+            </div>
+            <div class="category-card-desc">시스템 이벤트 없이 시나리오를 진행하거나 대화를 마무리하는 유형</div>
+            <div class="criteria-list">
+              <div class="criteria-item">
+                <div><span class="type-badge conv">Conversation</span></div>
+                <div class="criteria-text">일상적인 대화, 스토리 배경 설명, 단순 정보 전달 등의 맥락</div>
+              </div>
+              <div class="criteria-item">
+                <div><span class="type-badge conv">Complete</span></div>
+                <div class="criteria-text">플레이어가 특정 사건 및 퀘스트의 목표를 달성한 후 NPC에게 보고하여 상황이 완전히 종결되는 맥락</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="category-card c-quest">
+            <div class="category-card-title">
+              <span class="cat-dot" style="background:var(--c-quest)"></span>
+              시스템 연동
+            </div>
+            <div class="category-card-desc">아이템, 전투, 수면, 게임 엔딩 등 시스템 이벤트를 트리거하는 유형</div>
+            <div class="criteria-list">
+              <div class="criteria-item">
+                <div><span class="type-badge quest">Hunt</span></div>
+                <div class="criteria-text">NPC가 플레이어에게 특정 몬스터를 토벌해올 것을 요청하며, 처치해야 할 대상을 명확히 지시하는 맥락</div>
+              </div>
+              <div class="criteria-item">
+                <div><span class="type-badge quest">Collect</span></div>
+                <div class="criteria-text">NPC가 플레이어에게 특정 물건이나 재료를 구해오라고 요청하며, 수집의 목적을 언급하는 맥락</div>
+              </div>
+              <div class="criteria-item">
+                <div><span class="type-badge quest">Sleep</span></div>
+                <div class="criteria-text">NPC가 휴식을 권유하거나 여관 숙박 등 플레이어의 체력 회복 및 시간 경과를 암시하는 맥락</div>
+              </div>
+              <div class="criteria-item">
+                <div><span class="type-badge quest">Final</span></div>
+                <div class="criteria-text">최종 결전을 앞두고 있으며, 더 이상의 대화가 없이 게임의 엔딩을 앞두고 있는 마지막 대화의 맥락</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          이벤트 및 파라미터
+        </div>
+
+        <div class="type-table-wrap">
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th style="width:80px">Type</th>
+                <th style="width:120px">생성 파라미터</th>
+                <th style="width:240px">트리거 이벤트</th>
+                <th>다음 대화 진입 조건</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="type-badge conv">Conversation</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-tag">즉시 진행</span></td>
+              </tr>
+              <tr>
+                <td><span class="type-badge conv">Complete</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-tag">즉시 진행</span></td>
+              </tr>
+              <tr>
+                <td><span class="type-badge quest">Hunt</span></td>
+                <td><span class="event-tag">적 이름, 수량</span></td>
+                <td><span class="event-tag">사냥 퀘스트 발생</span></td>
+                <td><span class="event-tag">지정된 적을 수량만큼 처치</span></td>
+              </tr>
+              <tr>
+                <td><span class="type-badge quest">Collect</span></td>
+                <td><span class="event-tag">아이템 이름, 수량</span></td>
+                <td><span class="event-tag">수집 퀘스트 발생, 아이템 오브젝트 활성화</span></td>
+                <td><span class="event-tag">지정된 아이템을 수량만큼 수집</span></td>
+              </tr>
+              <tr>
+                <td><span class="type-badge quest">Sleep</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-tag">수면 오브젝트(ex: 침대)와 상호작용</span></td>
+              </tr>
+              <tr>
+                <td><span class="type-badge quest">Final</span></td>
+                <td><span class="event-none">None</span></td>
+                <td><span class="event-tag">보스전 진입 가능</span></td>
+                <td><span class="event-tag">모든 대화 종결</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="conclusion-callout">
+          <span class="icon">→</span>
+          <span class="text"><strong>대화 유형 분류</strong>를 통해 대화의 맥락에 대응이 되는 이벤트 출력이 가능하였다.</span>
+        </div>
+
+        <div class="next-step">
+          <span class="next-step-text">유니티 엔진을 이용하여 실제 게임으로 구성하였다.<span class="highlight">→ 최종 결과로 이어짐</span></span>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">11 / 19</span>
+    </div>
+  </div>
+</body>
+</html>
