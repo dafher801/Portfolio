@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
   <title>김주영 — Portfolio</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,5 +47,28 @@
   <iframe src="page17.html" scrolling="no"></iframe>
   <iframe src="page18.html" scrolling="no"></iframe>
   <iframe src="page19.html" scrolling="no"></iframe>
+
+  <script>
+    // 모든 iframe 로드 후, 내부 링크 클릭을 가로채서 부모 window에서 새 탭으로 열기
+    document.querySelectorAll('iframe').forEach(iframe => {
+      iframe.addEventListener('load', () => {
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          doc.querySelectorAll('a[href]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (href && href.startsWith('http')) {
+              a.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(href, '_blank', 'noopener,noreferrer');
+              });
+            }
+          });
+        } catch (e) {
+          // cross-origin 접근 불가 시 무시
+        }
+      });
+    });
+  </script>
 </body>
 </html>
