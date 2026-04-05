@@ -240,6 +240,18 @@
     }
 
     /* ─── Result Items ─── */
+    .result-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+
+    .result-group:last-child {
+      margin-bottom: 0;
+    }
+
     .result-list {
       display: flex;
       flex-direction: column;
@@ -442,38 +454,54 @@
       </div>
 
       <div class="section-block">
-        <div class="result-list">
-          <div class="result-item">
-            <span class="result-marker positive">✓</span>
-            <span class="result-text">컴파일 에러, 테스트 실패 등 로그로 직접 전달 가능한 에러는 AI가 자체적으로 해결할 수 있었다.</span>
-          </div>
-          <div class="result-item">
-            <span class="result-marker negative">✗</span>
-            <span class="result-text">인게임 플레이에서 감지되는 버그는 로그로 전달 가능한 에러보다 해결 정확도가 떨어졌다.</span>
-          </div>
-          <div class="result-item">
-            <span class="result-marker neutral">→</span>
-            <span class="result-text">버그의 <strong>예상 위치를 구체적으로</strong> 짚어줄수록 해결 정확도가 높아졌다.</span>
-          </div>
-          <div class="result-item">
-            <span class="result-marker positive">✓</span>
-            <span class="result-text">씬과 프리팹의 계층 구조 구성은 AI가 안정적으로 수행하였다.</span>
-          </div>
-          <div class="result-item">
-            <span class="result-marker negative">✗</span>
-            <span class="result-text">UI/UX 미세 조정은 C# 코드 작성만으로는 자동화가 어려웠다.</span>
-          </div>
-          <div class="result-item">
-            <span class="result-marker neutral">→</span>
-            <span class="result-text"><strong>HTML → Figma → Unity GUI / UXML</strong> 파이프라인을 통해 자동화가 가능할 것으로 판단된다.</span>
+        <div class="result-group">
+          <div class="result-list">
+            <div class="result-item">
+              <span class="result-marker positive">✓</span>
+              <span class="result-text">컴파일 에러, 테스트 실패 등 로그로 직접 전달 가능한 에러는 AI가 자체적으로 해결할 수 있었다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker negative">✗</span>
+              <span class="result-text">인게임 플레이에서 감지되는 버그는 로그로 전달 가능한 에러보다 해결 정확도가 떨어졌다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker neutral">→</span>
+              <span class="result-text">버그의 <strong>예상 위치를 구체적으로</strong> 짚어줄수록 해결 정확도가 높아졌다.</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- 결론 -->
-      <div class="conclusion-callout">
-        <span class="icon">★</span>
-        <span class="text">완전 자동화의 병목은 단순히 만드는 것이 아니라, <strong>AI에게 문제를 정확히 전달하는 것</strong>에 있다.</span>
+        <div class="result-group">
+          <div class="result-list">
+            <div class="result-item">
+              <span class="result-marker positive">✓</span>
+              <span class="result-text">씬과 프리팹의 계층 구조 구성은 AI가 안정적으로 수행하였다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker negative">✗</span>
+              <span class="result-text">UI/UX 미세 조정은 C# 코드 작성만으로는 자동화가 어려웠다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker neutral">→</span>
+              <span class="result-text"><strong>HTML → Figma → Unity GUI / UXML</strong> 파이프라인을 통해 자동화가 가능할 것으로 보이며, 추가 실험이 필요할 것으로 판단된다.</span>
+            </div>
+          </div>
+        </div>
+        <div class="result-group">
+          <div class="result-list">
+            <div class="result-item">
+              <span class="result-marker positive">✓</span>
+              <span class="result-text">SCA 레이어 분리를 통해 AI가 참조해야 할 파일을 정확히 식별하였다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker negative">✗</span>
+              <span class="result-text">소스 코드 작성 시, 레이어 간 의존 방향 규칙을 무시하고 코드를 생성하는 경우가 발견되었다.</span>
+            </div>
+            <div class="result-item">
+              <span class="result-marker neutral">→</span>
+              <span class="result-text">정해진 계층 외의 참조를 <strong>물리적으로 차단</strong>하여 규칙 위반을 방지할 수 있을 것으로 보이며, 추가 실험이 필요할 것으로 판단된다.</span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </main>
