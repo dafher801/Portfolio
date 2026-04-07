@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>탱크 게임 모작 — Project Overview</title>
+  <title>보스 러쉬 모작 — Project Overview</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,11 +51,10 @@
     /* ── Hero Section ── */
     .project-hero {
       position: relative;
-      /* 배경 이미지 추가 및 기존 그라데이션 오버레이 적용 */
       background:
-        linear-gradient(135deg, rgba(10, 14, 10, 0.75) 0%, rgba(16, 22, 14, 0.60) 55%, rgba(10, 14, 10, 0.75) 100%),
-        url('Tank_bg.png') center/cover no-repeat;
-      background-color: #0e1a0c;
+        linear-gradient(135deg, rgba(18, 8, 8, 0.75) 0%, rgba(30, 14, 10, 0.60) 55%, rgba(18, 8, 8, 0.75) 100%),
+        url('GreenGuy_bg.png') center / cover no-repeat;
+      background-color: #1a0e0a;
       padding: 48px 48px 48px;
       overflow: hidden;
     }
@@ -206,15 +205,25 @@
       flex: 1;
       overflow: hidden;
       display: flex;
-      background: #0e1a0c;
+      background: #1a0e0a;
       min-height: 100px;
     }
 
     .media-img-slot img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* 이미지가 슬롯 크기에 꽉 차게 조절됩니다 */
+      object-fit: cover;
       display: block;
+    }
+
+    .media-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     /* ── Page Body ── */
@@ -404,33 +413,33 @@
     <header class="project-hero">
       <div class="hero-container">
         <div class="hero-copy">
-          <h1 class="project-title">탱크 슈팅 모작</h1>
-          <p class="project-tagline">탱크를 타서 생존하고 강화하는 2D 탑뷰 슈팅게임</p>
+          <h1 class="project-title">보스 러쉬 모작</h1>
+          <p class="project-tagline">보스와의 탄막 전투에 집중하는 2D 탑뷰 슈팅게임</p>
 
           <div class="project-intro">
             <div class="intro-row">
               <span class="intro-label concept">Concept</span>
-              <span class="intro-text">끝없이 몰려오는 적들 사이에서 남은 거라고는 탱크 한 대 뿐이다.</span>
+              <span class="intro-text">한 마법사가 다양한 궤적의 탄막을 구사하는 용과 전투를 벌인다.</span>
             </div>
             <div class="intro-row">
               <span class="intro-label role">My Role</span>
-              <span class="intro-text">1인 개발 — 기획·프로그래밍·밸런싱 전 과정을 단독으로 수행했다.</span>
+              <span class="intro-text">프로그래머 — 탄막 궤적 로직, 보스 패턴 등 게임 전체의 클라이언트 프로그래밍을 전담했다.</span>
             </div>
           </div>
 
           <div class="project-meta">
             <div class="meta-item">
               <span class="meta-label">Period</span>
-              <span class="meta-value">2020.09 – 2021.01</span>
+              <span class="meta-value">2021.07 – 2021.08</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Type</span>
-              <span class="meta-value">개인 학습 프로젝트</span>
+              <span class="meta-value">동아리 여름 학습 프로젝트</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Link</span>
               <span class="meta-value">
-                <a href="https://github.com/dafher801/TankRoguelike/tree/master/Source/TankRoguelike" target="_blank">github.com/dafher801/TankRoguelike</a>
+                <a href="https://github.com/dafher801/GreenGuy/tree/main/Source/GreenGuy" target="_blank">github.com/dafher801/GreenGuy</a>
               </span>
             </div>
             <div class="meta-item">
@@ -442,10 +451,10 @@
 
         <div class="hero-media">
           <div class="media-img-slot">
-            <img src="Tank_1.png" alt="탱크 게임 스크린샷 1" />
+            <img src="GreenGuy_1.png" alt="보스 러쉬 모작 스크린샷 1" />
           </div>
           <div class="media-img-slot">
-            <img src="Tank_2.png" alt="탱크 게임 스크린샷 2" />
+            <img src="GreenGuy_2.png" alt="보스 러쉬 모작 스크린샷 2" />
           </div>
         </div>
       </div>
@@ -455,11 +464,12 @@
 
       <div class="section-header">
         <div class="section-bar"></div>
-        <h2 class="section-title">부위별 피격 시스템 <span class="section-title-en">Directional Hit Detection</span></h2>
+        <h2 class="section-title">Snowing 패턴 <span class="section-title-en">Curved Projectile</span></h2>
       </div>
 
       <p class="narrative">
-        탱크의 특성상 전면은 장갑이 두껍고 후면은 취약한 구조를 구현해야 했는데, 투사체가 탱크의 어느 방향에서 충돌했는지를 판별하는 것이 문제였다.
+        투사체가 단순 직선이 아닌 <strong>일정한 곡선 패턴</strong>을 그리며 낙하해야 했다.
+        스플라인 경로를 미리 만들어 따라가게 하는 방법도 있었지만, 곡선의 폭이나 빈도를 바꿀 때마다 경로를 새로 그려야 하는 문제가 있었다.
       </p>
 
       <div class="tech-cards">
@@ -473,7 +483,7 @@
           </div>
           <div class="tech-point">
             <span class="tech-point-bullet">→</span>
-            <span>투사체-탱크 간 상대 각도를 탱크의 <strong>ForwardVector</strong> 기준으로 계산하고, 탱크 바디의 가로·세로 비율로 경계각을 도출</span>
+            <span>경로 수동 지정 대신 <strong>프레임당 회전 각도</strong>를 누적하고, 누적값이 임계점에 도달하면 부호를 반전시켜 곡선을 수학적으로 생성</span>
           </div>
         </div>
 
@@ -487,19 +497,18 @@
           </div>
           <div class="tech-point">
             <span class="tech-point-bullet">→</span>
-            <span>전면 피격 시 데미지 ×0.05, 후면 피격 시 ×1.5 적용 — <strong>탱크의 방향 관리가 곧 전략</strong>이 되는 전투 구현</span>
+            <span>곡선의 폭·빈도를 하나의 값으로 제어하여 경로 수동 지정 없이 원하는 패턴 생성 가능</span>
           </div>
         </div>
       </div>
 
       <div class="section-header">
         <div class="section-bar"></div>
-        <h2 class="section-title">회전탄 <span class="section-title-en">Orbiting Projectile</span></h2>
+        <h2 class="section-title">Bomb 패턴 <span class="section-title-en">Area-based Scatter</span></h2>
       </div>
 
       <p class="narrative">
-        투사체가 <strong>원을 그리면서 전진</strong>하는 탄막을 만들어야 했다.
-        단순히 원형 경로를 따라가게 하면 중심축이 이동할 때 궤도가 깨지는 문제가 있었고, 공전과 이동을 동시에 처리할 방법이 필요했다.
+        <strong>지정된 영역에 랜덤</strong>으로 탄막을 흩뿌려야 했는데, 순수 랜덤만으로는 탄막이 한 곳에 뭉치거나 과도하게 퍼져서 플레이어가 보스의 탄막을 회피하는 행위에 몰입이 방해되는 현상이 발생했다.
       </p>
 
       <div class="tech-cards">
@@ -513,7 +522,7 @@
           </div>
           <div class="tech-point">
             <span class="tech-point-bullet">→</span>
-            <span>매 프레임 투사체를 중심축 기준으로 회전시킨 뒤, 중심축 자체의 Velocity를 가산하여 공전+이동을 동시 처리</span>
+            <span><strong>영역 좌표</strong>로 산포 범위를 정의하고, 투사체 생성 시 기존 투사체들과의 <strong>최소 간격 검증</strong>을 거쳐 통과한 경우에만 배치</span>
           </div>
         </div>
 
@@ -527,7 +536,7 @@
           </div>
           <div class="tech-point">
             <span class="tech-point-bullet">→</span>
-            <span>회전 각도·속도·중심 이동 방향 조합으로 <strong>나선형·확산형 등 다양한 궤적 변형</strong>이 가능한 범용 회전탄 구현</span>
+            <span>탄막이 시각적으로 고르게 분포되어 회피 가능하면서도 긴장감 있는 패턴을 구성</span>
           </div>
         </div>
       </div>
@@ -535,15 +544,15 @@
       <div class="retro-box">
         <span class="retro-icon">→</span>
         <div class="retro-text">
-          UE4 C++을 처음 본격적으로 사용한 프로젝트였다.
-          두 시스템 모두 <strong>벡터 연산과 각도 계산</strong>으로 게임플레이 로직을 풀어낸 경험으로, 이후 프로젝트에서 투사체 궤적이나 공간 판정 문제를 설계할 때의 기초가 되었다.
+          두 패턴 모두 "경로나 위치를 직접 찍어주는" 방식 대신 <strong>수학적 규칙을 설계</strong>하여 런타임에 계산하는 접근을 택했다.
+          미리 만든 에셋에 의존하지 않으니 파라미터 조정만으로 변형이 자유로웠고, 이 경험은 이후 SnowTale에서 전투 시스템 전체를 데이터 주도로 설계하는 밑바탕이 되었다.
         </div>
       </div>
 
     </main>
 
     <div class="page-footer">
-      <span class="page-number">18 / 19</span>
+      <span class="page-number">18 / 20</span>
     </div>
   </div>
 </body>

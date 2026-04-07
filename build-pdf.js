@@ -5,7 +5,7 @@ const path = require('path');
 // ── 설정 ──
 const OUTPUT_DIR = 'C:/Users/USER/OneDrive/Desktop/포폴/PDF';   // 변환된 PDF 저장 경로
 const PAGE_START = 1;         // 시작 페이지
-const PAGE_END   = 19;        // 끝 페이지
+const PAGE_END   = 20;        // 끝 페이지
 
 (async () => {
   const fs = require('fs');

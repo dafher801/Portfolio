@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="format-detection" content="telephone=no, email=no, address=no" />
-  <title>김주영 — Portfolio (Page 12)</title>
+  <title>탱크 게임 모작 — Project Overview</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
   <style>
     :root {
       --navy: #0F1A2E;
@@ -22,6 +23,7 @@
       --border-light: #EDEEF2;
       --bg-card: #F5F6F9;
       --bg: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,212 +34,517 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      justify-content: center;
       padding: 0;
     }
 
     .a4-page {
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      position: relative;
+      margin: 0 auto;
+      max-width: 210mm;
+      min-height: 297mm;
       display: flex;
       flex-direction: column;
-      width: 210mm;
-      height: 297mm;
-      background: #FFFFFF;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* ── CLOSING HERO (mirrors page 1 hero) ── */
-    .closing-hero {
-      background: var(--navy);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 60px 64px;
+    /* ── Hero Section ── */
+    .project-hero {
       position: relative;
+      /* 배경 이미지 추가 및 기존 그라데이션 오버레이 적용 */
+      background:
+        linear-gradient(135deg, rgba(10, 14, 10, 0.75) 0%, rgba(16, 22, 14, 0.60) 55%, rgba(10, 14, 10, 0.75) 100%),
+        url('Tank_bg.png') center/cover no-repeat;
+      background-color: #0e1a0c;
+      padding: 48px 48px 48px;
       overflow: hidden;
     }
 
-    /* subtle grid pattern background */
-    .closing-hero::before {
-      content: '';
+    .project-hero::before {
+      content: "";
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
       pointer-events: none;
     }
 
-
-
-    .closing-content {
+    .hero-container {
       position: relative;
       z-index: 1;
-      text-align: center;
-      max-width: 520px;
-    }
-
-    .closing-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 32px;
-    }
-
-    .closing-statement {
-      font-family: 'Playfair Display', 'Noto Sans KR', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: #FFFFFF;
-      line-height: 1.5;
-      letter-spacing: -0.3px;
-      margin-bottom: 24px;
-    }
-
-    .closing-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.7;
-      font-style: italic;
-      margin-bottom: 48px;
-    }
-
-    /* ── DIVIDER ── */
-    .closing-divider {
-      width: 40px;
-      height: 1px;
-      background: rgba(255,255,255,0.15);
-      margin: 0 auto 48px;
-    }
-
-    /* ── CONTACT GRID ── */
-    .contact-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,0.06);
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', 'Noto Sans KR', serif;
+      font-size: 36px;
+      line-height: 1.05;
+      letter-spacing: -0.4px;
+      color: #fff;
+      margin-top: -6px;
+      margin-bottom: 6px;
+    }
+
+    .project-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .project-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 6px;
       overflow: hidden;
-      width: 100%;
-      max-width: 480px;
+      margin-bottom: 18px;
     }
 
-    .contact-item {
-      background: var(--navy-light);
-      padding: 18px 16px;
-      text-align: center;
-      transition: background 0.2s;
+    .intro-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 9px 16px;
     }
 
-    .contact-icon {
+    .intro-row:first-child {
+      position: relative;
+    }
+    .intro-row:first-child::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 16px; right: 16px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .intro-label {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 9px;
       font-weight: 500;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+
+    .intro-label.concept { color: #C084FC; }
+    .intro-label.role    { color: #5BC0EB; }
+
+    .intro-text {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .project-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .meta-value {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      word-break: keep-all;
+    }
+
+    .meta-value a {
+      color: #8AB4F8;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Hero Media ── */
+    .hero-media {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .media-img-slot {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      background: #0e1a0c;
+      min-height: 100px;
+    }
+
+    .media-img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 이미지가 슬롯 크기에 꽉 차게 조절됩니다 */
+      display: block;
+    }
+
+    /* ── Page Body ── */
+    .page-body {
+      padding: 22px 48px 28px;
+      flex: 1;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .section-bar {
+      width: 3px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ── Narrative Block ── */
+    .narrative {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      word-break: keep-all;
+      margin-bottom: 14px;
+    }
+
+    .narrative strong {
+      color: var(--text);
+    }
+
+    /* ── Tech Detail Cards ── */
+    .tech-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .tech-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .tech-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 8px;
     }
 
-    .contact-value {
-      font-size: 11px;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.5;
-      word-break: break-all;
+    .tech-card-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: #fff;
+      border: 2px solid var(--navy);
     }
 
-    .contact-value a {
-      color: #7B9FFF;
-      text-decoration: none;
+    .tech-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
     }
 
-    /* ── THANK YOU ── */
-    .closing-thanks {
-      margin-top: 48px;
+    .tech-card-subtitle {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      font-size: 9px;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 1px;
     }
 
-    /* ── FOOTER ── */
+    .tech-point {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      font-size: 11px;
+      color: var(--text-sec);
+      line-height: 1.55;
+      margin-bottom: 3px;
+    }
+
+    .tech-point strong {
+      color: var(--text);
+    }
+
+    .tech-point-bullet {
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 10px;
+      margin-top: 1px;
+    }
+
+    /* ── Retrospective ── */
+    .retro-box {
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #F8F7FF 0%, #F0F4FF 100%);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .retro-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .retro-text {
+      font-size: 11.5px;
+      color: var(--text-sec);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .retro-text strong {
+      color: var(--text);
+    }
+
+    /* ── Footer ── */
     .page-footer {
       position: absolute;
       bottom: 16px;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       text-align: center;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 9px;
-      color: rgba(255,255,255,0.2);
+      color: var(--text-muted);
       letter-spacing: 1px;
     }
 
     .page-number {
       display: inline-block;
       padding: 2px 12px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--border-light);
     }
 
+    /* ── Print ── */
     @media print {
       @page { size: A4; margin: 0; }
       body { margin: 0; padding: 0; background: #fff; }
-      .a4-page { margin: 0; box-shadow: none; border: none; }
+      .a4-page {
+        margin: 0; padding: 0; box-shadow: none; border: none;
+        width: 210mm; height: 297mm; max-width: 210mm; min-height: 297mm;
+      }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
   </style>
 </head>
 <body>
   <div class="a4-page">
-    <div class="closing-hero">
-      <div class="closing-content">
 
-        <div class="closing-label">Closing Note</div>
+    <header class="project-hero">
+      <div class="hero-container">
+        <div class="hero-copy">
+          <h1 class="project-title">탱크 슈팅 모작</h1>
+          <p class="project-tagline">탱크를 타서 생존하고 강화하는 2D 탑뷰 슈팅게임</p>
 
-        <div class="closing-statement">
-          LLM이 게임에서 할 수 있는 일의<br/>
-          경계를 직접 넓히겠습니다.
+          <div class="project-intro">
+            <div class="intro-row">
+              <span class="intro-label concept">Concept</span>
+              <span class="intro-text">끝없이 몰려오는 적들 사이에서 남은 거라고는 탱크 한 대 뿐이다.</span>
+            </div>
+            <div class="intro-row">
+              <span class="intro-label role">My Role</span>
+              <span class="intro-text">1인 개발 — 기획·프로그래밍·밸런싱 전 과정을 단독으로 수행했다.</span>
+            </div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">Period</span>
+              <span class="meta-value">2020.09 – 2021.01</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Type</span>
+              <span class="meta-value">개인 학습 프로젝트</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Link</span>
+              <span class="meta-value">
+                <a href="https://github.com/dafher801/TankRoguelike/tree/master/Source/TankRoguelike" target="_blank">github.com/dafher801/TankRoguelike</a>
+              </span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Stack</span>
+              <span class="meta-value">C++ · Unreal</span>
+            </div>
+          </div>
         </div>
 
-        <div class="closing-sub">
-          연구로 가능성을 확인했고, 구현으로 증명했습니다.<br/>
-          다음은 현업에서 증명할 차례입니다.
-        </div>
-
-        <div class="closing-divider"></div>
-
-        <div class="contact-grid">
-          <div class="contact-item">
-            <div class="contact-icon">Email</div>
-            <div class="contact-value"><span id="contact-email-19"></span></div>
+        <div class="hero-media">
+          <div class="media-img-slot">
+            <img src="Tank_1.png" alt="탱크 게임 스크린샷 1" />
           </div>
-          <div class="contact-item">
-            <div class="contact-icon">Phone</div>
-            <div class="contact-value">010-6376-7195</div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">GitHub</div>
-            <div class="contact-value"><a href="https://github.com/dafher801?tab=repositories" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">github.com/dafher801</a></div>
+          <div class="media-img-slot">
+            <img src="Tank_2.png" alt="탱크 게임 스크린샷 2" />
           </div>
         </div>
-
-        <div class="closing-thanks">Thank you for reading.</div>
-
       </div>
+    </header>
+
+    <main class="page-body">
+
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <h2 class="section-title">부위별 피격 시스템 <span class="section-title-en">Directional Hit Detection</span></h2>
+      </div>
+
+      <p class="narrative">
+        탱크의 특성상 전면은 장갑이 두껍고 후면은 취약한 구조를 구현해야 했는데, 투사체가 탱크의 어느 방향에서 충돌했는지를 판별하는 것이 문제였다.
+      </p>
+
+      <div class="tech-cards">
+        <div class="tech-card">
+          <div class="tech-card-header">
+            <div class="tech-card-icon">🧠</div>
+            <div>
+              <div class="tech-card-title">판단</div>
+              <span class="tech-card-subtitle">Decision</span>
+            </div>
+          </div>
+          <div class="tech-point">
+            <span class="tech-point-bullet">→</span>
+            <span>투사체-탱크 간 상대 각도를 탱크의 <strong>ForwardVector</strong> 기준으로 계산하고, 탱크 바디의 가로·세로 비율로 경계각을 도출</span>
+          </div>
+        </div>
+
+        <div class="tech-card">
+          <div class="tech-card-header">
+            <div class="tech-card-icon">✓</div>
+            <div>
+              <div class="tech-card-title">결과</div>
+              <span class="tech-card-subtitle">Result</span>
+            </div>
+          </div>
+          <div class="tech-point">
+            <span class="tech-point-bullet">→</span>
+            <span>전면 피격 시 데미지 ×0.05, 후면 피격 시 ×1.5 적용 — <strong>탱크의 방향 관리가 곧 전략</strong>이 되는 전투 구현</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <h2 class="section-title">회전탄 <span class="section-title-en">Orbiting Projectile</span></h2>
+      </div>
+
+      <p class="narrative">
+        투사체가 <strong>원을 그리면서 전진</strong>하는 탄막을 만들어야 했다.
+        단순히 원형 경로를 따라가게 하면 중심축이 이동할 때 궤도가 깨지는 문제가 있었고, 공전과 이동을 동시에 처리할 방법이 필요했다.
+      </p>
+
+      <div class="tech-cards">
+        <div class="tech-card">
+          <div class="tech-card-header">
+            <div class="tech-card-icon">🧠</div>
+            <div>
+              <div class="tech-card-title">판단</div>
+              <span class="tech-card-subtitle">Decision</span>
+            </div>
+          </div>
+          <div class="tech-point">
+            <span class="tech-point-bullet">→</span>
+            <span>매 프레임 투사체를 중심축 기준으로 회전시킨 뒤, 중심축 자체의 Velocity를 가산하여 공전+이동을 동시 처리</span>
+          </div>
+        </div>
+
+        <div class="tech-card">
+          <div class="tech-card-header">
+            <div class="tech-card-icon">✓</div>
+            <div>
+              <div class="tech-card-title">결과</div>
+              <span class="tech-card-subtitle">Result</span>
+            </div>
+          </div>
+          <div class="tech-point">
+            <span class="tech-point-bullet">→</span>
+            <span>회전 각도·속도·중심 이동 방향 조합으로 <strong>나선형·확산형 등 다양한 궤적 변형</strong>이 가능한 범용 회전탄 구현</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="retro-box">
+        <span class="retro-icon">→</span>
+        <div class="retro-text">
+          UE4 C++을 처음 본격적으로 사용한 프로젝트였다.
+          두 시스템 모두 <strong>벡터 연산과 각도 계산</strong>으로 게임플레이 로직을 풀어낸 경험으로, 이후 프로젝트에서 투사체 궤적이나 공간 판정 문제를 설계할 때의 기초가 되었다.
+        </div>
+      </div>
+
+    </main>
+
+    <div class="page-footer">
+      <span class="page-number">19 / 20</span>
     </div>
-    <footer class="page-footer"><span class="page-number">19 / 19</span></footer>
   </div>
-  <script>
-    (function(){var a='dafher801',b='gmail.com';var el=document.getElementById('contact-email-19');if(el)el.textContent=a+'@'+b;})();
-  </script>
 </body>
 </html>

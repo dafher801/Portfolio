@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>김주영 — Portfolio (Page 2)</title>
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
+  <title>김주영 — Portfolio (Page 1)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -12,14 +13,15 @@
       --navy: #0F1A2E; --navy-light: #182640; --accent: #2D5BE3; --accent-light: #4A73F5;
       --gold: #C8A24E; --text: #1A1D26; --text-sec: #4A4F5C; --text-muted: #8B90A0;
       --border: #D8DAE0; --border-light: #EDEEF2; --bg-card: #F5F6F9; --bg: #FFFFFF;
-      --green: #1B8C5A; --blue-2a: #6278C4; --purple: #6E4BB6;
+      --green: #1B8C5A; --blue-2a: #6278C4;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Noto Sans KR', sans-serif; background: #E0E0E0; color: var(--text);
-      line-height: 1.6; -webkit-font-smoothing: antialiased;
+      line-height: 1.6; -webkit-font-smoothing: antialiased; display: flex;
+      justify-content: center; padding: 0;
     }
 
     .a4-page {
@@ -27,116 +29,41 @@
       position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .page-body { padding: 30px 48px 42px; }
-
-    .section { margin-bottom: 18px; }
-    .section:last-child { margin-bottom: 0; }
-
-    .section-header {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-      padding-bottom: 4px; border-bottom: 2px solid var(--navy);
-    }
-
+    /* ── PAGE BODY ── */
+    .page-body { padding: 32px 48px; }
+    .section { margin-bottom: 20px; }
+    .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 2px solid var(--navy); }
     .section-bar { width: 3px; height: 16px; background: var(--accent); border-radius: 2px; }
     .section-title { font-size: 15px; font-weight: 700; color: var(--text); }
-    .section-title-en {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400;
-      color: var(--text-muted); margin-left: 4px;
-    }
+    .section-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); margin-left: 4px; }
 
-    .stack-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-    .stack-table tr { border-bottom: 1px solid var(--border-light); }
-    .stack-table tr:last-child { border-bottom: none; }
-    .stack-table td { padding: 6px 0; vertical-align: top; }
+    .edu-row { display: flex; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
+    .edu-row:last-child { border-bottom: none; }
+    .edu-label { font-size: 12px; font-weight: 600; color: var(--text); width: 60px; flex-shrink: 0; }
+    .edu-content { font-size: 12px; color: var(--text-sec); line-height: 1.5; }
 
-    .stack-label {
-      width: 100px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-      font-weight: 600; color: var(--text); white-space: nowrap;
-    }
+    .paper-list { display: flex; flex-direction: column; gap: 8px; }
+    .paper-item { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-light); border-left: 3px solid var(--border); border-radius: 4px; padding: 12px 16px; }
+    .paper-item.thesis-item, .paper-item.conf-item { border-left-color: var(--accent-light); background: #F9FAFF; }
+    .paper-badges { margin-bottom: 4px; }
+    .paper-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.3px; color: #fff; padding: 2px 6px; border-radius: 2px; margin-right: 4px; }
+    .paper-badge.thesis, .paper-badge.conf { background: var(--blue-2a); }
+    .paper-badge.award { background: var(--gold); }
+    .paper-badge.kci { background: var(--green); }
+    .paper-title { font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 4px; }
+    .paper-meta { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; }
+    .paper-meta .divider { color: var(--border); font-size: 9px; }
+    .paper-link { color: var(--accent-light); text-decoration: none; font-weight: 500; }
+    .paper-status { font-size: 10.5px; font-weight: 700; color: var(--text); }
 
-    .stack-tags, .project-tags {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
+    .page-footer { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
 
-    .tag, .project-tag {
-      display: inline-block; font-family: 'IBM Plex Mono', monospace;
-      border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec);
-    }
-
-    .tag {
-      padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 500;
-    }
-
-    .activity-grid, .project-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px;
-    }
-
-    .activity-card {
-      background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 4px;
-      padding: 11px 13px;
-    }
-
-    .activity-title {
-      font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.35;
-      margin-bottom: 3px;
-    }
-
-    .activity-period {
-      font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .activity-desc {
-      font-size: 10.5px; color: var(--text-sec); line-height: 1.5;
-    }
-
-    .project-grid { margin-top: 2px; }
-
-    .project-card {
-      background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px;
-      padding: 16px 20px;
-    }
-
-    .project-header {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 12px; margin-bottom: 8px;
-    }
-
-    .project-title {
-      font-size: 13px; font-weight: 800; color: var(--navy); letter-spacing: -0.1px;
-    }
-
-    .project-duration {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
-      color: var(--text-muted); white-space: nowrap;
-    }
-
-    .project-desc {
-      font-size: 11px; color: var(--text-sec); line-height: 1.45; margin-bottom: 8px;
-    }
-
-    .project-meta {
-      display: flex; align-items: center; gap: 5px; font-size: 10.5px;
-      color: var(--text-muted); font-weight: 600; margin-bottom: 10px;
-    }
-
-    .project-meta .icon {
-      color: var(--purple); font-size: 13px; line-height: 1;
-    }
-
-    .project-tag {
-      padding: 4px 9px; border-radius: 6px; font-size: 10px; font-weight: 600;
-    }
-
-    .page-footer {
-      position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
-      font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted);
-      letter-spacing: 1px;
-    }
-
-    .page-number {
-      display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light);
-    }
+    .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+    .activity-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 4px; padding: 11px 13px; }
+    .activity-title { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 3px; }
+    .activity-period { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--text-muted); margin-bottom: 6px; }
+    .activity-desc { font-size: 10.5px; color: var(--text-sec); line-height: 1.5; }
+    .page-number { display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light); }
 
     @media print {
       @page { size: A4; margin: 0; }
@@ -152,35 +79,47 @@
       <section class="section">
         <div class="section-header">
           <div class="section-bar"></div>
-          <h2 class="section-title">기술 스택</h2>
-          <span class="section-title-en">Technical Skills</span>
+          <h2 class="section-title">학력</h2>
+          <span class="section-title-en">Education</span>
         </div>
-        <table class="stack-table">
-          <tr>
-            <td class="stack-label">Programming</td>
-            <td><div class="stack-tags"><span class="tag">C/C++</span><span class="tag">C#</span><span class="tag">Python</span></div></td>
-          </tr>
-          <tr>
-            <td class="stack-label">Game Engine</td>
-            <td><div class="stack-tags"><span class="tag">Unity</span><span class="tag">Unreal</span></div></td>
-          </tr>
-          <tr>
-            <td class="stack-label">LLM API</td>
-            <td><div class="stack-tags"><span class="tag">Anthropic API</span><span class="tag">OpenAI API</span></div></td>
-          </tr>
-          <tr>
-            <td class="stack-label">AI Agent</td>
-            <td><div class="stack-tags"><span class="tag">Claude Code</span></div></td>
-          </tr>
-          <tr>
-            <td class="stack-label">Networking</td>
-            <td><div class="stack-tags"><span class="tag">Photon</span></div></td>
-          </tr>
-          <tr>
-            <td class="stack-label">Tools</td>
-            <td><div class="stack-tags"><span class="tag">Slack</span><span class="tag">GitLab</span></div></td>
-          </tr>
-        </table>
+        <div class="edu-row">
+          <div class="edu-label">석사</div>
+          <div class="edu-content">호서대학교 대학원 게임학과 공학석사 (2025.08) · Emotive Play Lab 연구실</div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-label">학사</div>
+          <div class="edu-content">호서대학교 게임소프트웨어학과 (2023.02)</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="section-bar"></div>
+          <h2 class="section-title">연구 논문</h2>
+          <span class="section-title-en">Research Papers</span>
+        </div>
+        <div class="paper-list">
+          <div class="paper-item thesis-item">
+            <div class="paper-badges"><span class="paper-badge thesis">석사 학위논문</span><span class="paper-badge award">우수 논문 수상</span></div>
+            <div class="paper-title">LLM 기반 게임 시나리오 생성 및 적용 방안에 관한 연구</div>
+            <div class="paper-meta"><span>호서대학교 일반대학원 게임학과</span><span class="divider">|</span><span>2025.08</span><span class="divider">|</span><span>지도교수: 김재범</span><span class="divider">|</span><a href="https://hoseo.dcollection.net/srch/srchDetail/200000906104" class="paper-link" target="_blank" rel="noopener noreferrer">논문 보기 ↗</a></div>
+          </div>
+          <div class="paper-item conf-item">
+            <div class="paper-badges"><span class="paper-badge conf">학회논문</span><span class="paper-badge kci">KCI 등재</span></div>
+            <div class="paper-title">LLM 기반 게임 데이터 로딩 시점에서 대화 생성 방안에 관한 연구 - RPG를 중심으로</div>
+            <div class="paper-meta"><span>한국게임학회 논문지 제24권 제4호</span><span class="divider">|</span><span>2024.08</span><span class="divider">|</span><span>제1 저자: 김주영</span><span class="divider">|</span><span>교신저자: 김재범</span><span class="divider">|</span><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11920381" class="paper-link" target="_blank" rel="noopener noreferrer">논문 보기 ↗</a></div>
+          </div>
+          <div class="paper-item conf-item">
+            <div class="paper-badges"><span class="paper-badge conf">학회논문</span><span class="paper-badge kci">KCI 등재</span></div>
+            <div class="paper-title">LLM을 이용한 플레이 가능한 게임 월드 구성 방안에 관한 연구 - 2D RPG를 중심으로</div>
+            <div class="paper-meta"><span>한국게임학회 논문지 제25권 제2호</span><span class="divider">|</span><span>2025.04</span><span class="divider">|</span><span>제1 저자: 김주영</span><span class="divider">|</span><span>교신저자: 김재범</span><span class="divider">|</span><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12153161" class="paper-link" target="_blank" rel="noopener noreferrer">논문 보기 ↗</a></div>
+          </div>
+          <div class="paper-item conf-item">
+            <div class="paper-badges"><span class="paper-badge conf">학회논문</span><span class="paper-badge kci">KCI 등재</span></div>
+            <div class="paper-title">게임 시스템 연동을 고려한 LLM 기반 시나리오 생성 방안</div>
+            <div class="paper-meta"><span>한국게임학회 논문지 제26권</span><span class="divider">|</span><span>2026 (예정)</span><span class="divider">|</span><span>제1 저자: 김주영</span><span class="divider">|</span><span>교신저자: 김재범</span><span class="divider">|</span><span class="paper-status">게재 확정</span></div>
+          </div>
+        </div>
       </section>
 
       <section class="section">
@@ -212,78 +151,9 @@
           </div>
         </div>
       </section>
-
-      <section class="section">
-        <div class="section-header">
-          <div class="section-bar"></div>
-          <h2 class="section-title">프로젝트</h2>
-          <span class="section-title-en">Projects</span>
-        </div>
-        <div class="project-grid">
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">p10</div>
-              <div class="project-duration">2023.08 - 2025.08</div>
-            </div>
-            <div class="project-desc">매 회차마다 새로운 시나리오로 진행되는 타일 기반 탑뷰 2D 어드벤처 게임</div>
-            <div class="project-meta"><span class="icon">👤</span><span>개인 프로젝트</span></div>
-            <div class="project-tags"><span class="project-tag">C#</span><span class="project-tag">Python</span><span class="project-tag">Unity</span><span class="project-tag">Anthropic API</span><span class="project-tag">OpenAI API</span><span class="project-tag">Slack</span><span class="project-tag">GitLab</span></div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">Chess / Poker</div>
-              <div class="project-duration">2026.03 - 2026-04</div>
-            </div>
-            <div class="project-desc">바이브 코딩의 한계를 테스트하기 위해 체스와 포커를 구현한 실험 프로젝트</div>
-            <div class="project-meta"><span class="icon">👤</span><span>개인 프로젝트</span></div>
-            <div class="project-tags"><span class="project-tag">C#</span><span class="project-tag">Python</span><span class="project-tag">Unity</span><span class="project-tag">Anthropic API</span><span class="project-tag">Claude Code</span><span class="project-tag">Photon</span></div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">ARTIFICIAL (Steam 출시)</div>
-              <div class="project-duration">2022.07 - 2022.08</div>
-            </div>
-            <div class="project-desc">동아리 합숙 프로젝트: 기획 총괄 및 개발 - 3D 방탈출 게임</div>
-            <div class="project-meta"><span class="icon">👤</span><span>기획 1명, 프로그래밍 2명, 그래픽 2명</span></div>
-            <div class="project-tags"><span class="project-tag">C#</span><span class="project-tag">Unity</span></div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">SnowTale</div>
-              <div class="project-duration">2022.01 - 2022.06</div>
-            </div>
-            <div class="project-desc">졸업 프로젝트: 클라이언트 개발 - 3D 쿼터뷰 슈팅 게임</div>
-            <div class="project-meta"><span class="icon">👤</span><span>기획 1명, 프로그래밍 1명, 그래픽 2명</span></div>
-            <div class="project-tags"><span class="project-tag">C/C++</span><span class="project-tag">Unreal</span></div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">보스 슈팅 모작</div>
-              <div class="project-duration">2021.07 - 2021.08</div>
-            </div>
-            <div class="project-desc">동아리 합숙 프로젝트: 클라이언트 개발 - 2D 탑뷰 슈팅 게임</div>
-            <div class="project-meta"><span class="icon">👤</span><span>기획 1명, 프로그래밍 1명</span></div>
-            <div class="project-tags"><span class="project-tag">C/C++</span><span class="project-tag">Unreal</span></div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-title">탱크 슈팅 모작</div>
-              <div class="project-duration">2020.09 - 2021.01</div>
-            </div>
-            <div class="project-desc">동아리 합숙 프로젝트: 클라이언트 개발 - 2D 탑뷰 슈팅 게임</div>
-            <div class="project-meta"><span class="icon">👤</span><span>개인 프로젝트</span></div>
-            <div class="project-tags"><span class="project-tag">C/C++</span><span class="project-tag">Unreal</span></div>
-          </div>
-        </div>
-      </section>
     </div>
-
-    <div class="page-footer"><span class="page-number">2 / 19</span></div>
+    <footer class="page-footer"><span class="page-number">2 / 20</span></footer>
   </div>
+
 </body>
 </html>

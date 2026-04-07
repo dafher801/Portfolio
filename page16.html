@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SnowTale — Project Overview</title>
+  <title>ARTificial — Project Overview</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,12 +51,12 @@
     /* ── Hero Section ── */
     .project-hero {
       position: relative;
-      /* 배경 이미지 추가 및 기존 그라데이션 오버레이 적용 */
       background:
-        linear-gradient(135deg, rgba(8, 18, 32, 0.78) 0%, rgba(12, 24, 44, 0.62) 55%, rgba(8, 18, 32, 0.78) 100%),
-        url('SnowTale_bg.jpg') center/cover no-repeat;
-      background-color: #0c1a30;
-      padding: 48px 48px 48px;
+        linear-gradient(135deg, rgba(12, 10, 18, 0.72) 0%, rgba(20, 16, 30, 0.60) 55%, rgba(12, 10, 18, 0.72) 100%),
+        url('artificial_bg.jpg') center/cover no-repeat;
+      /* fallback if no bg image */
+      background-color: #1a1028;
+      padding: 55px 48px 55px;
       overflow: hidden;
     }
 
@@ -101,7 +101,7 @@
     .project-tagline {
       font-size: 13px;
       color: rgba(255,255,255,0.65);
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       line-height: 1.5;
     }
 
@@ -113,14 +113,14 @@
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .intro-row {
       display: flex;
       align-items: baseline;
       gap: 10px;
-      padding: 9px 16px;
+      padding: 10px 16px;
     }
 
     .intro-row:first-child {
@@ -190,7 +190,6 @@
       text-underline-offset: 2px;
     }
 
-    /* ── Hero Media ── */
     .hero-media {
       position: relative;
       border-radius: 8px;
@@ -206,7 +205,7 @@
       flex: 1;
       overflow: hidden;
       display: flex;
-      background: #0c1a30;
+      background: #1a1028;
       min-height: 100px;
     }
 
@@ -217,6 +216,7 @@
       display: block;
     }
 
+    /* placeholder for screenshots */
     .media-placeholder {
       flex: 1;
       display: flex;
@@ -229,7 +229,7 @@
 
     /* ── Page Body ── */
     .page-body {
-      padding: 22px 48px 28px;
+      padding: 28px 48px 32px;
       flex: 1;
     }
 
@@ -237,7 +237,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 22px;
       padding-bottom: 4px;
       border-bottom: 2px solid var(--navy);
     }
@@ -250,7 +250,7 @@
     }
 
     .section-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--text);
     }
@@ -264,121 +264,127 @@
       text-transform: uppercase;
     }
 
-    /* ── Narrative Block ── */
-    .narrative {
-      font-size: 12px;
+    /* ── Game Intro ── */
+    .game-intro {
+      font-size: 13px;
       color: var(--text-sec);
-      line-height: 1.7;
+      line-height: 1.75;
+      margin-bottom: 28px;
       word-break: keep-all;
-      margin-bottom: 14px;
     }
 
-    .narrative strong {
-      color: var(--text);
+    /* ── Highlight Cards ── */
+    .highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
     }
 
-    /* ── Tech Detail Cards ── */
-    .tech-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .tech-card {
+    .highlight-card {
+      display: flex;
+      gap: 14px;
       background: var(--bg-card);
       border: 1px solid var(--border-light);
       border-radius: 6px;
-      padding: 14px 16px;
+      padding: 16px 20px;
+      align-items: flex-start;
     }
 
-    .tech-card-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .tech-card-icon {
+    .highlight-icon {
       flex-shrink: 0;
-      width: 28px;
-      height: 28px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 16px;
       background: #fff;
       border: 2px solid var(--navy);
+      box-shadow: 0 0 0 3px var(--bg-card);
     }
 
-    .tech-card-title {
-      font-size: 13px;
+    .highlight-content { flex: 1; }
+
+    .highlight-title {
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--text);
+      margin-bottom: 4px;
     }
 
-    .tech-card-subtitle {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 1px;
-    }
-
-    .tech-point {
-      display: flex;
-      gap: 6px;
-      align-items: flex-start;
-      font-size: 11px;
-      color: var(--text-sec);
-      line-height: 1.55;
-      margin-bottom: 3px;
-    }
-
-    .tech-point strong {
-      color: var(--text);
-    }
-
-    .tech-point-bullet {
-      flex-shrink: 0;
-      color: var(--gold);
-      font-size: 10px;
-      margin-top: 1px;
-    }
-
-    /* ── Retrospective ── */
-    .retro-box {
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, #F8F7FF 0%, #F0F4FF 100%);
-      border: 1px solid var(--border-light);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 6px 6px 0;
-      padding: 12px 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .retro-icon {
-      flex-shrink: 0;
-      font-size: 14px;
-      margin-top: 1px;
-      color: var(--accent);
-    }
-
-    .retro-text {
-      font-size: 11.5px;
+    .highlight-desc {
+      font-size: 12px;
       color: var(--text-sec);
       line-height: 1.65;
       word-break: keep-all;
     }
 
-    .retro-text strong {
+    /* ── Contribution (Role-based) ── */
+    .role-contrib {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .contrib-section {
+      margin-bottom: 28px;
+    }
+
+    .sub-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .sub-bar {
+      width: 3px;
+      height: 13px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .sub-title {
+      font-size: 14px;
+      font-weight: 700;
       color: var(--text);
     }
 
+    .sub-title-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    .contrib-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.65;
+    }
+
+    .contrib-bullet {
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
     /* ── Outcome ── */
+    .outcome-section {
+      margin-bottom: 0;
+    }
+
     .outcome-strip {
       display: flex;
       gap: 12px;
@@ -402,10 +408,32 @@
       font-size: 13px;
     }
 
-    .outcome-tag a {
-      color: #fff;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+    /* ── Retrospective ── */
+    .retro-box {
+      margin-top: 0;
+      margin-bottom: 0;
+      background: linear-gradient(135deg, #F8F7FF 0%, #F0F4FF 100%);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .retro-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 1px;
+      color: var(--accent);
+    }
+
+    .retro-text {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      word-break: keep-all;
     }
 
     /* ── Footer ── */
@@ -441,158 +469,126 @@
 <body>
   <div class="a4-page">
 
+    <!-- ━━ HERO ━━ -->
     <header class="project-hero">
       <div class="hero-container">
         <div class="hero-copy">
-          <h1 class="project-title">SnowTale</h1>
-          <p class="project-tagline">뒤틀린 동화 속 백설공주의 복수극을 그리는 3D 쿼터뷰 슈팅게임</p>
+          <h1 class="project-title">ARTificial</h1>
+          <p class="project-tagline">화가의 기이한 그림 속 진실을 파헤치는 3D 방탈출 게임</p>
 
           <div class="project-intro">
             <div class="intro-row">
               <span class="intro-label concept">Concept</span>
-              <span class="intro-text">저주받은 동화 속, 모든 것을 잃은 백설공주가 복수를 위해 마녀의 성으로 향한다.</span>
+              <span class="intro-text">동경하는 화가의 집을 방문하여 그림과 대화하고, 그가 숨기고 있는 비밀을 밝혀낸다.</span>
             </div>
             <div class="intro-row">
               <span class="intro-label role">My Role</span>
-              <span class="intro-text">프로그래머 — 전투·보스 AI 등 게임 전체의 클라이언트 프로그래밍을 전담했다.</span>
+              <span class="intro-text">기획 총괄 · 서브 프로그래머 — 게임 컨셉 설계부터 프로젝트 관리까지 전 과정을 주도했다.</span>
             </div>
           </div>
 
           <div class="project-meta">
             <div class="meta-item">
               <span class="meta-label">Period</span>
-              <span class="meta-value">2022.01 – 2022.06</span>
+              <span class="meta-value">2022.07 – 2022.08</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Type</span>
-              <span class="meta-value">졸업 프로젝트</span>
+              <span class="meta-value">동아리 여름 합숙 프로젝트</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Link</span>
               <span class="meta-value">
-                <a href="https://github.com/dafher801/SnowTale/tree/main/Source/SnowTale" target="_blank">github.com/dafher801/SnowTale</a>
+                <a href="https://github.com/Doopaang/Artificial" target="_blank">github.com/Doopaang/Artificial</a>
               </span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Stack</span>
-              <span class="meta-value">C++ · Unreal</span>
+              <span class="meta-value">C# · Unity</span>
             </div>
           </div>
         </div>
 
         <div class="hero-media">
           <div class="media-img-slot">
-            <img src="SnowTale_1.jpg" alt="SnowTale 스크린샷 1" />
+            <!-- 스크린샷 이미지를 여기에 교체 -->
+            <img src="artificial 1.jpg" alt="게임 스크린샷 1">
           </div>
           <div class="media-img-slot">
-            <img src="SnowTale_2.jpg" alt="SnowTale 스크린샷 2" />
+            <img src="artificial 2.jpg" alt="게임 스크린샷 2">
           </div>
         </div>
       </div>
     </header>
 
+    <!-- ━━ BODY ━━ -->
     <main class="page-body">
 
+      <!-- ── Role 1: 기획 총괄 ── -->
       <div class="section-header">
         <div class="section-bar"></div>
-        <h2 class="section-title">전투 시스템 <span class="section-title-en">Combat System</span></h2>
+        <h2 class="section-title">프로젝트 총괄 <span class="section-title-en">Game Director</span></h2>
       </div>
 
-      <p class="narrative">
-        게임 특성상 적 유닛마다 공격 방식과 투사체 유형이 달라야 했고, 밸런싱 과정에서 이 조합이 수시로 변경되었다.
-        변경이 생길 때마다 코드를 수정하고 빌드하는 구조는 6개월짜리 프로젝트에서 병목이 될 것이 분명했다.
-      </p>
-
-      <div class="tech-cards">
-        <div class="tech-card">
-          <div class="tech-card-header">
-            <div class="tech-card-icon">🧠</div>
-            <div>
-              <div class="tech-card-title">판단</div>
-              <span class="tech-card-subtitle">Decision</span>
-            </div>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>로직을 Unit · AttackSystem · Projectile 세 계층으로 분리하고, 공격 방식 및 투사체 유형을 언리얼 에디터 프로퍼티로 노출</span>
-          </div>
+      <div class="role-contrib">
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>컨셉 · 방향 설정</strong> — "그림과 대화하며 단서를 찾는다"는 핵심 컨셉을 제안하고, 합숙 기간 내 완성 가능한 스코프로 조율</span>
         </div>
-
-        <div class="tech-card">
-          <div class="tech-card-header">
-            <div class="tech-card-icon">✓</div>
-            <div>
-              <div class="tech-card-title">결과</div>
-              <span class="tech-card-subtitle">Result</span>
-            </div>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>밸런싱 및 새로운 적 유닛 추가 시에도 기존 AttackSystem · Projectile을 재조합하는 것만으로 대응</span>
-          </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>시스템 · 퍼즐 설계</strong> — 퍼즐 난이도 곡선, NPC 대화 분기, 퍼즐 해금 조건 등 게임 플로우 전반의 구조를 설계</span>
         </div>
-      </div>
-
-      <div class="section-header">
-        <div class="section-bar"></div>
-        <h2 class="section-title">보스 인공지능 <span class="section-title-en">Boss AI</span></h2>
-      </div>
-
-      <p class="narrative">
-        보스전은 여러 공격 패턴을 순서대로 실행하며 난이도를 조절해야 했다.
-        전투 시스템과 같은 이유로, 패턴의 순서·지속 시간·대기 시간을 기획자가 직접 실험하며 조율할 수 있어야 했다.
-      </p>
-
-      <div class="tech-cards">
-        <div class="tech-card">
-          <div class="tech-card-header">
-            <div class="tech-card-icon">🧠</div>
-            <div>
-              <div class="tech-card-title">판단</div>
-              <span class="tech-card-subtitle">Decision</span>
-            </div>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>보스 패턴이 AttackSystem을 상속받도록 설계, <strong>PatternArray</strong>에 순차 등록하여 각 패턴들이 자동 순환</span>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>Duration · Waiting · Cycle Time을 에디터 프로퍼티로 노출, 기획자가 타이밍을 직접 제어</span>
-          </div>
-        </div>
-
-        <div class="tech-card">
-          <div class="tech-card-header">
-            <div class="tech-card-icon">✓</div>
-            <div>
-              <div class="tech-card-title">결과</div>
-              <span class="tech-card-subtitle">Result</span>
-            </div>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>프로그래머 개입 없이 보스 패턴 추가·순서 변경·타이밍 조정이 가능 — <strong>밸런싱 사이클 단축</strong></span>
-          </div>
-          <div class="tech-point">
-            <span class="tech-point-bullet">→</span>
-            <span>전투 시스템의 AttackSystem을 그대로 재활용하여 보스 전용 코드량을 최소화</span>
-          </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>일정 · 작업 관리</strong> — 프로그래밍·그래픽 파트의 작업 우선순위를 조율하고 전반적인 작업 지시를 주도</span>
         </div>
       </div>
 
       <div class="retro-box">
         <span class="retro-icon">→</span>
-        <div class="retro-text">
-          두 시스템을 관통하는 설계 원칙은 동일했다 — "기획자가 프로그래머를 기다리지 않게 만들 것."
-          프로그래머의 역할은 구현 그 자체가 아니라 <strong>팀의 작업 흐름을 고려하는 것</strong>이라는 확신을 갖게 되었고, 이후 프로젝트에서도 같은 기준으로 구조를 결정하고 있다.
+        <div class="retro-text">기획 문서의 관리 부족으로 레퍼런스·문서·구현이 각각 다른 스펙으로 진행되는 문제를 겪었다. 기획 의도를 사전에 명확히 정리하지 않으면 팀 전체의 작업이 어긋난다는 것을 체감했고, 이후 프로젝트에서는 기획 의도와 기준을 먼저 확보하고 있다.</div>
+      </div>
+
+      <!-- ── Role 2: 서브 프로그래머 ── -->
+      <div class="section-header" style="margin-top: 26px;">
+        <div class="section-bar"></div>
+        <h2 class="section-title">서브 프로그래머 <span class="section-title-en">Sub Programmer</span></h2>
+      </div>
+
+      <div class="role-contrib">
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>인벤토리</strong> — 아이템 획득·보관·인스펙션·사용 흐름을 구현하고 Unity UI와 연동했다.</span>
+        </div>
+        <div class="contrib-item">
+          <div class="contrib-bullet"></div>
+          <span><strong>씬 구성 · 환경 배치</strong> — 레벨 디자인 문서를 기반으로 Unity 에디터에서 씬 구성 및 환경 오브젝트 배치를 담당했다.</span>
+        </div>
+      </div>
+
+      <div class="retro-box">
+        <span class="retro-icon">→</span>
+        <div class="retro-text">프로그래머 2명 이상으로 협업한 첫 프로젝트로, Git 브랜치 전략과 충돌 해결 등 버전 관리의 기초를 실전에서 익혔다.</div>
+      </div>
+
+      <!-- ── 성과 ── -->
+      <div class="section-header" style="margin-top: 26px;">
+        <div class="section-bar"></div>
+        <h2 class="section-title">성과 <span class="section-title-en">Outcome</span></h2>
+      </div>
+
+      <div class="outcome-section">
+        <div class="outcome-strip">
+          <span class="outcome-tag"><span class="tag-icon">🚀</span> <a href="https://store.steampowered.com/app/2216000/ARTificial/" target="_blank" style="color:#fff;text-decoration:underline;text-underline-offset:2px;">Steam 정식 출시</a></span>
+          <span class="outcome-tag"><span class="tag-icon">👥</span> 다운로드 수: 40,023</span>
         </div>
       </div>
 
     </main>
 
     <div class="page-footer">
-      <span class="page-number">16 / 19</span>
+      <span class="page-number">16 / 20</span>
     </div>
   </div>
 </body>

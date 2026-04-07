@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chess & Poker — Page 1</title>
+  <title>Step 04 — 실험 환경 및 결과</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -23,495 +23,282 @@
       --border-light: #EDEEF2;
       --bg-card: #F5F6F9;
       --bg: #FFFFFF;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+      --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --caution: #F5A623;
+      --success: #3BA676;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background: #E0E0E0;
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
       padding: 0;
     }
 
     .a4-page {
+      width: 210mm;
+      min-height: 297mm;
       background: var(--bg);
       box-shadow: var(--shadow);
-      position: relative;
-      margin: 0 auto;
-      max-width: 210mm;
-      min-height: 297mm;
-      height: 297mm;
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
-    }
-
-    .project-hero {
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(10, 18, 32, 0.78) 0%, rgba(15, 24, 42, 0.72) 55%, rgba(10, 18, 32, 0.80) 100%),
-        url('ClaudeCode.png') center/cover no-repeat;
-      padding: 50px 48px 50px;
-      overflow: hidden;
+      padding: 28px 52px 36px;
     }
 
-    .project-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 28px 28px;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
-      pointer-events: none;
-    }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 2px solid var(--navy); }
+    .section-bar { width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .section-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); margin-left: 6px; text-transform: uppercase; }
 
-    .hero-container {
-      position: relative;
-      z-index: 1;
+    .section-summary { font-size: 12.5px; color: var(--text-sec); line-height: 1.8; margin-bottom: 12px; }
+
+    .subsection { margin-bottom: 14px; }
+    .subsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .subsection-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; color: var(--accent); background: rgba(45, 91, 227, 0.07); padding: 2px 8px; border-radius: 4px; }
+    .subsection-title { font-size: 14px; font-weight: 700; color: var(--text); }
+    .subsection-title-en { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 400; color: var(--text-muted); margin-left: 4px; text-transform: uppercase; }
+
+    .image-gallery {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 32px;
-      align-items: stretch;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 10px;
+      margin-bottom: 10px;
     }
 
-    .hero-copy {
+    .img-card {
       display: flex;
       flex-direction: column;
+      gap: 4px;
+    }
+
+    .img-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
 
-    .project-title {
-      font-family: 'Playfair Display', 'Noto Sans KR', serif;
-      font-size: 38px;
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .project-tagline {
-      font-size: 13px;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 18px;
-      line-height: 1.5;
-    }
-
-    .project-intro {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 6px;
-      overflow: hidden;
-      margin-bottom: 18px;
-    }
-
-    .intro-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      padding: 9px 16px;
-    }
-
-    .intro-row:first-child {
-      position: relative;
-    }
-
-    .intro-row:first-child::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 16px;
-      right: 16px;
-      height: 1px;
-      background: rgba(255,255,255,0.25);
-    }
-
-    .intro-label {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .intro-label.motivation { color: #F5A623; }
-    .intro-label.criteria { color: #5BC0EB; }
-
-    .intro-text {
-      font-size: 12px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.85);
-    }
-
-    .project-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 16px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .meta-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .meta-value {
-      font-size: 11px;
-      color: rgba(255,255,255,0.8);
-      word-break: keep-all;
-    }
-
-    .meta-value a {
-      color: #6EA8FE;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      text-decoration-color: rgba(110,168,254,0.4);
-      transition: color 0.2s, text-decoration-color 0.2s;
-    }
-
-    .meta-value a:hover {
-      color: #93BFFF;
-      text-decoration-color: rgba(147,191,255,0.7);
-    }
-
-    .hero-media {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .media-img-slot {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      background: var(--navy);
-    }
-
-    .media-img-slot img {
+    .img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .media-placeholder {
-      flex: 1;
+    .img-info {
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      text-align: center;
     }
 
-    .page-body {
-      flex: 1;
-      padding: 24px 48px 32px;
+    .img-label {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-sec);
+    }
+
+    .limitation-cards {
       display: flex;
       flex-direction: column;
+      gap: 10px;
     }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      padding-bottom: 4px;
-      border-bottom: 2px solid var(--navy);
-    }
-
-    .section-bar {
-      width: 3px;
-      height: 16px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .section-title-en {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-left: 4px;
-      text-transform: uppercase;
-    }
-
-    .intro-paragraph {
-      font-size: 12px;
-      line-height: 1.75;
-      color: var(--text-sec);
-      margin-bottom: 20px;
-      word-break: keep-all;
-    }
-
-    /* ─── Section / Table Title Label (page7 스타일) ─── */
-    .section-element-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .section-element-title .icon {
-      font-size: 13px;
-      color: var(--accent);
-    }
-
-    /* ─── Constraint Table (page7 스타일) ─── */
-    .constraint-table-wrap {
+    .limitation-card {
+      background: #fff;
       border: 1px solid var(--border-light);
-      border-radius: 8px;
-      overflow: hidden;
+      border-left: 3px solid var(--caution);
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
     }
 
-    .constraint-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
+    .limit-icon {
+      font-size: 14px;
+      line-height: 1.5;
+      flex-shrink: 0;
+      opacity: 0.8;
     }
 
-    .constraint-table thead th {
-      background: var(--bg-card);
-      font-weight: 600;
+    .limit-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .limit-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .limit-desc {
       font-size: 11px;
       color: var(--text-sec);
-      padding: 10px 14px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      letter-spacing: 0.2px;
+      line-height: 1.6;
     }
 
-    .constraint-table thead th:not(:first-child) {
-      text-align: center;
-    }
-
-    .constraint-table tbody td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border-light);
-      color: var(--text-sec);
-      vertical-align: middle;
-      font-size: 12px;
-    }
-
-    .constraint-table tbody td:first-child {
-      font-weight: 600;
-      color: var(--text);
-      font-size: 12px;
-    }
-
-    .constraint-table tbody td:not(:first-child) {
-      text-align: center;
-    }
-
-    .constraint-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .td-highlight {
-      color: var(--accent) !important;
+    .limit-resolve {
+      font-size: 10.5px;
+      color: var(--success);
       font-weight: 500;
+      line-height: 1.6;
+      margin-top: 2px;
     }
 
-    .td-muted {
-      color: var(--text-muted) !important;
+    .limit-resolve::before {
+      content: '→ ';
+      font-weight: 700;
     }
 
-    .page-footer {
-      position: absolute;
-      bottom: 16px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
+    .conclusion-callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(45, 91, 227, 0.05);
+      border: 1px solid rgba(45, 91, 227, 0.15);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 14px; 
+      box-shadow: 0 4px 12px rgba(45, 91, 227, 0.03);
     }
 
-    .page-number {
-      display: inline-block;
-      padding: 2px 12px;
-      border-top: 1px solid var(--border-light);
+    .conclusion-callout .icon {
+      flex-shrink: 0;
+      font-size: 18px;
+      color: var(--accent);
+      margin-top: -2px;
     }
+
+    .conclusion-callout .text {
+      font-size: 13px;
+      color: var(--text-sec);
+      line-height: 1.75;
+    }
+
+    .conclusion-callout .text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .page-footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
+    .page-number { display: inline-block; padding: 2px 12px; border-top: 1px solid var(--border-light); }
 
     @media print {
-      @page { size: A4; margin: 0; }
-      body { margin: 0; padding: 0; background: #fff; }
-      .a4-page { 
-        margin: 0; 
-        padding: 0; 
-        box-shadow: none; 
-        border: none; 
-        width: 210mm;
-        height: 297mm;
-        max-width: 210mm;
-        min-height: 297mm;
-      }
+      body { background: #fff; padding: 0; }
+      .a4-page { box-shadow: none; }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page { size: A4; margin: 0; }
     }
   </style>
 </head>
 <body>
-
   <div class="a4-page">
-    
-    <header class="project-hero">
-      <div class="hero-container">
-        <div class="hero-copy">
-          <h1 class="project-title">Chess / Poker</h1>
-          <p class="project-tagline">바이브 코딩, 어디까지 가능할까?</p>
-          <div class="project-intro">
-            <div class="intro-row">
-              <span class="intro-label motivation">Motivation</span>
-              <span class="intro-text">오로지 LLM에게 100% 코드 작성을 시켜도 실제로 동작하는 게임이 나올 수 있을까?</span>
-            </div>
-            <div class="intro-row">
-              <span class="intro-label criteria">Criterion</span>
-              <span class="intro-text">코드 리뷰 없이, "제대로 동작하면 성공"이라는 기준으로 비전공자 관점으로 진행했다.</span>
-            </div>
+
+    <div class="section-header">
+      <div class="section-bar"></div>
+      <h2 class="section-title">Step 4. 최종 결과<span class="section-title-en">Results</span></h2>
+    </div>
+
+    <div class="section-summary">
+      시나리오 생성 프롬프트 체인을 구성하고, 이를 통해 생성한 시나리오를 실제 게임에 적용 가능한지 실험을 통해 확인하였다. 실험 환경은 Unity(2022.3.51f1) 엔진을 이용한 탑뷰 시점의 타일 기반 2D 어드벤처 게임이며, 플레이어는 키보드 입력을 통한 이동, 랜덤 인카운터 방식의 턴제 전투, 오브젝트 상호작용이 가능하다. 전체 맵은 루트 노드인 게임 월드, 지역 내부, 건물 내부 순서의 계층 구조로 구성된다.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-header">
+        <span class="subsection-num">1</span>
+        <h3 class="subsection-title">게임 화면<span class="subsection-title-en"> Gameplay Screenshots</span></h3>
+      </div>
+
+      <div class="image-gallery">
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Game World.png" alt="전체 월드 이미지">
           </div>
-          <div class="project-meta">
-            <div class="meta-item">
-              <span class="meta-label">Period</span>
-              <span class="meta-value">2026.03 – 2026.04</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Type</span>
-              <span class="meta-value">실험 프로젝트</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Link</span>
-              <span class="meta-value"><a href="https://github.com/dafher801/Chess" target="_blank">github.com/dafher801/Chess</a><br/><a href="https://github.com/dafher801/Poker" target="_blank">github.com/dafher801/Poker</a></span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Stack</span>
-              <span class="meta-value">C# · Python · Unity · Anthropic API · Claude Code · Photon</span>
-            </div>
+          <div class="img-info">
+            <span class="img-label">전체 월드</span>
           </div>
         </div>
-        <div class="hero-media">
-          <div class="media-img-slot">
-            <img src="Chess.png" alt="Chess Screenshot" />
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="NPC.png" alt="NPC 대화 화면 이미지">
           </div>
-          <div class="media-img-slot">
-            <img src="Poker.png" alt="Poker Screenshot" />
+          <div class="img-info">
+            <span class="img-label">NPC 대화 화면</span>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Combat.png" alt="전투 화면 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">전투 화면</span>
+          </div>
+        </div>
+
+        <div class="img-card">
+          <div class="img-box">
+            <img src="Boss.png" alt="최종 보스전 이미지">
+          </div>
+          <div class="img-info">
+            <span class="img-label">최종 보스전</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection" style="margin-bottom: 10px;">
+      <div class="subsection-header">
+        <span class="subsection-num">2</span>
+        <h3 class="subsection-title">제약 사항<span class="subsection-title-en">Constraints</span></h3>
+      </div>
+
+      <div class="limitation-cards">
+        <div class="limitation-card">
+          <span class="limit-icon">🌦️</span>
+          <div class="limit-content">
+            <span class="limit-title">시간적 요소: 동적 환경 변화의 제한</span>
+            <span class="limit-desc">리소스의 정적 특성으로 인해 날씨, 계절 등의 동적 변화를 게임 환경에 반영하는 데 한계가 있었다.</span>
+            <span class="limit-resolve">수면 관련 오브젝트(침대)와의 상호작용을 통해 다음 날 아침으로 전환되도록 구현하여 자연스러운 시간 진행을 표현</span>
+          </div>
+        </div>
+
+        <div class="limitation-card">
+          <span class="limit-icon">🧱</span>
+          <div class="limit-content">
+            <span class="limit-title">환경적 요소: 시각적 표현의 단순화</span>
+            <span class="limit-desc">리소스의 범위 제한으로 인해 건물의 세부 구조물(뒷문, 창문, 굴뚝 등)이나 지형의 세부 속성(흙의 색깔, 강의 색깔 등)을 상세히 표현하기 어려웠다.</span>
+            <span class="limit-resolve">건물 구조물 및 지형 속성의 시각적 표현을 타일 기반으로 간략화</span>
           </div>
         </div>
       </div>
-    </header>
+    </div>
 
-    <main class="page-body">
-      
-      <div class="section-header">
-        <div class="section-bar"></div>
-        <h2 class="section-title">프로젝트 개요 <span class="section-title-en">Overview</span></h2>
-      </div>
-
-      <p class="intro-paragraph">
-        바이브 코딩만으로 어디까지 가능한지 확인하기 위해 체스와 포커의 개발을 순차적으로 진행했다.
-        AI의 성능에 대한 호기심으로 체스 개발을 사작하였고, 프로젝트 계획을 수립하여 AI에게 단계별 구현을 지시한 결과
-        3일 만에 플레이 가능한 수준으로 완성되었다. 포커에서는 계획을 수립하는 과정을 프롬프트로 구성하여 AI에 위임하고, 토큰 소모량 절감을 위해 레이어 구조를 설계하여 컨텍스트를 관리했다.
-      </p>
-
-      <div class="section-element-title">
-        <span class="icon">◈</span>
-        프로젝트별 진행 방식 비교
-      </div>
-
-      <div class="constraint-table-wrap">
-        <table class="constraint-table">
-          <thead>
-            <tr>
-              <th style="width:110px">항목</th>
-              <th>체스 ♟ (1회차)</th>
-              <th>포커 ♠ (2회차)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>계획 수립</td>
-              <td>직접 작성</td>
-              <td>AI 작성 (Self-Reflection)</td>
-            </tr>
-            <tr>
-              <td>실행 도구</td>
-              <td>웹 인터페이스</td>
-              <td>Claude Code</td>
-            </tr>
-            <tr>
-              <td>사용 모델</td>
-              <td>Claude Opus 4.6 · Gemini 3.0 Pro</td>
-              <td>Claude Opus 4.6</td>
-            </tr>
-            <tr>
-              <td>컨텍스트 관리</td>
-              <td class="td-muted">없음</td>
-              <td>레이어 구조 설계</td>
-            </tr>
-            <tr>
-              <td>기간</td>
-              <td>3일</td>
-              <td>3일</td>
-            </tr>
-            <tr>
-              <td>구현 범위</td>
-              <td>로직 · 멀티플레이 · 고수준 AI</td>
-              <td>로직 · 기본 AI</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </main>
+    <div class="conclusion-callout">
+      <span class="icon">★</span>
+      <span class="text">NPC의 위치 및 대사, 퀘스트 부여·진행·완료 등 생성된 데이터를 통해 게임이 시작부터 종료까지 일관되게 구성됨을 확인하였다. <strong>매 회차마다 서로 다른 대사, 퀘스트, NPC로 이루어진 완전히 새로운 스토리를 제공</strong>함으로써, 재플레이 가치를 극대화하고 게임의 생명 주기를 연장할 수 있는 기반이 될 것으로 기대한다.</span>
+    </div>
 
     <div class="page-footer">
-      <span class="page-number">13 / 19</span>
+      <span class="page-number">13 / 20</span>
     </div>
   </div>
-
 </body>
 </html>
