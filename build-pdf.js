@@ -1,11 +1,13 @@
 // build-pdf.js
 const puppeteer = require('puppeteer');
 const path = require('path');
+const { pathToFileURL } = require('url');   // ← 추가
 
 // ── 설정 ──
-const OUTPUT_DIR = 'C:/Users/USER/OneDrive/Desktop/포폴/PDF';   // 변환된 PDF 저장 경로
-const PAGE_START = 1;         // 시작 페이지
-const PAGE_END   = 20;        // 끝 페이지
+const OUTPUT_DIR = 'C:/Users/USER/OneDrive/Desktop/포폴/PDF';
+const PAGE_START = 1;
+const PAGE_END   = 20;
+const EXTRA_FILES = ['resume.html'];
 
 (async () => {
   const fs = require('fs');
@@ -17,12 +19,21 @@ const PAGE_END   = 20;        // 끝 페이지
   for (let i = PAGE_START; i <= PAGE_END; i++) {
     pages.push(`page${i}.html`);
   }
+  pages.push(...EXTRA_FILES);
 
   const browser = await puppeteer.launch();
 
   for (const file of pages) {
+    const absPath = path.resolve(file);
+
+    // 파일 존재 여부 먼저 확인 → 없으면 스킵하고 에러 메시지만 출력
+    if (!fs.existsSync(absPath)) {
+      console.warn(`✗ 건너뜀 — 파일 없음: ${absPath}`);
+      continue;
+    }
+
     const page = await browser.newPage();
-    await page.goto(`file://${path.resolve(file)}`, {
+    await page.goto(pathToFileURL(absPath).href, {   // ← 여기가 핵심 변경
       waitUntil: 'networkidle0',
       timeout: 60000,
     });
@@ -40,6 +51,5 @@ const PAGE_END   = 20;        // 끝 페이지
   }
 
   await browser.close();
-  const count = PAGE_END - PAGE_START + 1;
-  console.log(`\n완료 — ${count}개 PDF 생성됨 (page${PAGE_START}~page${PAGE_END})`);
+  console.log(`\n완료`);
 })();

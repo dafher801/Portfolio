@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
+  <title>김주영 — 이력서</title>
+
+  <!-- Pretendard: 한국어 가독성 최고, 가변 폰트로 가벼움 -->
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+  <!-- 영문 디스플레이용: 절제된 세리프 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #4a4a4a;
+      --ink-mute: #888;
+      --line: #e5e5e5;
+      --line-soft: #f0f0f0;
+      --bg: #ffffff;
+      --accent: #1f3a5f;       /* 차분한 네이비, 게임/IT 정장 톤 */
+      --accent-soft: #f4f6fa;
+      --highlight: #ffd84d;    /* 거의 안 씀, 미세한 강조용 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #e0e0e0;
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      font-feature-settings: "ss10" on;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== 페이지 컨테이너 (A4) ===== */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      margin: 28px auto;
+      padding: 18mm 18mm 16mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      position: relative;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    /* ===== 헤더: 이름 + 한 줄 소개 + 사진 + 연락처 ===== */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 24px;
+    }
+    .header-main { min-width: 0; }
+
+    .name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 6px;
+    }
+    .name-ko {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .name-en {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-mute);
+      letter-spacing: 0.02em;
+    }
+
+    .tagline {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      max-width: 95%;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 12px;
+      row-gap: 4px;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+    .contact-grid dt {
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .contact-grid dd a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--ink-mute);
+    }
+    .contact-grid dd a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* 증명사진 */
+    .photo {
+      width: 110px;
+      height: 140px;
+      background: #ddd;
+      border: 1px solid var(--line);
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===== 섹션 공통 ===== */
+    section { margin-bottom: 22px; }
+    section:last-child { margin-bottom: 0; }
+
+    /* 첫 페이지(기술 스택 / 학력 / 자격증·수상) 섹션 간 여백 확장 */
+    .page-1 > section { margin-bottom: 36px; }
+    .page-1 > section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .section-title .ko {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+
+    /* ===== 기술 스택 ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      row-gap: 8px;
+      column-gap: 16px;
+      font-size: 12.5px;
+      align-items: baseline;
+    }
+    .skill-cat {
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 12px;
+    }
+    .skill-list {
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .skill-list code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    /* ===== 학력 / 자격증 / 수상: 타임라인 ===== */
+    .timeline {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      column-gap: 16px;
+      row-gap: 10px;
+      font-size: 12.5px;
+      align-items: baseline;
+    }
+    .timeline .date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    .timeline .title {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .timeline .meta {
+      color: var(--ink-soft);
+      font-size: 11.5px;
+      margin-top: 2px;
+    }
+    .timeline .right {
+      font-size: 11px;
+      color: var(--ink-mute);
+      white-space: nowrap;
+    }
+    .timeline .body { min-width: 0; }
+
+    /* ===== 프로젝트 ===== */
+    .project {
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .project:last-child { border-bottom: none; }
+    .project-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .project-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .project-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+      white-space: nowrap;
+    }
+    .project-role {
+      font-size: 11.5px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .project-desc {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .project-stack {
+      font-size: 10.5px;
+      color: var(--ink-mute);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.01em;
+    }
+    .project-stack::before {
+      content: "STACK / ";
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ===== 자기소개 (서술형) ===== */
+    .intro {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+    .intro p {
+      margin-bottom: 13px;
+      text-align: justify;
+      word-break: keep-all;
+    }
+    .intro p:last-child { margin-bottom: 0; }
+    .intro strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .intro-lead {
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.65;
+      padding: 12px 14px;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      margin-bottom: 14px;
+    }
+
+    /* ===== 푸터 ===== */
+    .footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 11px;
+      color: var(--ink-mute);
+    }
+    .footer-sign {
+      text-align: right;
+      font-size: 12px;
+      color: var(--ink);
+    }
+    .footer-sign .date {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ink-mute);
+      margin-right: 8px;
+    }
+
+    /* ===== 인쇄 (PDF 변환용) ===== */
+    @media print {
+      html, body { background: #fff; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      a { color: inherit !important; }
+      .contact-grid dd a { border-bottom: none; }
+    }
+
+    /* 화면에서 페이지 사이 간격 표시 */
+    @media screen {
+      body { padding: 20px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 : 인적사항 + 기술 + 학력 + 자격/수상 + 프로젝트 요약 -->
+<!-- ============================================================ -->
+<div class="page page-1">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="header">
+    <div class="header-main">
+      <div class="name-row">
+        <h1 class="name-ko">김주영</h1>
+        <span class="name-en">Kim Juyeong</span>
+      </div>
+      <p class="tagline">
+        연구로 가능성을 설계했고, 구현으로 확인했습니다. 다음은 현업에서 증명할 차례입니다.
+      </p>
+      <dl class="contact-grid">
+        <dt>Email</dt>
+        <dd>dafher801@gmail.com</dd>
+        <dt>Phone</dt>
+        <dd>010-6376-7195</dd>
+        <dt>Birth</dt>
+        <dd>1998. 08. 01</dd>
+        <!-- 포트폴리오·GitHub 링크 있다면 여기에 추가 -->
+        <!-- <dt>Portfolio</dt><dd><a href="">링크</a></dd> -->
+        <!-- <dt>GitHub</dt><dd><a href="">링크</a></dd> -->
+      </dl>
+    </div>
+    <!-- 증명사진: 실제 사진 파일로 교체. 일단 placeholder -->
+    <img class="photo" src="photo.jpg" alt="김주영 증명사진"
+         onerror="this.style.background='#ddd';this.removeAttribute('src');this.alt='';">
+  </header>
+
+  <!-- ===== 기술 스택 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>SKILLS</span><span class="ko">기술 스택</span>
+    </h2>
+    <div class="skills-grid">
+      <div class="skill-cat">Languages</div>
+      <div class="skill-list">
+        <code>C/C++</code><code>C#</code><code>Python</code>
+      </div>
+
+      <div class="skill-cat">Game Engines</div>
+      <div class="skill-list">
+        <code>Unity</code><code>Unreal Engine</code>
+      </div>
+
+      <div class="skill-cat">AI / LLM</div>
+      <div class="skill-list">
+        <code>Anthropic API</code><code>OpenAI API</code><code>Claude Code</code>
+      </div>
+
+      <div class="skill-cat">Networking</div>
+      <div class="skill-list">
+        <code>Photon</code>
+      </div>
+
+      <div class="skill-cat">Collaboration</div>
+      <div class="skill-list">
+        <code>Slack</code><code>GitLab</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 학력 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>EDUCATION</span><span class="ko">학력</span>
+    </h2>
+    <div class="timeline">
+      <div class="date">2023.08 — 2025.08</div>
+      <div class="body">
+        <div class="title">호서대학교 일반대학원 게임학과 석사</div>
+      </div>
+      <div class="date">2017.03 — 2023.02</div>
+      <div class="body">
+        <div class="title">호서대학교 게임소프트웨어학과 학사</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 수상 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>AWARDS</span><span class="ko">수상</span>
+    </h2>
+    <div class="timeline">
+      <div class="date">2024</div>
+      <div class="body">
+        <div class="title">호서대학교 일반대학원 2024학년도 후기 우수졸업논문상</div>
+      </div>
+
+      <div class="date">2017</div>
+      <div class="body">
+        <div class="title">호서대학교 2017년도 프로그래밍 경진대회 우수상</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 자격증 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>CERTIFICATIONS</span><span class="ko">자격증</span>
+    </h2>
+    <div class="timeline">
+      <div class="date">2020</div>
+      <div class="body">
+        <div class="title">정보처리산업기사</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 : 자기소개 (서술형)                                    -->
+<!-- 회사가 자기소개서를 따로 요구하지 않을 경우 함께 제출.        -->
+<!-- 회사별로 [회사명], [지원동기 문단] 부분만 갈아끼우면 됨.      -->
+<!-- ============================================================ -->
+<div class="page">
+
+  <section>
+    <h2 class="section-title">
+      <span>ABOUT ME</span><span class="ko">자기소개</span>
+    </h2>
+
+    <div class="intro">
+      <p>
+        석사 과정에서 LLM API를 게임에 직접 연동하는 연구를 수행하며, 관련 주제로 KCI 등재 논문 3편을 게재한 게임 프로그래머입니다.
+        석사 과정에서 쌓은 LLM 활용 경험과 AI Native 개발 방식이 이 역할에 직접적으로 맞닿아 있다고 느껴 크로노 스튜디오의 개발 자동화 엔지니어 포지션에 지원하게 되었습니다.
+      </p>
+
+      <p>
+        석사 논문 프로젝트에서는 매 회차마다 새로운 시나리오로 플레이되는 2D RPG를 개발했습니다.
+        이를 위해 게임 시나리오 대본을 생성하는 방안을 구상했고, 시나리오 작법을 프롬프트 설계에
+        적용하였습니다. 이후 생성된 대본을 기반으로 게임 월드를 구성하고, 대화 유형을 분류하여
+        퀘스트와 이벤트를 시스템에 연동하는 과정까지 파이프라인을 확장했습니다. 이 과정에서
+        Anthropic API와 OpenAI API를 활용하여 <strong>문제 정의부터 파이프라인 설계, 게임 연동까지
+        전 과정을 수행</strong>했습니다. 문제를 파악하고 LLM 기반의 파이프라인으로 이를 해결한 경험은
+        업무 자동화 설계와 본질적으로 같은 구조라고 생각합니다.
+      </p>
+
+      <p>
+        최근에는 Claude Code를 활용하여 체스와 포커 게임을 구현하는 실험 프로젝트를 진행했습니다. 
+        <strong>AI 코딩 에이전트가 실제 개발에서 어디까지 활용 가능한지 직접 검증</strong>하기 위한
+        프로젝트였으며, 체스에서 Photon을 활용한 멀티플레이 기능까지 빠르게 프로토타이핑한 경험이
+        있습니다. 이 과정에서 코딩 에이전트의 강점과 한계를 파악할 수 있었고, 이를 바탕으로 AI Native
+        개발 방식에 대한 실질적인 감각을 갖추게 되었습니다.
+      </p>
+
+      <p>
+        협업 측면에서는 대학 게임 개발 동아리에서 <strong>총팀장으로 기획·프로그래밍·그래픽 파트
+        전체를 이끌었고</strong>, 합숙 프로젝트를 통해 Steam 출시까지 완료한 경험이 있습니다.
+        석사 과정에서는 Slack과 GitLab 기반으로 연구실 프로젝트를 관리하며 소통에도 익숙해졌습니다.
+        LLM 파이프라인 설계 경험과 AI Native 개발 감각, 그리고 다양한 직군과의 협업 경험을 바탕으로
+        크로노 스튜디오의 개발 자동화에 기여하겠습니다.
+      </p>
+
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
