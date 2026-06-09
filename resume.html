@@ -130,7 +130,7 @@
     section:last-child { margin-bottom: 0; }
 
     /* 첫 페이지(기술 스택 / 학력 / 자격증·수상) 섹션 간 여백 확장 */
-    .page-1 > section { margin-bottom: 36px; }
+    .page-1 > section { margin-bottom: 30px; }
     .page-1 > section:last-child { margin-bottom: 0; }
 
     .section-title {
@@ -186,7 +186,7 @@
       margin-bottom: 2px;
     }
 
-    /* ===== 학력 / 자격증 / 수상: 타임라인 ===== */
+    /* ===== 학력 / 자격증 / 수상 / 논문: 타임라인 ===== */
     .timeline {
       display: grid;
       grid-template-columns: 110px 1fr;
@@ -205,11 +205,18 @@
     .timeline .title {
       font-weight: 600;
       color: var(--ink);
+      line-height: 1.4;
     }
     .timeline .meta {
       color: var(--ink-soft);
       font-size: 11.5px;
       margin-top: 2px;
+      line-height: 1.5;
+    }
+    .timeline .meta a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--ink-mute);
     }
     .timeline .right {
       font-size: 11px;
@@ -217,82 +224,6 @@
       white-space: nowrap;
     }
     .timeline .body { min-width: 0; }
-
-    /* ===== 프로젝트 ===== */
-    .project {
-      padding: 12px 0;
-      border-bottom: 1px dashed var(--line);
-    }
-    .project:last-child { border-bottom: none; }
-    .project-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-    .project-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-    .project-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--ink-mute);
-      white-space: nowrap;
-    }
-    .project-role {
-      font-size: 11.5px;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 6px;
-    }
-    .project-desc {
-      font-size: 12.5px;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      margin-bottom: 6px;
-    }
-    .project-stack {
-      font-size: 10.5px;
-      color: var(--ink-mute);
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.01em;
-    }
-    .project-stack::before {
-      content: "STACK / ";
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* ===== 자기소개 (서술형) ===== */
-    .intro {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--ink-soft);
-    }
-    .intro p {
-      margin-bottom: 13px;
-      text-align: justify;
-      word-break: keep-all;
-    }
-    .intro p:last-child { margin-bottom: 0; }
-    .intro strong {
-      color: var(--ink);
-      font-weight: 600;
-    }
-    .intro-lead {
-      font-size: 15px;
-      color: var(--ink);
-      font-weight: 500;
-      line-height: 1.65;
-      padding: 12px 14px;
-      background: var(--accent-soft);
-      border-left: 3px solid var(--accent);
-      margin-bottom: 14px;
-    }
 
     /* ===== 푸터 ===== */
     .footer {
@@ -325,7 +256,7 @@
         page-break-after: always;
       }
       a { color: inherit !important; }
-      .contact-grid dd a { border-bottom: none; }
+      .contact-grid dd a, .timeline .meta a { border-bottom: none; }
     }
 
     /* 화면에서 페이지 사이 간격 표시 */
@@ -337,7 +268,7 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- PAGE 1 : 인적사항 + 기술 + 학력 + 자격/수상 + 프로젝트 요약 -->
+<!-- 이력서 (1장) : 인적사항 + 학력 + 연구 논문 + 수상 + 자격증 + 기술 스택 -->
 <!-- ============================================================ -->
 <div class="page page-1">
 
@@ -358,48 +289,12 @@
         <dd>010-6376-7195</dd>
         <dt>Birth</dt>
         <dd>1998. 08. 01</dd>
-        <!-- 포트폴리오·GitHub 링크 있다면 여기에 추가 -->
-        <!-- <dt>Portfolio</dt><dd><a href="">링크</a></dd> -->
-        <!-- <dt>GitHub</dt><dd><a href="">링크</a></dd> -->
       </dl>
     </div>
     <!-- 증명사진: 실제 사진 파일로 교체. 일단 placeholder -->
     <img class="photo" src="photo.jpg" alt="김주영 증명사진"
          onerror="this.style.background='#ddd';this.removeAttribute('src');this.alt='';">
   </header>
-
-  <!-- ===== 기술 스택 ===== -->
-  <section>
-    <h2 class="section-title">
-      <span>SKILLS</span><span class="ko">기술 스택</span>
-    </h2>
-    <div class="skills-grid">
-      <div class="skill-cat">Languages</div>
-      <div class="skill-list">
-        <code>C/C++</code><code>C#</code><code>Python</code>
-      </div>
-
-      <div class="skill-cat">Game Engines</div>
-      <div class="skill-list">
-        <code>Unity</code><code>Unreal Engine</code>
-      </div>
-
-      <div class="skill-cat">AI / LLM</div>
-      <div class="skill-list">
-        <code>Anthropic API</code><code>OpenAI API</code><code>Claude Code</code>
-      </div>
-
-      <div class="skill-cat">Networking</div>
-      <div class="skill-list">
-        <code>Photon</code>
-      </div>
-
-      <div class="skill-cat">Collaboration</div>
-      <div class="skill-list">
-        <code>Slack</code><code>GitLab</code>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== 학력 ===== -->
   <section>
@@ -414,6 +309,46 @@
       <div class="date">2017.03 — 2023.02</div>
       <div class="body">
         <div class="title">호서대학교 게임소프트웨어학과 학사</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 학위논문 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>THESIS</span><span class="ko">학위 논문</span>
+    </h2>
+    <div class="timeline">
+      <div class="date">2025.08</div>
+      <div class="body">
+        <div class="title">LLM 기반 게임 시나리오 생성 및 적용 방안에 관한 연구</div>
+        <div class="meta">호서대학교 일반대학원 게임학과 석사학위논문 · 지도교수: 김재범</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 학술지 논문 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>PUBLICATIONS</span><span class="ko">학술지 논문</span>
+    </h2>
+    <div class="timeline">
+      <div class="date">2026.06</div>
+      <div class="body">
+        <div class="title">게임 시스템 연동을 고려한 LLM 기반 시나리오 생성 방안 (게재 확정)</div>
+        <div class="meta">한국게임학회 논문지 제26권 제3호 (KCI 등재) · 제1저자 · 교신저자: 김재범</div>
+      </div>
+
+      <div class="date">2025.04</div>
+      <div class="body">
+        <div class="title">LLM을 이용한 플레이 가능한 게임 월드 구성 방안에 관한 연구 — 2D RPG를 중심으로</div>
+        <div class="meta">한국게임학회 논문지 제25권 제2호 (KCI 등재) · 제1저자 · 교신저자: 김재범</div>
+      </div>
+
+      <div class="date">2024.08</div>
+      <div class="body">
+        <div class="title">LLM 기반 게임 데이터 로딩 시점에서 대화 생성 방안에 관한 연구 — RPG를 중심으로</div>
+        <div class="meta">한국게임학회 논문지 제24권 제4호 (KCI 등재) · 제1저자 · 교신저자: 김재범</div>
       </div>
     </div>
   </section>
@@ -449,52 +384,36 @@
     </div>
   </section>
 
-</div>
-
-<!-- ============================================================ -->
-<!-- PAGE 2 : 자기소개 (서술형)                                    -->
-<!-- 회사가 자기소개서를 따로 요구하지 않을 경우 함께 제출.        -->
-<!-- 회사별로 [회사명], [지원동기 문단] 부분만 갈아끼우면 됨.      -->
-<!-- ============================================================ -->
-<div class="page">
-
+  <!-- ===== 기술 스택 ===== -->
   <section>
     <h2 class="section-title">
-      <span>ABOUT ME</span><span class="ko">자기소개</span>
+      <span>SKILLS</span><span class="ko">기술 스택</span>
     </h2>
+    <div class="skills-grid">
+      <div class="skill-cat">Languages</div>
+      <div class="skill-list">
+        <code>C/C++</code><code>C#</code><code>Python</code>
+      </div>
 
-    <div class="intro">
-      <p>
-        석사 과정에서 LLM API를 게임에 직접 연동하는 연구를 수행하며, 관련 주제로 KCI 등재 논문 3편을 게재한 게임 프로그래머입니다.
-        석사 과정에서 쌓은 LLM 활용 경험과 AI Native 개발 방식이 이 역할에 직접적으로 맞닿아 있다고 느껴 ESTgames의 개발 자동화 엔지니어 포지션에 지원하게 되었습니다.
-      </p>
+      <div class="skill-cat">Game Engines</div>
+      <div class="skill-list">
+        <code>Unity</code><code>Unreal Engine</code>
+      </div>
 
-      <p>
-        석사 논문 프로젝트에서는 매 회차마다 새로운 시나리오로 플레이되는 2D RPG를 개발했습니다.
-        이를 위해 게임 시나리오 대본을 생성하는 방안을 구상했고, 시나리오 작법을 프롬프트 설계에
-        적용하였습니다. 이후 생성된 대본을 기반으로 게임 월드를 구성하고, 대화 유형을 분류하여
-        퀘스트와 이벤트를 시스템에 연동하는 과정까지 파이프라인을 확장했습니다. 이 과정에서
-        Anthropic API와 OpenAI API를 활용하여 <strong>문제 정의부터 파이프라인 설계, 게임 연동까지
-        전 과정을 수행</strong>했습니다. 문제를 파악하고 LLM 기반의 파이프라인으로 이를 해결한 경험은
-        업무 자동화 설계와 본질적으로 같은 구조라고 생각합니다.
-      </p>
+      <div class="skill-cat">AI / LLM</div>
+      <div class="skill-list">
+        <code>Claude Code</code><code>Anthropic API</code><code>OpenAI API</code>
+      </div>
 
-      <p>
-        최근에는 Claude Code를 활용하여 체스와 포커 게임을 구현하는 실험 프로젝트를 진행했습니다. 
-        <strong>AI 코딩 에이전트가 실제 개발에서 어디까지 활용 가능한지 직접 검증</strong>하기 위한
-        프로젝트였으며, 체스에서 Photon을 활용한 멀티플레이 기능까지 빠르게 프로토타이핑한 경험이
-        있습니다. 이 과정에서 코딩 에이전트의 강점과 한계를 파악할 수 있었고, 이를 바탕으로 AI Native
-        개발 방식에 대한 실질적인 감각을 갖추게 되었습니다.
-      </p>
+      <div class="skill-cat">Networking</div>
+      <div class="skill-list">
+        <code>Photon</code>
+      </div>
 
-      <p>
-        협업 측면에서는 대학 게임 개발 동아리에서 <strong>총팀장으로 기획·프로그래밍·그래픽 파트
-        전체를 이끌었고</strong>, 합숙 프로젝트를 통해 Steam 출시까지 완료한 경험이 있습니다.
-        석사 과정에서는 Slack과 GitLab 기반으로 연구실 프로젝트를 관리하며 소통에도 익숙해졌습니다.
-        LLM 파이프라인 설계 경험과 AI Native 개발 감각, 그리고 다양한 직군과의 협업 경험을 바탕으로
-        ESTgames의 개발 자동화에 기여하겠습니다.
-      </p>
-
+      <div class="skill-cat">Collaboration</div>
+      <div class="skill-list">
+        <code>Slack</code><code>GitLab</code>
+      </div>
     </div>
   </section>
 
