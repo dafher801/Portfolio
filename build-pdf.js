@@ -7,7 +7,7 @@ const { pathToFileURL } = require('url');   // ← 추가
 const OUTPUT_DIR = 'C:/Users/USER/OneDrive/Desktop/포폴/PDF';
 const PAGE_START = 1;
 const PAGE_END   = 20;
-const EXTRA_FILES = ['resume.html'];
+const EXTRA_FILES = ['resume.html', 'cover_letter.html'];
 
 (async () => {
   const fs = require('fs');

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
+  <title>김주영 — 커버레터</title>
+
+  <!-- Pretendard: 한국어 가독성 -->
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <!-- 영문 디스플레이용 세리프 + 모노 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #4a4a4a;
+      --ink-mute: #888;
+      --line: #e5e5e5;
+      --line-soft: #f0f0f0;
+      --bg: #ffffff;
+      --accent: #1f3a5f;
+      --accent-soft: #f4f6fa;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #e0e0e0;
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      font-feature-settings: "ss10" on;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== 페이지 컨테이너 (A4) ===== */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      margin: 28px auto;
+      padding: 18mm 18mm 16mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    /* ===== 헤더 ===== */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 26px;
+    }
+    .header-main { min-width: 0; }
+
+    .name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .name-ko {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .name-en {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-mute);
+      letter-spacing: 0.02em;
+    }
+
+    .tagline {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      max-width: 95%;
+    }
+
+    .target {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 12px;
+      row-gap: 4px;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+    .contact-grid dt {
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .contact-grid dd a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--ink-mute);
+    }
+    .contact-grid dd a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .photo {
+      width: 110px;
+      height: 140px;
+      background: #ddd;
+      border: 1px solid var(--line);
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===== 섹션 타이틀 ===== */
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .section-title .ko {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+
+    /* ===== 본문 ===== */
+    .letter p {
+      font-size: 13px;
+      line-height: 1.95;
+      color: var(--ink-soft);
+      margin-bottom: 15px;
+      word-break: keep-all;
+      text-align: justify;
+    }
+    .letter p:last-child { margin-bottom: 0; }
+    .letter p .hl {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ===== 서명 ===== */
+    .sign {
+      margin-top: 30px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--ink);
+    }
+    .sign .date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-mute);
+    }
+
+    /* ===== 인쇄 ===== */
+    @media print {
+      html, body { background: #fff; }
+      .page { margin: 0; box-shadow: none; }
+      a { color: inherit !important; }
+      .contact-grid dd a { border-bottom: none; }
+    }
+    @media screen {
+      body { padding: 20px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="header">
+    <div class="header-main">
+      <div class="name-row">
+        <h1 class="name-ko">김주영</h1>
+        <span class="name-en">Kim Juyeong</span>
+      </div>
+      <p class="target">ReLU Games · AI Integration Game Developer</p>
+      <p class="tagline">연구로 가능성을 설계했고, 구현으로 확인했습니다. 다음은 현업에서 증명할 차례입니다.</p>
+      <dl class="contact-grid">
+        <dt>Email</dt>
+        <dd>dafher801@gmail.com</dd>
+        <dt>Phone</dt>
+        <dd>010-6376-7195</dd>
+        <dt>GitHub</dt>
+        <dd><a href="https://github.com/dafher801?tab=repositories" target="_blank" rel="noopener noreferrer">github.com/dafher801</a></dd>
+      </dl>
+    </div>
+    <img class="photo" src="photo.jpg" alt="김주영 증명사진"
+         onerror="this.style.background='#ddd';this.removeAttribute('src');this.alt='';">
+  </header>
+
+  <!-- ===== 본문 ===== -->
+  <section>
+    <h2 class="section-title">
+      <span>COVER LETTER</span><span class="ko">자기소개서</span>
+    </h2>
+
+    <div class="letter">
+      <p>
+        석사 과정에서 LLM을 게임에 직접 연동하는 연구를 수행하며 관련 주제로 KCI 등재 논문 3편을 게재한 게임 프로그래머입니다. LLM 파이프라인을 설계하고 그 출력을 게임 시스템에 연결해 온 경험이 AI 통합 게임 개발자 역할에 직접적으로 맞닿아 있다고 느껴 지원하게 되었습니다. 특히 AI를 게임 시스템에 통합해 새로운 경험을 만드는 일은, 매번 다른 이야기가 만들어지는 게임을 LLM으로 구현해 온 제 연구와 본질적으로 같은 시도라고 생각합니다.
+      </p>
+      <p>
+        석사 논문 프로젝트에서는 매 회차마다 새로운 시나리오로 플레이되는 2D RPG를 개발했습니다. 이를 위해 게임 시나리오 대본을 생성하는 방안을 구상했고, 시나리오 작법을 프롬프트 설계에 적용하였습니다. 이후 생성된 대본을 기반으로 게임 월드를 구성하고, 대화 유형을 분류하여 퀘스트와 이벤트를 시스템에 연동하는 과정까지 파이프라인을 확장했습니다. 이 과정에서 Anthropic API와 OpenAI API를 활용하여, 문제 정의부터 파이프라인 설계, 게임 연동까지 전 과정을 수행했습니다. 문제를 정의하고 LLM의 입력과 출력을 게임 규칙에 맞게 다듬고 상태를 관리해본 경험은, 딥러닝 모델을 게임 속에서 살아 움직이게 만드는 AI 통합 게임 개발자의 업무와 본질적으로 같다고 생각합니다.
+      </p>
+      <p>
+        최근에는 AI 코딩 에이전트가 실제 개발에서 어디까지 활용 가능한지를, 최소한의 동작 가능한 구현으로 검증하는 실험 프로젝트를 진행했습니다. 먼저 웹 인터페이스로 체스를 구현하며 Photon 기반 멀티플레이까지 빠르게 프로토타이핑했고, 이어 Claude Code로 포커를 구현하며 방식을 더 발전시켰습니다. 이 과정에서 작업을 작은 단위로 쪼개어 빠르게 실험하고 검증하는 AI Native 개발 감각을 갖추었고, 이는 2개월 내 프로토타이핑을 수십 차례 반복하는 렐루게임즈의 개발 방식에 곧바로 합류할 수 있는 지점이라 생각합니다.
+      </p>
+      <p>
+        대학 게임 개발 동아리에서는 총팀장으로 기획·프로그래밍·그래픽 파트를 아울러 이끌었고, 합숙 프로젝트를 통해 기획부터 Steam 출시까지 개발의 전 과정을 직접 경험했습니다. 석사 과정에서는 Slack과 GitLab으로 연구실 프로젝트를 관리하며 여러 직군과 협업해 왔습니다. LLM을 게임에 통합한 경험과 빠른 검증 중심의 개발 감각을 바탕으로, 플레이어가 체감하는 AI의 존재감을 만드는 데 기여하겠습니다.
+      </p>
+    </div>
+
+    <div class="sign">
+      <span class="date">2026</span>
+      <span>김주영</span>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
