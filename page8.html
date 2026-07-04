@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Step 02 — 실험 결과 (Page 3)</title>
+  <title>Step 02 — Mock 시나리오 (Page 2)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,6 +24,11 @@
       --bg-card: #F5F6F9;
       --bg: #FFFFFF;
       --shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
+
+      --step-extract: #2D5BE3;
+      --step-env: #34A853;
+      --step-obj: #F5A623;
+      --step-reflect: #9B59B6;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,15 +108,8 @@
       margin-bottom: 18px;
     }
 
-    /* ─── Metric Table ─── */
-    .metric-table-wrap {
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 22px;
-    }
-
-    .metric-table-label {
+    /* ─── Section / Table Title Label (공통 스타일 추가) ─── */
+    .section-element-title {
       font-size: 12px;
       font-weight: 700;
       color: var(--text);
@@ -121,185 +119,189 @@
       gap: 8px;
     }
 
-    .metric-table-label .icon {
+    .section-element-title .icon {
       font-size: 13px;
       color: var(--accent);
     }
 
-    .metric-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-
-    .metric-table thead th {
-      background: var(--bg-card);
-      font-weight: 600;
-      font-size: 11px;
-      color: var(--text-sec);
-      padding: 10px 14px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      letter-spacing: 0.2px;
-    }
-
-    .metric-table tbody td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border-light);
-      color: var(--text-sec);
-      vertical-align: middle;
-      font-size: 12px;
-    }
-
-    .metric-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .metric-abbr {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 0.3px;
-    }
-
-    .metric-full {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 1px;
-    }
-
-    /* ─── Experiment Desc ─── */
-    .experiment-desc {
+    /* ─── Prompt Structure ─── */
+    .prompt-structure {
       background: var(--bg-card);
       border: 1px solid var(--border-light);
       border-radius: 10px;
-      padding: 18px 22px;
-      margin-bottom: 22px;
-      font-size: 12.5px;
-      color: var(--text-sec);
-      line-height: 1.8;
+      padding: 16px 24px 22px; /* 상단 타이틀이 외부로 빠졌으므로 top 패딩 축소 */
+      margin-bottom: 24px;
     }
 
-    .experiment-desc strong {
-      color: var(--text);
+    .prompt-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
-    .experiment-inline-tag {
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 500;
-      padding: 1px 6px;
-      border-radius: 3px;
-      letter-spacing: 0.2px;
-      vertical-align: baseline;
-    }
-
-    .experiment-inline-tag.pass { background: #E8F5E9; color: #2D7D46; }
-    .experiment-inline-tag.fail { background: #FDE8E4; color: #C0392B; }
-
-    /* ─── Result Table ─── */
-    .result-table-wrap {
-      border: 1px solid var(--border-light);
+    .prompt-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
       border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 14px;
+      padding: 16px 18px;
     }
 
-    .result-table-title {
+    .prompt-card.request { border-color: var(--accent); }
+    .prompt-card.role { border-color: var(--step-reflect); }
+
+    .prompt-card-header {
       font-size: 12px;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
-    .result-table-title .icon {
-      font-size: 13px;
+    .prompt-card-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.3px;
+    }
+
+    .prompt-card.request .prompt-card-num {
+      background: rgba(45, 91, 227, 0.1);
       color: var(--accent);
     }
 
-    .result-table {
+    .prompt-card.role .prompt-card-num {
+      background: rgba(155, 89, 182, 0.1);
+      color: var(--step-reflect);
+    }
+
+    .prompt-card-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .prompt-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prompt-card-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .group-label {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 3px;
+      display: inline-block;
+      width: fit-content;
+      letter-spacing: 0.2px;
+    }
+
+    .group-label.story { background: rgba(45, 91, 227, 0.08); color: var(--accent); }
+    .group-label.visual { background: rgba(52, 168, 83, 0.08); color: #2D7D46; }
+    .group-label.impl { background: rgba(245, 166, 35, 0.1); color: #B8860B; }
+    .group-label.role-tag { background: rgba(155, 89, 182, 0.08); color: var(--step-reflect); }
+    .group-label.enforce-tag { background: rgba(155, 89, 182, 0.08); color: var(--step-reflect); }
+
+    .group-items {
+      display: flex;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .group-item {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .group-effect {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .group-effect-single {
+      font-size: 10.5px;
+      color: var(--text-sec);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* ─── Constraint Table ─── */
+    .constraint-table-wrap {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .constraint-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 12px;
     }
 
-    .result-table thead th {
+    .constraint-table thead th {
       background: var(--bg-card);
       font-weight: 600;
       font-size: 11px;
       color: var(--text-sec);
       padding: 10px 14px;
-      text-align: center;
+      text-align: left;
       border-bottom: 1px solid var(--border);
       letter-spacing: 0.2px;
     }
 
-    .result-table thead th:first-child {
-      text-align: left;
-    }
-
-    .result-table tbody td {
+    .constraint-table tbody td {
       padding: 10px 14px;
       border-bottom: 1px solid var(--border-light);
       color: var(--text-sec);
       vertical-align: middle;
-      text-align: center;
       font-size: 12px;
     }
 
-    .result-table tbody td:first-child {
-      text-align: left;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .result-table tbody tr:last-child td {
+    .constraint-table tbody tr:last-child td {
       border-bottom: none;
     }
 
-    .result-table tbody tr.best-row {
-      background: rgba(45, 91, 227, 0.04);
-    }
-
-    .result-cell-pass {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+    .constraint-category {
       font-weight: 600;
-      color: #2D7D46;
+      color: var(--text);
+      font-size: 12px;
     }
 
-    .result-cell-fail {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      color: #C0392B;
-    }
-
-    .result-summary {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .tag {
+    .resource-tag {
       display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
       font-weight: 500;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 3px;
-      margin-right: 3px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: var(--text-sec);
+      margin: 1px 2px;
+      letter-spacing: 0.2px;
     }
 
-    .tag.best-tag { background: rgba(45, 91, 227, 0.1); color: var(--accent); font-weight: 600; }
-
-    /* ─── Conclusion callout ─── */
-    .conclusion-callout {
+    /* ─── Callout ─── */
+    .mock-callout {
       display: flex;
       gap: 10px;
       align-items: flex-start;
@@ -307,101 +309,29 @@
       border-left: 3px solid var(--accent);
       border-radius: 0 6px 6px 0;
       padding: 14px 18px;
-      margin-bottom: 22px;
     }
 
-    .conclusion-callout .icon {
+    .mock-callout .icon {
       flex-shrink: 0;
       font-size: 14px;
       margin-top: 1px;
       color: var(--accent);
     }
 
-    .conclusion-callout .text {
+    .mock-callout .text {
       font-size: 12.5px;
       color: var(--text-sec);
       line-height: 1.7;
     }
 
-    .conclusion-callout .text strong {
+    .mock-callout .text strong {
       color: var(--text);
     }
-
-    /* ─── Findings (성과 & 한계) ─── */
-    .findings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-
-    .finding-card {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 16px 18px;
-      background: #fff;
-    }
-
-    .finding-card.positive { border-color: #34A853; }
-    .finding-card.caution { border-color: #F5A623; }
-
-    .finding-card-header {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .finding-card-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 3px;
-      letter-spacing: 0.3px;
-    }
-
-    .finding-card.positive .finding-card-label {
-      background: rgba(52, 168, 83, 0.1);
-      color: #2D7D46;
-    }
-
-    .finding-card.caution .finding-card-label {
-      background: rgba(245, 166, 35, 0.1);
-      color: #B8860B;
-    }
-
-    .finding-items {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .finding-item {
-      font-size: 11.5px;
-      color: var(--text-sec);
-      line-height: 1.6;
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    .finding-item::before {
-      content: "▸";
-      font-size: 9px;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .finding-item.positive { color: #2D7D46; font-weight: 500; }
-    .finding-item.caution { color: #B8860B; font-weight: 500; }
 
     /* ─── Next Step Link ─── */
     .next-step {
-      padding-top: 18px;
+      margin-top: 22px;
+      padding-top: 16px;
       border-top: 1px dashed var(--border);
       display: flex;
       align-items: center;
@@ -454,135 +384,131 @@
 
     <main class="page-body">
 
-      <!-- ─── 소제목 3: 실험 결과 ─── -->
       <div class="subsection">
         <div class="subsection-header">
-          <span class="subsection-num">3</span>
-          <h2 class="subsection-title">자기 피드백 <span class="subsection-title-en">Self-Reflection</span></h2>
+          <span class="subsection-num">2</span>
+          <h2 class="subsection-title">시스템 프롬프트 <span class="subsection-title-en">System Prompt</span></h2>
         </div>
 
         <div class="desc-block">
-          <p>자기 피드백 단계에서는 Self-Reflection 기법을 적용하였는데, 이는 LLM이 자신의 사고 과정을 되돌아보도록 유도하여 오류를 식별하고 개선 방향을 스스로 생성하게 하는 기법이다. 본 실험에서는 Self-Reflection 횟수에 따른 게임 월드 생성 품질을 평가하기 위해, 각 횟수 조건(0회, 1회, 5회, 10회)마다 10개의 맵을 생성하였다. 평가는 5개의 메트릭을 기준으로 수행하였으며, 하나라도 만족하지 않으면 Fail(F), 모두 만족하면 Pass(T)로 판정하였다.</p>
+          <p>게임 월드 생성 시 고려해야 할 요소를 시나리오 생성 과정에 반영하기 위해, 선행 연구에서 사용된 프롬프트에 시스템 프롬프트를 추가로 도입하였다. 시스템 프롬프트는 사용자 요청과 LLM 역할 설정으로 구성되며, 이를 통해 리소스 제약이 반영된 Mock 시나리오를 생성하여 파이프라인의 입력으로 사용하였다.</p>
         </div>
 
-        <!-- 평가 메트릭 테이블 -->
-        <div class="metric-table-label">
+        <div class="section-element-title">
           <span class="icon">◈</span>
-          평가 메트릭
+          시스템 프롬프트 구조
         </div>
-        <div class="metric-table-wrap">
-          <table class="metric-table">
+
+        <div class="prompt-structure">
+          <div class="prompt-cards">
+            <div class="prompt-card request">
+              <div class="prompt-card-header">
+                <span class="prompt-card-num">A</span>
+                사용자 요청
+              </div>
+              <div class="prompt-card-desc">시나리오의 내용과 분위기를 결정하는 입력 요소</div>
+              <div class="prompt-card-items">
+                <div class="prompt-card-group">
+                  <span class="group-label story">이야기 구조</span>
+                  <div class="group-items">
+                    <span class="group-item">장르</span>
+                    <span class="group-item">플롯</span>
+                  </div>
+                  <div class="group-effect">→ 시나리오의 이야기 흐름에 영향</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label visual">시각 요소</span>
+                  <div class="group-items">
+                    <span class="group-item">배경</span>
+                    <span class="group-item">리소스 목록</span>
+                  </div>
+                  <div class="group-effect">→ 시나리오의 전체적인 분위기에 영향</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label impl">구현 사항</span>
+                  <div class="group-items">
+                    <span class="group-item">게임 규칙</span>
+                    <span class="group-item">제약 사항</span>
+                  </div>
+                  <div class="group-effect">→ 캐릭터 행동, 장소·시간 등 전체에 영향</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="prompt-card role">
+              <div class="prompt-card-header">
+                <span class="prompt-card-num">B</span>
+                LLM 역할 설정
+              </div>
+              <div class="prompt-card-desc">시나리오 품질과 요청 반영을 강제하는 설정</div>
+              <div class="prompt-card-items">
+                <div class="prompt-card-group">
+                  <span class="group-label role-tag">역할 부여</span>
+                  <div class="group-effect-single">시나리오 작가 역할을 부여하여 대본의 품질을 고려하도록 강제</div>
+                </div>
+                <div class="prompt-card-group">
+                  <span class="group-label enforce-tag">강제성 부여</span>
+                  <div class="group-effect-single">'투자자의 요청을 반영하지 않으면 투자를 받을 수 없다'는 조건을 제시하여 사용자 요청을 최우선으로 반영</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-element-title">
+          <span class="icon">◈</span>
+          입력 항목별 설정 내용
+        </div>
+
+        <div class="constraint-table-wrap">
+          <table class="constraint-table">
             <thead>
               <tr>
-                <th style="width:150px">Metric</th>
-                <th>설명</th>
+                <th style="width:110px">입력 항목</th>
+                <th>설정 내용</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
-                  <span class="metric-abbr">TR</span>
-                  <span class="metric-full">Tile Reflection</span>
-                </td>
-                <td>시나리오에 등장하지만 게임 월드에 배치되지 않은 타일의 존재 여부</td>
+                <td><span class="constraint-category">플롯</span></td>
+                <td>Quest — 주인공이 특정 목표를 찾아 나서며, 단서를 수집하고 다양한 인물을 만나는 탐색 구조</td>
               </tr>
               <tr>
-                <td>
-                  <span class="metric-abbr">OR</span>
-                  <span class="metric-full">Object Reflection</span>
-                </td>
-                <td>시나리오에 등장하지만 게임 월드에 배치되지 않은 오브젝트의 존재 여부</td>
+                <td><span class="constraint-category">장르</span></td>
+                <td>Light-hearted Comedy — 대화를 통해 오해를 풀어가는 가벼운 판타지 코미디</td>
               </tr>
               <tr>
-                <td>
-                  <span class="metric-abbr">TA</span>
-                  <span class="metric-full">Tile Accessibility</span>
-                </td>
-                <td>플레이어가 접근할 수 없는 이동 가능 타일의 존재 여부</td>
+                <td><span class="constraint-category">배경</span></td>
+                <td>중세 마을 — 석조 건물과 교회 첨탑이 있는 언덕 아래의 평화로운 마을</td>
               </tr>
               <tr>
-                <td>
-                  <span class="metric-abbr">OP</span>
-                  <span class="metric-full">Object Placement</span>
-                </td>
-                <td>이동 불가 타일 위에 배치된 오브젝트의 존재 여부</td>
+                <td><span class="constraint-category">게임 규칙</span></td>
+                <td>NPC 순차 대화 기반의 선형 진행 — 전투 및 연출 없음</td>
               </tr>
               <tr>
-                <td>
-                  <span class="metric-abbr">OA</span>
-                  <span class="metric-full">Object Accessibility</span>
-                </td>
-                <td>플레이어가 접근할 수 없는 오브젝트의 존재 여부</td>
+                <td><span class="constraint-category">제약 사항</span></td>
+                <td>밤낮 변환 배제(오전~저녁 이전) · 실내 표현 배제(모든 장면 야외) · 맵 개수: 1개</td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">타일 목록</span></td>
+                <td><span class="resource-tag">Rock</span> <span class="resource-tag">Dirt</span> <span class="resource-tag">Grass</span> <span class="resource-tag">Water</span></td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">건물 목록</span></td>
+                <td><span class="resource-tag">Blue House</span> <span class="resource-tag">Church</span> <span class="resource-tag">Forge</span> <span class="resource-tag">Inns</span> <span class="resource-tag">Market Hall</span> <span class="resource-tag">Red House</span> <span class="resource-tag">Saloon</span> <span class="resource-tag">Shop</span> <span class="resource-tag">Village Hall</span> <span class="resource-tag">Warehouse</span></td>
+              </tr>
+              <tr>
+                <td><span class="constraint-category">캐릭터 목록</span></td>
+                <td><span class="resource-tag">Adventurer Man</span> <span class="resource-tag">Adventurer Woman</span> <span class="resource-tag">Artist</span> <span class="resource-tag">Baker</span> <span class="resource-tag">Blacksmith</span> <span class="resource-tag">Child</span> <span class="resource-tag">Doctor</span> <span class="resource-tag">Guard</span> <span class="resource-tag">Inn Owner</span> <span class="resource-tag">Priest</span> <span class="resource-tag">Shop Owner</span> <span class="resource-tag">Teacher</span> <span class="resource-tag">Village Leader</span> <span class="resource-tag">Villager</span></td>
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <!-- 실험 조건 설명 -->
-        <div class="experiment-desc">
-          각 조건에서 생성된 10개의 맵에 대해 5개 메트릭을 평가하여, 모든 메트릭을 만족하면 <span class="experiment-inline-tag pass">T (Pass)</span>, 하나라도 만족하지 않으면 <span class="experiment-inline-tag fail">F (Fail)</span>로 판정하였다. 아래 표의 <strong>F Count</strong>는 10개 맵 중 Fail 판정을 받은 맵의 수를 나타낸다.
-        </div>
-
-        <!-- 결과 테이블 -->
-        <div class="result-table-title">
-          <span class="icon">◈</span>
-          실험 결과
-        </div>
-        <div class="result-table-wrap">
-          <table class="result-table">
-            <thead>
-              <tr>
-                <th style="width:140px; text-align:left">Self-Reflection</th>
-                <th style="width:90px">생성 맵 수</th>
-                <th style="width:90px">F Count</th>
-                <th>성능 변화</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>0회 (Baseline)</td>
-                <td>10</td>
-                <td><span class="result-cell-fail">5</span></td>
-                <td style="font-size:11.5px; color:var(--text-muted);">—</td>
-              </tr>
-              <tr class="best-row">
-                <td>1회 <span class="tag best-tag">Best</span></td>
-                <td>10</td>
-                <td><span class="result-cell-pass">2</span></td>
-                <td style="font-size:11.5px; color:#2D7D46; font-weight:500;">0회 대비 유의미한 향상</td>
-              </tr>
-              <tr>
-                <td>5회</td>
-                <td>10</td>
-                <td><span class="result-cell-fail">3</span></td>
-                <td style="font-size:11.5px; color:var(--text-muted);">1회 대비 유의미하지 않음</td>
-              </tr>
-              <tr>
-                <td>10회</td>
-                <td>10</td>
-                <td><span class="result-cell-fail">3</span></td>
-                <td style="font-size:11.5px; color:var(--text-muted);">1회 대비 유의미하지 않음</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 결론 콜아웃 -->
-        <div class="conclusion-callout">
-          <span class="icon">→</span>
-          <span class="text"><strong>Self-Reflection 1회</strong> 적용에서 유의미한 성능 향상이 확인되었으나, 추가 반복은 유의미한 성능 향상이 발견되지 않았다.</span>
-        </div>
-
-        <!-- 향후 연구 -->
-        <div class="next-step">
-          <span class="next-step-text">게임 월드 생성의 가능성이 확인되었으나, 시스템, 실내 장면 표현, 시공간 변화 등의 제약을 완화할 필요가 있다.<span class="highlight">→ Step 03로 이어짐</span></span>
         </div>
       </div>
-
     </main>
 
     <div class="page-footer">
-      <span class="page-number">8 / 19</span>
+      <span class="page-number">8 / 20</span>
     </div>
   </div>
 </body>
